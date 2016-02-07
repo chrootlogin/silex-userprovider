@@ -208,6 +208,10 @@ The default values are shown below.
             'value' => 'value',
         ),
     );
+    
+ORM
+---
+There is an extension which uses Doctrine ORM instead of Doctrine DBAL: [Silex Simple Orm User Provider](https://github.com/chrootLogin/silex-simpleormuser)
 
 More information
 ----------------
