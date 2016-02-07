@@ -209,9 +209,9 @@ The default values are shown below.
         ),
     );
     
-ORM
+Doctrine ORM
 ---
-There is an extension which uses Doctrine ORM instead of Doctrine DBAL: [Silex Simple Orm User Provider](https://github.com/chrootLogin/silex-simpleormuser)
+There is an extension which enables the use of Doctrine ORM instead of Doctrine DBAL: [Silex Simple Orm User Provider](https://github.com/chrootLogin/silex-simpleormuser)
 
 More information
 ----------------
