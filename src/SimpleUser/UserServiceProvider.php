@@ -2,11 +2,15 @@
 
 namespace SimpleUser;
 
+use Doctrine\Tests\Models\Tweet\UserList;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Silex\ControllerProviderInterface;
 use Silex\ControllerCollection;
 use Silex\ServiceControllerResolver;
+use SimpleUser\Command\UserCreateCommand;
+use SimpleUser\Command\UserDeleteCommand;
+use SimpleUser\Command\UserListCommand;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authorization\Voter\RoleHierarchyVoter;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -212,6 +216,19 @@ class UserServiceProvider implements ServiceProviderInterface, ControllerProvide
                 return $exception;
             }
         });
+
+        // If symfony console is available, enable them
+        if (isset($app['console.commands'])) {
+            $app['console.commands'] = $app->share(
+                $app->extend('console.commands', function ($commands) use ($app) {
+                    $commands[] = new UserCreateCommand($app);
+                    $commands[] = new UserListCommand($app);
+                    $commands[] = new UserDeleteCommand($app);
+
+                    return $commands;
+                })
+            );
+        }
     }
 
     /**

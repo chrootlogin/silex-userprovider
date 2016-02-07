@@ -208,6 +208,15 @@ The default values are shown below.
             'value' => 'value',
         ),
     );
+    
+Commandline
+-----------
+
+If you have enabled the symfony console, as with [saxulum-console](https://github.com/saxulum/saxulum-console) for example, the provider will add some commands to the console:
+
+* `simpleuser:create`: Create an user
+* `simpleuser:list`: List users
+* `simpleuser:delete`: Delete an user
 
 More information
 ----------------
