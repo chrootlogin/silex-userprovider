@@ -1,8 +1,8 @@
 <?php
 
-namespace SimpleUser\Tests;
+namespace rootLogin\UserProvider\Tests;
 
-use SimpleUser\User;
+use rootLogin\UserProvider\Entity\User;
 
 class CustomUser extends User
 {
