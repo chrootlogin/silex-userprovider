@@ -277,7 +277,7 @@ class UserManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testSupportsSubClass()
     {
-        $this->userManager->setUserClass('\rootLogin\UserProvider\CustomUser');
+        $this->userManager->setUserClass('\rootLogin\UserProvider\Tests\CustomUser');
 
         $user = $this->userManager->createUser('test@example.com', 'password');
 

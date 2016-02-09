@@ -136,7 +136,7 @@ class UserManager implements UserProviderInterface
      */
     public function supportsClass($class)
     {
-        return ($class === 'SimpleUser\User') || is_subclass_of($class, 'SimpleUser\User');
+        return ($class === 'rootLogin\UserProvider\Entity\User') || is_subclass_of($class, 'rootLogin\UserProvider\Entity\User');
     }
 
     // ----- End UserProviderInterface -----
