@@ -52,7 +52,7 @@ Hello, {{ user.name }}. {{ confirmationUrl }}
 
     public function testCreateInstance()
     {
-        $this->assertInstanceOf('SimpleUser\Mailer', $this->mailer);
+        $this->assertInstanceOf('rootLogin\UserProvider\Lib\Mailer', $this->mailer);
     }
 
     public function testSendConfirmationMessage()

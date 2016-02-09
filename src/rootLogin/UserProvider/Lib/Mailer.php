@@ -27,6 +27,7 @@
 
 namespace rootLogin\UserProvider\Lib;
 
+use rootLogin\UserProvider\Entity\User;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use \Swift_Mailer;
 use \Twig_Environment;
