@@ -1,6 +1,6 @@
 <?php
 
-namespace SimpleUser;
+namespace rootLogin\UserProvider\Provider;
 
 use Doctrine\Tests\Models\Tweet\UserList;
 use Silex\Application;

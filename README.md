@@ -1,6 +1,5 @@
 User Provider for Silex
 =======================
-_This is a fork of [jasongrimes/silex-simpleuser](https://github.com/jasongrimes/silex-simpleuser). It was made after the original project was abandoned around a year. I will maintain and update it under a different name. Please update your composer file, if you want to use my version. You also need to update your usages, to load my version. Until version 3.0 there should be complete compatibility._
 
 [![Build Status](https://travis-ci.org/chrootLogin/silex-userprovider.svg?branch=master)](https://travis-ci.org/chrootLogin/silex-userprovider)
 [![Total Downloads](https://poser.pugx.org/rootlogin/silex-userprovider/downloads.svg)](https://packagist.org/packages/rootlogin/silex-userprovider)
@@ -11,22 +10,15 @@ A simple, extensible, database-backed user provider for the Silex [security serv
 
 The UserProvider is an easy way to set up user accounts (authentication, authorization, and user administration) in the Silex PHP micro-framework. It provides drop-in services for Silex that implement the missing user management pieces for the Security component. It includes a basic User model, a database-backed user manager, controllers and views for user administration, and various supporting features.
 
-Demo
-----
+Usage
+-----
+
+### Demo
 
 * [Online demo](http://silex-simpleuser-demo.grimesit.com/)
 * [Demo source code](https://github.com/jasongrimes/silex-simpleuser-demo)
 
-Upgrading
----------
-
-If you're upgrading from 1.x,
-you'll need to update the database for version 2.0.
-Tools are provided to make this database migration relatively painless.
-See [sql/MIGRATION.md](sql/MIGRATION.md) for details.
-
-Quick start example config
---------------------------
+### Quick start example config
 
 This configuration should work out of the box to get you up and running quickly. See below for additional details.
 
@@ -132,8 +124,7 @@ Make the new account an administrator by editing the record directly in the data
 (After you have one admin account, it can grant the admin role to others via the web interface.)
 
 
-Config options
---------------
+### Config options
 
 All of these options are _optional_.
 SimpleUser can work without any configuration at all,
@@ -209,8 +200,14 @@ The default values are shown below.
         ),
     );        
     
-Commandline
------------
+### Upgrading
+
+If you're upgrading from 1.x,
+you'll need to update the database for version 2.0.
+Tools are provided to make this database migration relatively painless.
+See [sql/MIGRATION.md](sql/MIGRATION.md) for details.
+    
+### Commandline
 
 If you have enabled the symfony console, as with [saxulum-console](https://github.com/saxulum/saxulum-console) for example, the provider will add some commands to the console:
 
@@ -218,17 +215,43 @@ If you have enabled the symfony console, as with [saxulum-console](https://githu
 * `simpleuser:list`: List users
 * `simpleuser:delete`: Delete an user
 
-Doctrine ORM
--------------
+### Doctrine ORM
 
 There is an extension which enables the use of Doctrine ORM instead of Doctrine DBAL: [Silex Simple Orm User Provider](https://github.com/chrootLogin/silex-simpleormuser)
 
-Contribution
-------------
+Developer documentation
+-----------------------
 
-Everyone is welcome to contribute to this project. The only thing you need to do is open a pull request or an issue.
+### Contribution
 
-More information
-----------------
+Everyone is welcome to contribute to this project. The only thing you need to do is open a pull request or an issue. If you push code to the repository or if you do a pull request, you accept that your code will be published under the GNU LGPL.
+
+### Licensing
+
+The original library was developed by [jasongrimes](https://github.com/jasongrimes) under the BSD license. However I want to do a transition to the LGPL v3.0, so please be aware over the fact that all new code is and will be released under the GNU LGPL.
+
+Project documentation
+---------------------
+
+### About the roots
+
+This is a fork of [jasongrimes/silex-simpleuser](https://github.com/jasongrimes/silex-simpleuser). It was made after the original project was abandoned around a year. I will maintain and keep it up-to-date under this name. Until version 3.0 there should be complete compatibility.
+
+
+### More information
 
 See the [Silex SimpleUser tutorial](http://www.jasongrimes.org/2014/09/simple-user-management-in-silex/).
+
+Changelog
+---------
+* Version 3.0.0
+  * Changed namespace
+  * Added informations about the licensing.
+  * Improved documentation
+  * Updated tests
+* Version 2.0.2
+  * Mainly changes in the documentation
+  * Added commands for creating, listing and deleting users
+* Version 2.0.1
+  * Last version from [jasongrimes](https://github.com/jasongrimes). 
+  * No changelog was maintained before.

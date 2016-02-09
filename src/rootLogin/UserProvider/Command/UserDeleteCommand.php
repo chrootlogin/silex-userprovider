@@ -1,6 +1,6 @@
 <?php
 
-namespace SimpleUser\Command;
+namespace rootLogin\UserProvider\Command;
 
 use Silex\Application;
 use Symfony\Component\Console\Command\Command;

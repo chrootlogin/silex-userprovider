@@ -1,6 +1,6 @@
 <?php
 
-namespace SimpleUser;
+namespace rootLogin\UserProvider\Event;
 
 class UserEvents
 {

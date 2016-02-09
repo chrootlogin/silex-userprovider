@@ -1,6 +1,6 @@
 <?php
 
-namespace SimpleUser;
+namespace rootLogin\UserProvider\Controller;
 
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;

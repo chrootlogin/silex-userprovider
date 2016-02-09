@@ -1,6 +1,6 @@
 <?php
 
-namespace SimpleUser;
+namespace rootLogin\UserProvider\Entity;
 
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 

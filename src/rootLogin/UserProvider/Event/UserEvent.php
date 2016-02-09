@@ -1,7 +1,8 @@
 <?php
 
-namespace SimpleUser;
+namespace rootLogin\UserProvider\Event;
 
+use rootLogin\UserProvider\Entity\User;
 use Symfony\Component\EventDispatcher\Event;
 
 class UserEvent extends Event
