@@ -32,7 +32,7 @@ This configuration should work out of the box to get you up and running quickly.
 
 Install with composer. This command will automatically install the latest stable version:
 
-    composer require jasongrimes/silex-simpleuser
+    composer require rootlogin/silex-userprovider
 
 Set up your Silex application something like this:
 
