@@ -1,6 +1,6 @@
 User Provider for Silex
 ==============================
-_This is a fork of [jasongrimes/silex-simpleuer](https://github.com/jasongrimes/silex-simpleuser-demo). It was made after the original project was abandoned around a year. I will maintain and update it under a different name. Please update your composer file, if you want to use my version. You also need to update your usages, to load my version._
+_This is a fork of [jasongrimes/silex-simpleuser](https://github.com/jasongrimes/silex-simpleuser). It was made after the original project was abandoned around a year. I will maintain and update it under a different name. Please update your composer file, if you want to use my version. You also need to update your usages, to load my version._
 
 [![Build Status](https://travis-ci.org/jasongrimes/silex-simpleuser.svg?branch=master)](https://travis-ci.org/jasongrimes/silex-simpleuser)
 [![Total Downloads](https://poser.pugx.org/jasongrimes/silex-simpleuser/downloads.svg)](https://packagist.org/packages/jasongrimes/silex-simpleuser)
