@@ -1,6 +1,6 @@
 <?php
 
-namespace SimpleUser\Migration;
+namespace rootLogin\UserProvider\Migration;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Types\Type;

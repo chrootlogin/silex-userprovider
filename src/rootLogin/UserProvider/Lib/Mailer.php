@@ -25,7 +25,7 @@
  * THE SOFTWARE.
  */
 
-namespace SimpleUser;
+namespace rootLogin\UserProvider\Lib;
 
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use \Swift_Mailer;

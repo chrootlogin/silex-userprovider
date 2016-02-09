@@ -2,12 +2,12 @@
 
 namespace SimpleUser\Tests\Migration;
 
+use rootLogin\UserProvider\Entity\User;
+use rootLogin\UserProvider\Manager\UserManager;
+use rootLogin\UserProvider\Migration\MigrateV1ToV2;
 use Silex\Application;
 use Doctrine\DBAL\Connection;
 use Silex\Provider\DoctrineServiceProvider;
-use SimpleUser\Migration\MigrateV1ToV2;
-use SimpleUser\UserManager;
-use SimpleUser\User;
 
 class MigrateV1ToV2Test extends \PHPUnit_Framework_TestCase
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace SimpleUser\Tests;
+namespace rootLogin\UserProvider\Tests;
 
+use rootLogin\UserProvider\Provider\UserServiceProvider;
 use Silex\Application;
 use Silex\Provider;
-use SimpleUser\UserServiceProvider;
 
 class UserServiceProviderTest extends \PHPUnit_Framework_TestCase
 {
@@ -45,8 +45,8 @@ class UserServiceProviderTest extends \PHPUnit_Framework_TestCase
         $app = $this->getMinimalApp();
         $app->boot();
 
-        $this->assertInstanceOf('SimpleUser\UserManager', $app['user.manager']);
-        $this->assertInstanceOf('SimpleUser\UserController', $app['user.controller']);
+        $this->assertInstanceOf('rootLogin\UserProvider\Manager\UserManager', $app['user.manager']);
+        $this->assertInstanceOf('rootLogin\UserProvider\Controller\UserController', $app['user.controller']);
         $this->assertNull($app['user']);
     }
 
@@ -55,7 +55,7 @@ class UserServiceProviderTest extends \PHPUnit_Framework_TestCase
         $app = $this->getAppWithAllDependencies();
         $app->boot();
 
-        $this->assertInstanceOf('SimpleUser\Mailer', $app['user.mailer']);
+        $this->assertInstanceOf('rootLogin\UserProvider\Lib\Mailer', $app['user.mailer']);
     }
 
 }

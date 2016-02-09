@@ -3,14 +3,19 @@
 namespace rootLogin\UserProvider\Provider;
 
 use Doctrine\Tests\Models\Tweet\UserList;
+use rootLogin\UserProvider\Command\UserCreateCommand;
+use rootLogin\UserProvider\Command\UserDeleteCommand;
+use rootLogin\UserProvider\Command\UserListCommand;
+use rootLogin\UserProvider\Controller\UserController;
+use rootLogin\UserProvider\Lib\Mailer;
+use rootLogin\UserProvider\Lib\TokenGenerator;
+use rootLogin\UserProvider\Manager\UserManager;
+use rootLogin\UserProvider\Voter\EditUserVoter;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Silex\ControllerProviderInterface;
 use Silex\ControllerCollection;
 use Silex\ServiceControllerResolver;
-use SimpleUser\Command\UserCreateCommand;
-use SimpleUser\Command\UserDeleteCommand;
-use SimpleUser\Command\UserListCommand;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authorization\Voter\RoleHierarchyVoter;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -242,7 +247,7 @@ class UserServiceProvider implements ServiceProviderInterface, ControllerProvide
     {
         // Add twig template path.
         if (isset($app['twig.loader.filesystem'])) {
-            $app['twig.loader.filesystem']->addPath(__DIR__ . '/views/', 'user');
+            $app['twig.loader.filesystem']->addPath(__DIR__ . '/../Resources/views/', 'user');
         }
 
         // Validate the mailer configuration.

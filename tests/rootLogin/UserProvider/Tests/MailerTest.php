@@ -1,9 +1,9 @@
 <?php
 
-namespace SimpleUser\Tests;
+namespace rootLogin\UserProvider\Tests;
 
-use SimpleUser\Mailer;
-use SimpleUser\User;
+use rootLogin\UserProvider\Entity\User;
+use rootLogin\UserProvider\Lib\Mailer;
 
 class MailerTest extends \PHPUnit_Framework_TestCase
 {

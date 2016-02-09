@@ -1,7 +1,10 @@
 <?php
 
-namespace SimpleUser;
+namespace rootLogin\UserProvider\Manager;
 
+use rootLogin\UserProvider\Entity\User;
+use rootLogin\UserProvider\Event\UserEvent;
+use rootLogin\UserProvider\Event\UserEvents;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -28,7 +31,7 @@ class UserManager implements UserProviderInterface
     protected $identityMap = array();
 
     /** @var string */
-    protected $userClass = '\SimpleUser\User';
+    protected $userClass = '\rootLogin\UserProvider\Entity\User';
 
     /** @var bool */
     protected $isUsernameRequired = false;
