@@ -1,5 +1,6 @@
-Simple User Provider for Silex
+User Provider for Silex
 ==============================
+_This is a fork of [jasongrimes/silex-simpleuer](https://github.com/jasongrimes/silex-simpleuser-demo). It was made after the original project was abandoned around a year. I will maintain and update it under a different name. Please update your composer file, if you want to use my version. You also need to update your usages, to load my version._
 
 [![Build Status](https://travis-ci.org/jasongrimes/silex-simpleuser.svg?branch=master)](https://travis-ci.org/jasongrimes/silex-simpleuser)
 [![Total Downloads](https://poser.pugx.org/jasongrimes/silex-simpleuser/downloads.svg)](https://packagist.org/packages/jasongrimes/silex-simpleuser)
@@ -9,7 +10,6 @@ Simple User Provider for Silex
 A simple, extensible, database-backed user provider for the Silex [security service](http://silex.sensiolabs.org/doc/providers/security.html).
 
 SimpleUser is an easy way to set up user accounts (authentication, authorization, and user administration) in the Silex PHP micro-framework. It provides drop-in services for Silex that implement the missing user management pieces for the Security component. It includes a basic User model, a database-backed user manager, controllers and views for user administration, and various supporting features.
-
 
 Demo
 ----
