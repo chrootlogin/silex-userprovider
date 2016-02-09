@@ -37,7 +37,7 @@ class UserManagerTest extends \PHPUnit_Framework_TestCase
                 'memory' => true,
             ),
         ));
-        $app['db']->executeUpdate(file_get_contents(__DIR__ . '/../../../../../sql/sqlite.sql'));
+        $app['db']->executeUpdate(file_get_contents(__DIR__ . '/../../../../sql/sqlite.sql'));
 
         $this->userManager = new UserManager($app['db'], $app);
         $this->conn = $app['db'];
