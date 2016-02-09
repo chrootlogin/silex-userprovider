@@ -7,12 +7,12 @@
     "license": "BSD-2-Clause",
     "authors": [
         {
-            "name": "Jason Grimes",
-            "email": "jason@grimesit.com"
-        },
-        {
             "name": "Simon Erhardt",
             "email": "hello@rootlogin.ch"
+        },
+        {
+            "name": "Jason Grimes",
+            "email": "jason@grimesit.com"
         }
     ],
     "require": {
