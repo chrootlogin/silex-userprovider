@@ -2,17 +2,15 @@
 
 namespace SimpleUser\Tests;
 
-use SimpleUser\TokenGenerator;
-use SimpleUser\User;
-use SimpleUser\UserEvent;
-use SimpleUser\UserEvents;
-use SimpleUser\UserManager;
+use rootLogin\UserProvider\Entity\User;
+use rootLogin\UserProvider\Event\UserEvent;
+use rootLogin\UserProvider\Event\UserEvents;
+use rootLogin\UserProvider\Manager\UserManager;
 use Silex\Application;
 use Silex\Provider\DoctrineServiceProvider;
 use Silex\Provider\SecurityServiceProvider;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 
 class UserManagerTest extends \PHPUnit_Framework_TestCase
 {
@@ -39,7 +37,7 @@ class UserManagerTest extends \PHPUnit_Framework_TestCase
                 'memory' => true,
             ),
         ));
-        $app['db']->executeUpdate(file_get_contents(__DIR__ . '/../../../sql/sqlite.sql'));
+        $app['db']->executeUpdate(file_get_contents(__DIR__ . '/../../../../../sql/sqlite.sql'));
 
         $this->userManager = new UserManager($app['db'], $app);
         $this->conn = $app['db'];
