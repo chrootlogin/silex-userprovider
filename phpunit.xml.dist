@@ -11,7 +11,7 @@
          bootstrap="vendor/autoload.php"
         >
     <testsuites>
-        <testsuite name="Silex SimpleUser Test Suite">
+        <testsuite name="Silex UserProvider Test Suite">
             <directory>./tests/</directory>
         </testsuite>
     </testsuites>
