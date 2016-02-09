@@ -8,7 +8,7 @@ User Provider for Silex
 
 A simple, extensible, database-backed user provider for the Silex [security service](http://silex.sensiolabs.org/doc/providers/security.html).
 
-The UserProvider is an easy way to set up user accounts (authentication, authorization, and user administration) in the Silex PHP micro-framework. It provides drop-in services for Silex that implement the missing user management pieces for the Security component. It includes a basic User model, a database-backed user manager, controllers and views for user administration, and various supporting features.
+The User Provider is an easy way to set up user accounts (authentication, authorization, and user administration) in the Silex PHP micro-framework. It provides drop-in services for Silex that implement the missing user management pieces for the Security component. It includes a basic User model, a database-backed user manager, controllers and views for user administration, and various supporting features.
 
 Usage
 -----
@@ -224,18 +224,19 @@ Developer documentation
 
 ### Contribution
 
-Everyone is welcome to contribute to this project. The only thing you need to do is open a pull request or an issue. If you push code to the repository or if you do a pull request, you accept that your code will be published under the GNU LGPL.
+Everyone is welcome to contribute to this project. The only thing you need to do is opening a pull request or an issue. By pushing code to the repository or doing pull requests, you accept that your code will be published under the GNU LGPL.
 
 ### Licensing
 
-The original library was developed by [jasongrimes](https://github.com/jasongrimes) under the BSD license. However I want to do a transition to the LGPL v3.0, so please be aware over the fact that all new code is and will be released under the GNU LGPL.
+The original library was developed by [jasongrimes](https://github.com/jasongrimes) under the BSD Clause-2 license. However, I wanted a transition to the LGPL v3.0, so please be aware of the fact that all codes from now on are released under the GNU LGPL v3.0. I try to make it as transparent as possible. 
+_If you want to get sure that you only use the BSD licensed code, please use a version lower or equal 2.0.1._
 
 Project documentation
 ---------------------
 
 ### About the roots
 
-This is a fork of [jasongrimes/silex-simpleuser](https://github.com/jasongrimes/silex-simpleuser). It was made after the original project was abandoned around a year. I will maintain and keep it up-to-date under this name. Until version 3.0 there should be complete compatibility.
+This is a fork of [jasongrimes/silex-simpleuser](https://github.com/jasongrimes/silex-simpleuser). it has been made one year after the abandonment of the original project. I will maintain and keep it up-to-date under this name. Until version 3.0 there should be complete compatibility.
 
 
 ### More information
