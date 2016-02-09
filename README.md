@@ -207,7 +207,7 @@ The default values are shown below.
             'attribute' => 'attribute',
             'value' => 'value',
         ),
-    );
+    );        
     
 Commandline
 -----------
@@ -217,6 +217,16 @@ If you have enabled the symfony console, as with [saxulum-console](https://githu
 * `simpleuser:create`: Create an user
 * `simpleuser:list`: List users
 * `simpleuser:delete`: Delete an user
+
+Doctrine ORM
+-------------
+
+There is an extension which enables the use of Doctrine ORM instead of Doctrine DBAL: [Silex Simple Orm User Provider](https://github.com/chrootLogin/silex-simpleormuser)
+
+Contribution
+------------
+
+Everyone is welcome to contribute to this project. The only thing you need to do is open a pull request or an issue.
 
 More information
 ----------------
