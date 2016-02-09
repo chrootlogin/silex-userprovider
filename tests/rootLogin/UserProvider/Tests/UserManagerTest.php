@@ -6,6 +6,7 @@ use rootLogin\UserProvider\Entity\User;
 use rootLogin\UserProvider\Event\UserEvent;
 use rootLogin\UserProvider\Event\UserEvents;
 use rootLogin\UserProvider\Manager\UserManager;
+use rootLogin\UserProvider\Tests\CustomUser;
 use Silex\Application;
 use Silex\Provider\DoctrineServiceProvider;
 use Silex\Provider\SecurityServiceProvider;
@@ -243,10 +244,10 @@ class UserManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testCustomUserClass()
     {
-        $this->userManager->setUserClass('\SimpleUser\Tests\CustomUser');
+        $this->userManager->setUserClass('\rootLogin\UserProvider\Tests\CustomUser');
 
         $user = $this->userManager->createUser('test@example.com', 'password');
-        $this->assertInstanceOf('SimpleUser\Tests\CustomUser', $user);
+        $this->assertInstanceOf('rootLogin\UserProvider\Tests\CustomUser', $user);
 
         $user->setTwitterUsername('foo');
         $errors = $this->userManager->validate($user);
@@ -276,7 +277,7 @@ class UserManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testSupportsSubClass()
     {
-        $this->userManager->setUserClass('\SimpleUser\Tests\CustomUser');
+        $this->userManager->setUserClass('\rootLogin\UserProvider\CustomUser');
 
         $user = $this->userManager->createUser('test@example.com', 'password');
 
