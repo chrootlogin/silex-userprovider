@@ -2,6 +2,8 @@
 
 namespace rootLogin\UserProvider\Controller;
 
+use rootLogin\UserProvider\Entity\User;
+use rootLogin\UserProvider\Manager\UserManager;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

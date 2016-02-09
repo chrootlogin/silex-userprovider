@@ -48,7 +48,7 @@ class UserManagerTest extends \PHPUnit_Framework_TestCase
     {
         $user = $this->userManager->createUser('test@example.com', 'pass');
 
-        $this->assertInstanceOf('Simpleuser\User', $user);
+        $this->assertInstanceOf('rootLogin\UserProvider\Entity\User', $user);
     }
 
     public function testStoreAndFetchUser()
