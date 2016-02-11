@@ -28,7 +28,8 @@
         "ext-pdo_sqlite": "*"
     },
     "suggest": {
-        "saxulum/saxulum-console": "Allows you to manage users via command line."
+        "saxulum/saxulum-console": "Allows you to manage users via command line.",
+        "dflydev/dflydev-doctrine-orm-service-provider": "Allows the use of doctrine orm."
     },
     "autoload": {
         "psr-0": {
@@ -40,5 +41,4 @@
             "rootLogin\\UserProvider\\Tests": "tests/"
         }
     }
-
 }
