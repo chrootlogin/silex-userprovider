@@ -249,6 +249,7 @@ Changelog
   * Added informations about the licensing.
   * Improved documentation
   * Updated tests
+  * Renamed commands
 * Version 2.0.2
   * Mainly changes in the documentation
   * Added commands for creating, listing and deleting users
