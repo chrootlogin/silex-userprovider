@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authorization\Voter\RoleHierarchyVoter;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
-class UserServiceProvider implements ServiceProviderInterface
+class UserProviderServiceProvider implements ServiceProviderInterface
 {
     /**
      * Registers services on the given app.
