@@ -121,7 +121,7 @@ class User implements AdvancedUserInterface, \Serializable
     public function __construct($email)
     {
         $this->email = $email;
-        $this->timeCreated = time();
+        $this->timeCreated = new \DateTime();
         $this->salt = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
     }
 
@@ -354,9 +354,9 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Set the time the user was originally created.
      *
-     * @param int $timeCreated A timestamp value.
+     * @param \DateTime $timeCreated A timestamp value.
      */
-    public function setTimeCreated($timeCreated)
+    public function setTimeCreated(\DateTime $timeCreated)
     {
         $this->timeCreated = $timeCreated;
     }
@@ -364,7 +364,7 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Set the time the user was originally created.
      *
-     * @return int
+     * @return \DateTime
      */
     public function getTimeCreated()
     {
@@ -572,15 +572,15 @@ class User implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * @param int|null $timestamp
+     * @param \DateTime|null $dateTime
      */
-    public function setTimePasswordResetRequested($timestamp)
+    public function setTimePasswordResetRequested(\DateTime $dateTime)
     {
-        $this->timePasswordResetRequested = $timestamp ?: null;
+        $this->timePasswordResetRequested = $dateTime ?: null;
     }
 
     /**
-     * @return int|null
+     * @return \DateTime|null
      */
     public function getTimePasswordResetRequested()
     {
@@ -589,6 +589,7 @@ class User implements AdvancedUserInterface, \Serializable
 
     /**
      * @param int $ttl Password reset request TTL, in seconds.
+     *
      * @return bool
      */
     public function isPasswordResetRequestExpired($ttl)
@@ -598,6 +599,6 @@ class User implements AdvancedUserInterface, \Serializable
             return true;
         }
 
-        return $timeRequested + $ttl < time();
+        return $timeRequested->getTimestamp() + $ttl < time();
     }
 }
