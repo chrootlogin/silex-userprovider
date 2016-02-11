@@ -1,6 +1,6 @@
 <?php
 
-namespace SimpleUser\Tests;
+namespace roorLogin\UserProvider\Tests;
 
 use rootLogin\UserProvider\Entity\User;
 use rootLogin\UserProvider\Event\UserEvent;

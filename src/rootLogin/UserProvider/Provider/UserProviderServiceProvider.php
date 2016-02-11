@@ -66,7 +66,7 @@ class UserProviderServiceProvider implements ServiceProviderInterface
             ),
 
             // Set this to use a custom User class.
-            'userClass' => 'SimpleUser\User',
+            'userClass' => 'rootLogin\UserProvider\Entity\User',
 
             // Whether to require that users have a username (default: false).
             // By default, users sign in with their email address instead.
@@ -189,7 +189,7 @@ class UserProviderServiceProvider implements ServiceProviderInterface
             if (!isset($app['url_generator'])) $missingDeps[] = 'UrlGeneratorServiceProvider';
             if (!isset($app['twig'])) $missingDeps[] = 'TwigServiceProvider';
             if (!empty($missingDeps)) {
-                throw new \RuntimeException('To access the SimpleUser mailer you must enable the following missing dependencies: ' . implode(', ', $missingDeps));
+                throw new \RuntimeException('To access the UserProvider mailer you must enable the following missing dependencies: ' . implode(', ', $missingDeps));
             }
 
             $mailer = new Mailer($app['mailer'], $app['url_generator'], $app['twig']);

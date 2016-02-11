@@ -1,6 +1,6 @@
 <?php
 
-namespace SimpleUser\Tests\Migration;
+namespace rootLogin\UserProvider\Tests\Migration;
 
 use rootLogin\UserProvider\Entity\User;
 use rootLogin\UserProvider\Manager\UserManager;

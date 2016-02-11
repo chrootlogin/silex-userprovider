@@ -113,7 +113,7 @@ class OrmUserManager implements UserManagerInterface
      */
     public function supportsClass($class)
     {
-        return ($class === 'SimpleUser\User') || is_subclass_of($class, 'SimpleUser\User');
+        return ($class === 'rootLogin\UserProvider\Entity\User') || is_subclass_of($class, 'rootLogin\UserProvider\Entity\User');
     }
 
     // ----- End UserProviderInterface -----
@@ -410,7 +410,7 @@ class OrmUserManager implements UserManagerInterface
     }
 
     /**
-     * @param string $userClass The class to use for the user model. Must extend SimpleUser\User.
+     * @param string $userClass The class to use for the user model. Must extend rootLogin\UserProvider\Entity\User.
      */
     public function setUserClass($userClass)
     {
