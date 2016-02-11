@@ -48,7 +48,7 @@ Set up your Silex application something like this:
     $app->register(new Provider\SwiftmailerServiceProvider());
 
     // Register the SimpleUser service provider.
-    $app->register(new \rootLogin\UserProvider\Provider\UserServiceProvider(););
+    $app->register(new \rootLogin\UserProvider\Provider\UserProviderServiceProvider(););
 
     // ...
 
@@ -57,7 +57,7 @@ Set up your Silex application something like this:
     //
 
     // Mount the user controller routes:
-    $app->mount('/user', new \rootLogin\UserProvider\Provider\UserControllerProvider(););
+    $app->mount('/user', new \rootLogin\UserProvider\Provider\UserProviderControllerProvider(););
 
     /*
     // Other routes and controllers...

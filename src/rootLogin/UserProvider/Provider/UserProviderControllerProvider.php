@@ -15,7 +15,7 @@ use Silex\ControllerProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-class UserControllerProvider implements ControllerProviderInterface
+class UserProviderControllerProvider implements ControllerProviderInterface
 {
     /**
      * Returns routes to connect to the given application.
