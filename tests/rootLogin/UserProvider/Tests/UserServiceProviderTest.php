@@ -2,6 +2,7 @@
 
 namespace rootLogin\UserProvider\Tests;
 
+use rootLogin\UserProvider\Provider\UserProviderServiceProvider;
 use rootLogin\UserProvider\Provider\UserServiceProvider;
 use Silex\Application;
 use Silex\Provider;
@@ -16,7 +17,7 @@ class UserServiceProviderTest extends \PHPUnit_Framework_TestCase
             array('security.firewalls' => array('dummy-firewall' => array('form' => array())))
         );
         $app->register(new Provider\DoctrineServiceProvider());
-        $app->register(new UserServiceProvider(), array(
+        $app->register(new UserProviderServiceProvider(), array(
             'db.options' => array(
                 'driver' => 'pdo_sqlite',
                 'memory' => true,
