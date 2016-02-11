@@ -133,7 +133,7 @@ class UserServiceProvider implements ServiceProviderInterface
         $app['user.tokenGenerator'] = $app->share(function($app) { return new TokenGenerator($app['logger']); });
 
         // User Manager
-        if($app['orm.ems']) { // Check if ORM is installed or not
+        if(isset($app['orm.ems'])) { // Check if ORM is installed or not
             // use orm usermanager
             $defaults = $app['user.options.default'];
             $defaults['userClass'] = 'rootLogin\SimpleOrmUser\Entity\User';
