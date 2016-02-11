@@ -135,10 +135,6 @@ class UserProviderServiceProvider implements ServiceProviderInterface
         // User Manager
         if(isset($app['orm.ems'])) { // Check if ORM is installed or not
             // use orm usermanager
-            $defaults = $app['user.options.default'];
-            $defaults['userClass'] = 'rootLogin\SimpleOrmUser\Entity\User';
-            $app['user.options.default'] = $defaults;
-
             $app['user.manager'] = $app->share(function($app) {
                 $app['user.options.init']();
 
