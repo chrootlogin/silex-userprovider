@@ -2,23 +2,19 @@
 
 namespace rootLogin\UserProvider\Provider;
 
-use Doctrine\Tests\Models\Tweet\UserList;
 use rootLogin\UserProvider\Command\UserCreateCommand;
 use rootLogin\UserProvider\Command\UserDeleteCommand;
 use rootLogin\UserProvider\Command\UserListCommand;
 use rootLogin\UserProvider\Controller\UserController;
 use rootLogin\UserProvider\Lib\Mailer;
 use rootLogin\UserProvider\Lib\TokenGenerator;
+use rootLogin\UserProvider\Manager\OrmUserManager;
 use rootLogin\UserProvider\Manager\UserManager;
 use rootLogin\UserProvider\Voter\EditUserVoter;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use Silex\ControllerProviderInterface;
-use Silex\ControllerCollection;
-use Silex\ServiceControllerResolver;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authorization\Voter\RoleHierarchyVoter;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
 class UserServiceProvider implements ServiceProviderInterface
@@ -136,19 +132,39 @@ class UserServiceProvider implements ServiceProviderInterface
         // Token generator.
         $app['user.tokenGenerator'] = $app->share(function($app) { return new TokenGenerator($app['logger']); });
 
-        // User manager.
-        $app['user.manager'] = $app->share(function($app) {
-            $app['user.options.init']();
+        // User Manager
+        if($app['orm.ems']) { // Check if ORM is installed or not
+            // use orm usermanager
+            $defaults = $app['user.options.default'];
+            $defaults['userClass'] = 'rootLogin\SimpleOrmUser\Entity\User';
+            $app['user.options.default'] = $defaults;
 
-            $userManager = new UserManager($app['db'], $app);
-            $userManager->setUserClass($app['user.options']['userClass']);
-            $userManager->setUsernameRequired($app['user.options']['isUsernameRequired']);
-            $userManager->setUserTableName($app['user.options']['userTableName']);
-            $userManager->setUserCustomFieldsTableName($app['user.options']['userCustomFieldsTableName']);
-            $userManager->setUserColumns($app['user.options']['userColumns']);
+            $app['user.manager'] = $app->share(function($app) {
+                $app['user.options.init']();
 
-            return $userManager;
-        });
+                $userManager = new OrmUserManager($app);
+                $userManager->setUserClass($app['user.options']['userClass']);
+                $userManager->setUsernameRequired($app['user.options']['isUsernameRequired']);
+
+                return $userManager;
+            });
+
+            $this->addDoctrineOrmMappings($app);
+        } else {
+            // use dbal user manager
+            $app['user.manager'] = $app->share(function($app) {
+                $app['user.options.init']();
+
+                $userManager = new UserManager($app['db'], $app);
+                $userManager->setUserClass($app['user.options']['userClass']);
+                $userManager->setUsernameRequired($app['user.options']['isUsernameRequired']);
+                $userManager->setUserTableName($app['user.options']['userTableName']);
+                $userManager->setUserCustomFieldsTableName($app['user.options']['userCustomFieldsTableName']);
+                $userManager->setUserColumns($app['user.options']['userColumns']);
+
+                return $userManager;
+            });
+        }
 
         // Current user.
         $app['user'] = $app->share(function($app) {
@@ -272,5 +288,35 @@ class UserServiceProvider implements ServiceProviderInterface
         if (isset($app['user.passwordStrengthValidator'])) {
             $app['user.manager']->setPasswordStrengthValidator($app['user.passwordStrengthValidator']);
         }
+    }
+
+    protected function addDoctrineOrmMappings(Application $app)
+    {
+        if (!isset($app['orm.ems.options'])) {
+            $app['orm.ems.options'] = $app->share(function () use ($app) {
+                $options = array(
+                    'default' => $app['orm.em.default_options']
+                );
+                return $options;
+            });
+        }
+
+        $app['orm.ems.options'] = $app->share($app->extend('orm.ems.options', function (array $options) {
+            $options['default']['mappings'][] = array(
+                'type' => 'annotation',
+                'namespace' => 'rootLogin\UserProvider\Entity',
+                'path' => $this->getEntityPath(),
+                'use_simple_annotation_reader' => false,
+            );
+            return $options;
+        }));
+    }
+
+    /**
+     * @return string
+     */
+    protected function getEntityPath()
+    {
+        return realpath(__DIR__ . "/../Entity/");
     }
 }

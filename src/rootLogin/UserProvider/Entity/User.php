@@ -5,22 +5,87 @@ namespace rootLogin\UserProvider\Entity;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
 /**
- * A simple User model.
+ * A user
  *
- * @package SimpleUser
+ * @ORM\Entity()
+ * @ORM\Table(name="user")
+ *
+ * @package rootLogin\UserProvider
  */
 class User implements AdvancedUserInterface, \Serializable
 {
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
     protected $id;
-    protected $email;
-    protected $password;
-    protected $salt;
-    protected $roles = array();
-    protected $name = '';
-    protected $timeCreated;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="username", type="string", nullable=true)
+     */
     protected $username;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", unique=true)
+     */
+    protected $email;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="password", type="string")
+     */
+    protected $password;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="salt", type="string")
+     */
+    protected $salt;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string")
+     */
+    protected $name = '';
+
+    protected $roles = array();
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created", type="datetime")
+     */
+    protected $timeCreated;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="enabled", type="boolean")
+     */
     protected $isEnabled = true;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="token", type="string", nullable=true)
+     */
     protected $confirmationToken;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="timeResetRequested", type="datetime", nullable=true)
+     */
     protected $timePasswordResetRequested;
 
     protected $customFields = array();

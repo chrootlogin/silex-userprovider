@@ -5,8 +5,8 @@ namespace rootLogin\UserProvider\Manager;
 use rootLogin\UserProvider\Entity\User;
 use rootLogin\UserProvider\Event\UserEvent;
 use rootLogin\UserProvider\Event\UserEvents;
+use rootLogin\UserProvider\Interfaces\UserManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
@@ -16,7 +16,7 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Doctrine\DBAL\Connection;
 use Silex\Application;
 
-class UserManager implements UserProviderInterface
+class UserManager implements UserManagerInterface
 {
     /** @var Connection */
     protected $conn;
@@ -186,6 +186,10 @@ class UserManager implements UserProviderInterface
         }
 
         return $user;
+    }
+
+    public function create($email, $plainPassword, $name = null, $roles = array()) {
+        return $this->createUser($email, $plainPassword, $name, $roles);
     }
 
     /**

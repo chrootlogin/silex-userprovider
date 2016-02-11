@@ -3,7 +3,7 @@
 namespace rootLogin\UserProvider\Controller;
 
 use rootLogin\UserProvider\Entity\User;
-use rootLogin\UserProvider\Manager\UserManager;
+use rootLogin\UserProvider\Interfaces\UserManagerInterface;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,7 +19,7 @@ use JasonGrimes\Paginator;
  */
 class UserController
 {
-    /** @var UserManager */
+    /** @var UserManagerInterface */
     protected $userManager;
 
     protected $templates = array(
@@ -45,10 +45,10 @@ class UserController
     /**
      * Constructor.
      *
-     * @param UserManager $userManager
+     * @param UserManagerInterface $userManager
      * @param array $deprecated - Deprecated. No longer used.
      */
-    public function __construct(UserManager $userManager, $deprecated = null)
+    public function __construct(UserManagerInterface $userManager, $deprecated = null)
     {
         $this->userManager = $userManager;
     }
