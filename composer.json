@@ -40,5 +40,8 @@
         "psr-0": {
             "rootLogin\\UserProvider\\Tests": "tests/"
         }
-    }
+    },
+    "non-feature-branches": [
+        "nextgen"
+    ]
 }
