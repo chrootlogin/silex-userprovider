@@ -28,5 +28,26 @@ use rootLogin\UserProvider\Entity\User;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 interface UserManagerInterface extends UserProviderInterface {
+
     public function create($email, $plainPassword, $name = null, $roles = array());
+
+    /**
+     * Find User instances that match the given criteria.
+     *
+     * @param array $criteria
+     * @param array $options An array of the following options (all optional):<pre>
+     *      limit (int|array) The maximum number of results to return, or an array of (offset, limit).
+     *      order_by (string|array) The name of the column to order by, or an array of column name and direction, ex. array(time_created, DESC)
+     * </pre>
+     * @return User[] An array of matching User instances, or an empty array if no matching users were found.
+     */
+    public function findBy(array $criteria = array(), array $options = array());
+
+    /**
+     * Get a single User instance that matches the given criteria. If more than one User matches, the first result is returned.
+     *
+     * @param array $criteria
+     * @return User|null
+     */
+    public function findOneBy(array $criteria);
 }

@@ -54,9 +54,9 @@ class UserListCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('simpleuser:list')
+            ->setName('user:list')
             ->setHelp(<<<EOT
-The <info>simpleuser:list</info> command lists all users.
+The <info>user:list</info> command lists all users.
 EOT
             );
     }

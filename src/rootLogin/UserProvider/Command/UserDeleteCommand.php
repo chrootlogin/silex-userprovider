@@ -55,13 +55,13 @@ class UserDeleteCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('simpleuser:delete')
+            ->setName('user:delete')
             ->setDefinition(array(
                 new InputArgument('email', InputArgument::REQUIRED, 'The email')
             ))
             ->setHelp(<<<EOT
-The <info>simpleuser:delete</info> command deletes a user:
-  <info>php app/console simpleuser:delete test@example.org</info>
+The <info>user:delete</info> command deletes a user:
+  <info>php app/console user:delete test@example.org</info>
 EOT
             );
     }

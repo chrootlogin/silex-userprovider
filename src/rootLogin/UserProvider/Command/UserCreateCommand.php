@@ -55,17 +55,17 @@ class UserCreateCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('simpleuser:create')
+            ->setName('user:create')
             ->setDefinition(array(
                 new InputArgument('email', InputArgument::REQUIRED, 'The email'),
                 new InputArgument('password', InputArgument::REQUIRED, 'The password')
             ))
             ->setHelp(<<<EOT
-The <info>simpleuser:create</info> command creates a user:
-  <info>php app/console simpleuser:create test@example.org</info>
+The <info>user:create</info> command creates a user:
+  <info>php app/console user:create test@example.org</info>
 This interactive shell will ask you for a password.
 You can alternatively specify the password as the second and third arguments:
-  <info>php app/console simpleuser:create test@example.org mypassword</info>
+  <info>php app/console user:create test@example.org mypassword</info>
 EOT
             );
     }
