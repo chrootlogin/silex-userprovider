@@ -344,7 +344,7 @@ class UserController
             throw new InvalidArgumentException('Passwords don\'t match.');
         }
 
-        $user = $this->userManager->createUser(
+        $user = $this->userManager->create(
             $request->request->get('email'),
             $request->request->get('password'),
             $request->request->get('name') ?: null);
