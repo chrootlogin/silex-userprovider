@@ -22,7 +22,7 @@ Usage
 ### Demo
 
 * [Online demo](http://silex-simpleuser-demo.grimesit.com/)
-* [Demo source code](https://github.com/jasongrimes/silex-simpleuser-demo)
+* [Demo App](https://github.com/chrootlogin/silex-demoapp)
 
 ### Quick start example config
 
@@ -120,10 +120,6 @@ Create the user database:
 
     mysql -uUSER -pPASSWORD MYDBNAME < vendor/jasongrimes/silex-simpleuser/sql/mysql.sql
 
-Note: if you're upgrading from SimpleUser 1.x,
-follow the instructions in [sql/MIGRATION.md](sql/MIGRATION.md) instead,
-to migrate the database without losing existing data.
-
 You should now be able to create an account at the `/user/register` URL.
 Make the new account an administrator by editing the record directly in the database and setting the `users.roles` column to `ROLE_USER,ROLE_ADMIN`.
 (After you have one admin account, it can grant the admin role to others via the web interface.)
@@ -205,13 +201,6 @@ The default values are shown below.
         ),
     );        
     
-### Upgrading
-
-If you're upgrading from 1.x,
-you'll need to update the database for version 2.0.
-Tools are provided to make this database migration relatively painless.
-See [sql/MIGRATION.md](sql/MIGRATION.md) for details.
-    
 ### Commandline
 
 If you have enabled the symfony console, as with [saxulum-console](https://github.com/saxulum/saxulum-console) for example, the provider will add some commands to the console:
@@ -223,6 +212,8 @@ If you have enabled the symfony console, as with [saxulum-console](https://githu
 ### Doctrine ORM
 
 The provider uses the Doctrine Orm (Object-relational mapper) automatically, if the necessairy provider are found.
+
+An auto migration is no possible.
 
 Developer documentation
 -----------------------

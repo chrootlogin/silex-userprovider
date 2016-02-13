@@ -77,7 +77,7 @@ EOT
         $email      = $input->getArgument('email');
         $password   = $input->getArgument('password');
 
-        $user = $this->app['user.manager']->createUser($email, $password);
+        $user = $this->app['user.manager']->create($email, $password);
         $user->setEnabled(true);
         $this->app['user.manager']->insert($user);
 
