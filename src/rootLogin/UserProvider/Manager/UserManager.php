@@ -175,11 +175,11 @@ class UserManager implements UserManagerInterface
         if ($roles = explode(',', $data['roles'])) {
             $user->setRoles($roles);
         }
-        $user->setTimeCreated($data['time_created']);
+        $user->setTimeCreated((new \DateTime())->setTimestamp($data['time_created']));
         $user->setUsername($data['username']);
         $user->setEnabled($data['isEnabled']);
         $user->setConfirmationToken($data['confirmationToken']);
-        $user->setTimePasswordResetRequested($data['timePasswordResetRequested']);
+        $user->setTimePasswordResetRequested((new \DateTime())->setTimestamp($data['timePasswordResetRequested']));
 
         if (!empty($data['customFields'])) {
             $user->setCustomFields($data['customFields']);
@@ -505,17 +505,22 @@ class UserManager implements UserManagerInterface
                 ', '.$this->getUserColumns('confirmationToken').', '.$this->getUserColumns('timePasswordResetRequested').')
             VALUES (:email, :password, :salt, :name, :roles, :timeCreated, :username, :isEnabled, :confirmationToken, :timePasswordResetRequested) ';
 
+        $timePasswordResetRequested = 0;
+        if($user->getTimePasswordResetRequested() !== null) {
+            $timePasswordResetRequested = $user->getTimePasswordResetRequested()->getTimestamp();
+        }
+
         $params = array(
             'email' => $user->getEmail(),
             'password' => $user->getPassword(),
             'salt' => $user->getSalt(),
             'name' => $user->getName(),
             'roles' => implode(',', $user->getRoles()),
-            'timeCreated' => $user->getTimeCreated(),
+            'timeCreated' => $user->getTimeCreated()->getTimestamp(),
             'username' => $user->getRealUsername(),
             'isEnabled' => $user->isEnabled(),
             'confirmationToken' => $user->getConfirmationToken(),
-            'timePasswordResetRequested' => $user->getTimePasswordResetRequested(),
+            'timePasswordResetRequested' => $timePasswordResetRequested,
         );
 
         $this->conn->executeUpdate($sql, $params);
@@ -551,17 +556,22 @@ class UserManager implements UserManagerInterface
             , '.$this->getUserColumns('timePasswordResetRequested').' = :timePasswordResetRequested
             WHERE '.$this->getUserColumns('id').' = :id';
 
+        $timePasswordResetRequested = 0;
+        if($user->getTimePasswordResetRequested() !== null) {
+            $timePasswordResetRequested = $user->getTimePasswordResetRequested()->getTimestamp();
+        }
+
         $params = array(
             'email' => $user->getEmail(),
             'password' => $user->getPassword(),
             'salt' => $user->getSalt(),
             'name' => $user->getName(),
             'roles' => implode(',', $user->getRoles()),
-            'timeCreated' => $user->getTimeCreated(),
+            'timeCreated' => $user->getTimeCreated()->getTimestamp(),
             'username' => $user->getRealUsername(),
             'isEnabled' => $user->isEnabled(),
             'confirmationToken' => $user->getConfirmationToken(),
-            'timePasswordResetRequested' => $user->getTimePasswordResetRequested(),
+            'timePasswordResetRequested' => $timePasswordResetRequested,
             'id' => $user->getId(),
         );
 

@@ -10,7 +10,8 @@ class UserTest extends \PHPUnit_Framework_TestCase
     {
         $user = new User('email@example.com');
 
-        $this->assertGreaterThan(0, $user->getTimeCreated());
+        $this->assertInstanceOf("DateTime", $user->getTimeCreated());
+        $this->assertNull($user->getTimePasswordResetRequested());
         $this->assertNotEmpty($user->getSalt());
         $this->assertTrue($user->hasRole('ROLE_USER'));
     }
