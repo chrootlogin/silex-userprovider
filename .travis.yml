@@ -5,14 +5,19 @@ php:
   - 5.5
   - 5.6
   - 7.0
-#  - hhvm
+  - hhvm
 
 env:
    - DB=sqlite3
 #  - DB=mysql
 #  - DB=pgsql
 
-before_script: composer install --dev --prefer-source
+before_script:
+  - composer self-update
+  - composer install --dev --prefer-source
+
+script:
+  - phpunit --coverage-text --verbose
 
 notifications:
   email: hello@rootlogin.ch
