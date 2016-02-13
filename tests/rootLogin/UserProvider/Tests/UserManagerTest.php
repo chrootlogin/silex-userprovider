@@ -52,14 +52,14 @@ class UserManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateUser()
     {
-        $user = $this->userManager->createUser('test@example.com', 'pass');
+        $user = $this->userManager->create('test@example.com', 'pass');
 
         $this->assertInstanceOf('rootLogin\UserProvider\Entity\User', $user);
     }
 
     public function testStoreAndFetchUser()
     {
-        $user = $this->userManager->createUser('test@example.com', 'password');
+        $user = $this->userManager->create('test@example.com', 'password');
         $this->assertNull($user->getId());
 
         $this->userManager->insert($user);
@@ -71,7 +71,7 @@ class UserManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testUpdateUser()
     {
-        $user = $this->userManager->createUser('test@example.com', 'pass');
+        $user = $this->userManager->create('test@example.com', 'pass');
         $this->userManager->insert($user);
 
         $user->setName('Foo');
@@ -86,7 +86,7 @@ class UserManagerTest extends \PHPUnit_Framework_TestCase
     {
         $email = 'test@example.com';
 
-        $user = $this->userManager->createUser($email, 'password');
+        $user = $this->userManager->create($email, 'password');
         $this->userManager->insert($user);
         $this->assertEquals($user, $this->userManager->findOneBy(array('email' => $email)));
 
@@ -96,7 +96,7 @@ class UserManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testCustomFields()
     {
-        $user = $this->userManager->createUser('test@example.com', 'pass');
+        $user = $this->userManager->create('test@example.com', 'pass');
         $user->setCustomField('field1', 'foo');
         $user->setCustomField('field2', 'bar');
 
@@ -123,7 +123,7 @@ class UserManagerTest extends \PHPUnit_Framework_TestCase
     {
         $email = 'test@example.com';
 
-        $user = $this->userManager->createUser($email, 'password');
+        $user = $this->userManager->create($email, 'password');
         $this->userManager->insert($user);
 
         $foundUser = $this->userManager->loadUserByUsername($email);
@@ -134,7 +134,7 @@ class UserManagerTest extends \PHPUnit_Framework_TestCase
     {
         $username = 'foo';
 
-        $user = $this->userManager->createUser('test@example.com', 'password');
+        $user = $this->userManager->create('test@example.com', 'password');
         $user->setUsername($username);
         $this->userManager->insert($user);
 
@@ -154,7 +154,7 @@ class UserManagerTest extends \PHPUnit_Framework_TestCase
     {
         $email = 'test@example.com';
 
-        $user = $this->userManager->createUser($email, 'password');
+        $user = $this->userManager->create($email, 'password');
 
         $this->assertNull($user->getRealUsername());
         $this->assertEquals($email, $user->getUsername());
@@ -167,7 +167,7 @@ class UserManagerTest extends \PHPUnit_Framework_TestCase
     {
         $username = 'joe';
 
-        $user = $this->userManager->createUser('test@example.com', 'password');
+        $user = $this->userManager->create('test@example.com', 'password');
         $user->setUsername($username);
 
         $this->assertEquals($username, $user->getUsername());
@@ -175,7 +175,7 @@ class UserManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testUsernameCannotContainAtSymbol()
     {
-        $user = $this->userManager->createUser('test@example.com', 'password');
+        $user = $this->userManager->create('test@example.com', 'password');
         $errors = $user->validate();
         $this->assertEmpty($errors);
 
@@ -188,13 +188,13 @@ class UserManagerTest extends \PHPUnit_Framework_TestCase
     {
         $email = 'test@example.com';
 
-        $user1 = $this->userManager->createUser($email, 'password');
+        $user1 = $this->userManager->create($email, 'password');
         $this->userManager->insert($user1);
         $errors = $this->userManager->validate($user1);
         $this->assertEmpty($errors);
 
         // Validation fails because a different user already exists in the database with that email address.
-        $user2 = $this->userManager->createUser($email, 'password');
+        $user2 = $this->userManager->create($email, 'password');
         $errors = $this->userManager->validate($user2);
         $this->assertArrayHasKey('email', $errors);
     }
@@ -203,14 +203,14 @@ class UserManagerTest extends \PHPUnit_Framework_TestCase
     {
         $username = 'foo';
 
-        $user1 = $this->userManager->createUser('test1@example.com', 'password');
+        $user1 = $this->userManager->create('test1@example.com', 'password');
         $user1->setUsername($username);
         $this->userManager->insert($user1);
         $errors = $this->userManager->validate($user1);
         $this->assertEmpty($errors);
 
         // Validation fails because a different user already exists in the database with that email address.
-        $user2 = $this->userManager->createUser('test2@example.com', 'password');
+        $user2 = $this->userManager->create('test2@example.com', 'password');
         $user2->setUsername($username);
         $errors = $this->userManager->validate($user2);
         $this->assertArrayHasKey('username', $errors);
@@ -223,11 +223,11 @@ class UserManagerTest extends \PHPUnit_Framework_TestCase
         $email1 = 'test1@example.com';
         $email2 = 'test2@example.com';
 
-        $user1 = $this->userManager->createUser($email1, 'password');
+        $user1 = $this->userManager->create($email1, 'password');
         $user1->setCustomField($customField, $customVal);
         $this->userManager->insert($user1);
 
-        $user2 = $this->userManager->createUser($email2, 'password');
+        $user2 = $this->userManager->create($email2, 'password');
         $user2->setCustomField($customField, $customVal);
         $this->userManager->insert($user2);
 
@@ -251,7 +251,7 @@ class UserManagerTest extends \PHPUnit_Framework_TestCase
     {
         $this->userManager->setUserClass('\rootLogin\UserProvider\Tests\Entity\CustomUser');
 
-        $user = $this->userManager->createUser('test@example.com', 'password');
+        $user = $this->userManager->create('test@example.com', 'password');
         $this->assertInstanceOf('rootLogin\UserProvider\Tests\Entity\CustomUser', $user);
 
         $user->setTwitterUsername('foo');
@@ -266,7 +266,7 @@ class UserManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testSupportsBaseClass()
     {
-        $user = $this->userManager->createUser('test@example.com', 'password');
+        $user = $this->userManager->create('test@example.com', 'password');
 
         $supportsObject = $this->userManager->supportsClass(get_class($user));
         $this->assertTrue($supportsObject);
@@ -284,7 +284,7 @@ class UserManagerTest extends \PHPUnit_Framework_TestCase
     {
         $this->userManager->setUserClass('\rootLogin\UserProvider\Tests\Entity\CustomUser');
 
-        $user = $this->userManager->createUser('test@example.com', 'password');
+        $user = $this->userManager->create('test@example.com', 'password');
 
         $supportsObject = $this->userManager->supportsClass(get_class($user));
         $this->assertTrue($supportsObject);
@@ -300,7 +300,7 @@ class UserManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testValidationWhenUsernameIsRequired()
     {
-        $user = $this->userManager->createUser('test@example.com', 'password');
+        $user = $this->userManager->create('test@example.com', 'password');
         $this->userManager->setUsernameRequired(true);
 
         $errors = $this->userManager->validate($user);
@@ -317,7 +317,7 @@ class UserManagerTest extends \PHPUnit_Framework_TestCase
            $event->getUser()->setCustomField('foo', 'bar');
         });
 
-        $user = $this->userManager->createUser('test@example.com', 'password');
+        $user = $this->userManager->create('test@example.com', 'password');
 
         // After insert, the custom field set by the listener is available.
         $this->assertFalse($user->hasCustomField('foo'));
@@ -336,7 +336,7 @@ class UserManagerTest extends \PHPUnit_Framework_TestCase
             $event->getUser()->setCustomField('foo', 'bar');
         });
 
-        $user = $this->userManager->createUser('test@example.com', 'password');
+        $user = $this->userManager->create('test@example.com', 'password');
 
         // After insert, the custom field set by the listener is available.
         $this->assertFalse($user->hasCustomField('foo'));
@@ -356,7 +356,7 @@ class UserManagerTest extends \PHPUnit_Framework_TestCase
             $event->getUser()->setCustomField('foo', 'bar');
         });
 
-        $user = $this->userManager->createUser('test@example.com', 'password');
+        $user = $this->userManager->create('test@example.com', 'password');
         $this->userManager->insert($user);
 
         // After update, the custom field set by the listener is available.
@@ -376,7 +376,7 @@ class UserManagerTest extends \PHPUnit_Framework_TestCase
             $event->getUser()->setCustomField('foo', 'bar');
         });
 
-        $user = $this->userManager->createUser('test@example.com', 'password');
+        $user = $this->userManager->create('test@example.com', 'password');
         $this->userManager->insert($user);
 
         // After update, the custom field set by the listener is available on the existing user instance.

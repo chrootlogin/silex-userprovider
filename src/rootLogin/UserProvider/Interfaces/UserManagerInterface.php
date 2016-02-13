@@ -29,7 +29,23 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 interface UserManagerInterface extends UserProviderInterface {
 
+    /**
+     * Factory method for creating a new User instance.
+     *
+     * @param string $email
+     * @param string $plainPassword
+     * @param string $name
+     * @param array $roles
+     * @return User
+     */
     public function create($email, $plainPassword, $name = null, $roles = array());
+
+    /**
+     * Delete a User from the database.
+     *
+     * @param User $user
+     */
+    public function delete(User $user);
 
     /**
      * Find User instances that match the given criteria.
@@ -50,4 +66,21 @@ interface UserManagerInterface extends UserProviderInterface {
      * @return User|null
      */
     public function findOneBy(array $criteria);
+
+    /**
+     * Count users that match the given criteria.
+     *
+     * @param array $criteria
+     * @return int The number of users that match the criteria.
+     */
+    public function findCount(array $criteria);
+
+    /**
+     * Log in as the given user.
+     *
+     * Sets the security token for the current request so it will be logged in as the given user.
+     *
+     * @param User $user
+     */
+    public function loginAsUser(User $user);
 }

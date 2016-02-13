@@ -188,22 +188,10 @@ class UserManager implements UserManagerInterface
         return $user;
     }
 
-    public function create($email, $plainPassword, $name = null, $roles = array()) {
-        return $this->createUser($email, $plainPassword, $name, $roles);
-    }
-
     /**
-     * Factory method for creating a new User instance.
-     *
-     * @param string $email
-     * @param string $plainPassword
-     * @param string $name
-     * @param array $roles
-     * @return User
+     * @inheritdoc
      */
-    public function createUser($email, $plainPassword, $name = null, $roles = array())
-    {
-
+    public function create($email, $plainPassword, $name = null, $roles = array()) {
         $userClass = $this->getUserClass();
 
         $user = new $userClass($email);

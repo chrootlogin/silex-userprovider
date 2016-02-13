@@ -116,22 +116,11 @@ class OrmUserManager implements UserManagerInterface
 
     // ----- End UserProviderInterface -----
 
+    /**
+     * @inheritdoc
+     */
     public function create($email, $plainPassword, $name = null, $roles = array())
     {
-        return $this->createUser($email, $plainPassword, $name, $roles);
-    }
-    /**
-     * Factory method for creating a new User instance.
-     *
-     * @param string $email
-     * @param string $plainPassword
-     * @param string $name
-     * @param array $roles
-     * @return User
-     */
-    public function createUser($email, $plainPassword, $name = null, $roles = array())
-    {
-
         $userClass = $this->getUserClass();
 
         $user = new $userClass($email);
@@ -148,6 +137,7 @@ class OrmUserManager implements UserManagerInterface
         }
 
         return $user;
+
     }
 
     /**
@@ -309,10 +299,7 @@ class OrmUserManager implements UserManagerInterface
     }
 
     /**
-     * Count users that match the given criteria.
-     *
-     * @param array $criteria
-     * @return int The number of users that match the criteria.
+     * @inheritdoc
      */
     public function findCount(array $criteria = array())
     {
@@ -350,9 +337,7 @@ class OrmUserManager implements UserManagerInterface
     }
 
     /**
-     * Delete a User from the database.
-     *
-     * @param User $user
+     * @inheritdoc
      */
     public function delete(User $user)
     {
@@ -433,33 +418,8 @@ class OrmUserManager implements UserManagerInterface
         return $this->isUsernameRequired;
     }
 
-    public function setUserTableName($userTableName)
-    {
-        $this->userTableName = $userTableName;
-    }
-
-    public function getUserTableName()
-    {
-        return $this->userTableName;
-    }
-
-
-    public function setUserCustomFieldsTableName($userCustomFieldsTableName)
-    {
-        $this->userCustomFieldsTableName = $userCustomFieldsTableName;
-    }
-
-    public function getUserCustomFieldsTableName()
-    {
-        return $this->userCustomFieldsTableName;
-    }
-
     /**
-     * Log in as the given user.
-     *
-     * Sets the security token for the current request so it will be logged in as the given user.
-     *
-     * @param User $user
+     * @inheritdoc
      */
     public function loginAsUser(User $user)
     {
