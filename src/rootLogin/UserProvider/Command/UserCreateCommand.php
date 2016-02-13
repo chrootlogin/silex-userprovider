@@ -79,7 +79,7 @@ EOT
 
         $user = $this->app['user.manager']->create($email, $password);
         $user->setEnabled(true);
-        $this->app['user.manager']->insert($user);
+        $this->app['user.manager']->save($user);
 
         $output->writeln(sprintf('Created user <comment>%s</comment>', $email));
     }
