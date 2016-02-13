@@ -13,7 +13,7 @@ use Silex\Provider\SecurityServiceProvider;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
-class UserManagerTest extends \PHPUnit_Framework_TestCase
+class DBALUserManagerTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var DBALUserManager
