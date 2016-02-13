@@ -28,7 +28,10 @@
     },
     "require-dev": {
         "phpunit/phpunit": "~4.2",
-        "ext-pdo_sqlite": "*"
+        "ext-pdo_sqlite": "*",
+        "symfony/console": "~2.8",
+        "dflydev/doctrine-orm-service-provider": " ~1.0",
+        "saxulum/saxulum-doctrine-orm-manager-registry-provider": " ~2.2"
     },
     "suggest": {
         "saxulum/saxulum-console": "Allows you to manage users via command line.",
