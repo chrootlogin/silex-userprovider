@@ -1,17 +1,44 @@
 <?php
 
-namespace roorLogin\UserProvider\Tests;
+/**
+ * Silex User Provider
+ *
+ *  Copyright 2016 by Simon Erhardt <hello@rootlogin.ch>
+ *
+ * This file is part of the silex user provider.
+ *
+ * The silex user provider is free software: you can redistribute
+ * it and/or modify it under the terms of the Lesser GNU General Public
+ * License version 3 as published by the Free Software Foundation.
+ *
+ * The silex user provider is distributed in the hope that it will
+ * be useful, but WITHOUT ANY WARRANTY; without even the implied warranty
+ * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * You should have received a copy of the Lesser GNU General Public
+ * License along with the silex user provider.  If not, see
+ * <http://www.gnu.org/licenses/>.
+ *
+ * @license LGPL-3.0 <http://spdx.org/licenses/LGPL-3.0>
+ */
 
+namespace rootLogin\UserProvider\Tests;
+
+use Dflydev\Silex\Provider\DoctrineOrm\DoctrineOrmServiceProvider;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Tools\SchemaTool;
 use rootLogin\UserProvider\Entity\User;
 use rootLogin\UserProvider\Event\UserEvent;
 use rootLogin\UserProvider\Event\UserEvents;
+use rootLogin\UserProvider\Manager\OrmUserManager;
 use rootLogin\UserProvider\Manager\UserManager;
-use rootLogin\UserProvider\Tests\CustomUser;
+use rootLogin\UserProvider\Tests\Entity\Orm\CustomUser;
 use Silex\Application;
 use Silex\Provider\DoctrineServiceProvider;
 use Silex\Provider\SecurityServiceProvider;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\Security\Http\Logout\DefaultLogoutSuccessHandler;
 
 class OrmUserManagerTest extends \PHPUnit_Framework_TestCase
 {
@@ -21,9 +48,9 @@ class OrmUserManagerTest extends \PHPUnit_Framework_TestCase
     protected $userManager;
 
     /**
-     * @var Connection
+     * @var EntityManager
      */
-    protected $conn;
+    protected $em;
 
     /** @var EventDispatcher */
     protected $dispatcher;
@@ -32,17 +59,36 @@ class OrmUserManagerTest extends \PHPUnit_Framework_TestCase
     {
         $app = new Application();
         $app->register(new SecurityServiceProvider());
-        $app->register(new DoctrineServiceProvider(), array(
-            'db.options' => array(
+        $app->register(new DoctrineServiceProvider(), [
+            'db.options' => [
                 'driver' => 'pdo_sqlite',
                 'memory' => true,
-            ),
-        ));
-        $app['db']->executeUpdate(file_get_contents(__DIR__ . '/../../../../sql/sqlite.sql'));
+            ],
+        ]);
+        $app->register(new DoctrineOrmServiceProvider(), [
+            'orm.em.options' => [
+                'mappings' => [
+                    [
+                        'type' => 'annotation',
+                        'namespace' => 'rootLogin\UserProvider\Entity',
+                        'path' => __DIR__ . '/../../../../src/rootLogin/UserProvider/Entity',
+                        'use_simple_annotation_reader' => false
+                    ],
+                    [
+                        'type' => 'annotation',
+                        'namespace' => 'rootLogin\UserProvider\Tests\Entity\Orm',
+                        'path' => __DIR__ . '/Entity',
+                        'use_simple_annotation_reader' => false
+                    ]
+                ]
+            ]
+        ]);
 
-        $this->userManager = new UserManager($app['db'], $app);
-        $this->conn = $app['db'];
+        $this->userManager = new OrmUserManager($app);
+        $this->em = $app['orm.em'];
         $this->dispatcher = $app['dispatcher'];
+
+        $this->createSchema();
     }
 
     public function testUserManager()
@@ -52,7 +98,7 @@ class OrmUserManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateUser()
     {
-        $user = $this->userManager->createUser('test@example.com', 'pass');
+        $user = $this->userManager->create('test@example.com', 'pass');
 
         $this->assertInstanceOf('rootLogin\UserProvider\Entity\User', $user);
     }
@@ -92,31 +138,6 @@ class OrmUserManagerTest extends \PHPUnit_Framework_TestCase
 
         $this->userManager->delete($user);
         $this->assertNull($this->userManager->findOneBy(array('email' => $email)));
-    }
-
-    public function testCustomFields()
-    {
-        $user = $this->userManager->createUser('test@example.com', 'pass');
-        $user->setCustomField('field1', 'foo');
-        $user->setCustomField('field2', 'bar');
-
-        $this->userManager->insert($user);
-
-        $storedUser = $this->userManager->getUser($user->getId());
-        $this->assertEquals('foo', $storedUser->getCustomField('field1'));
-        $this->assertEquals('bar', $storedUser->getCustomField('field2'));
-
-        // Search by two custom fields.
-        $foundUser = $this->userManager->findOneBy(array('customFields' => array('field1' => 'foo', 'field2' => 'bar')));
-        $this->assertEquals($user, $foundUser);
-
-        // Search by one custom field and one standard property.
-        $foundUser = $this->userManager->findOneBy(array('id' => $user->getId(), 'customFields' => array('field2' => 'bar')));
-        $this->assertEquals($user, $foundUser);
-
-        // Failed search returns null.
-        $foundUser = $this->userManager->findOneBy(array('customFields' => array('field1' => 'foo', 'field2' => 'does-not-exist')));
-        $this->assertNull($foundUser);
     }
 
     public function testLoadUserByUsernamePassingEmailAddress()
@@ -218,17 +239,13 @@ class OrmUserManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testFindAndCount()
     {
-        $customField = 'foo';
-        $customVal = 'bar';
         $email1 = 'test1@example.com';
         $email2 = 'test2@example.com';
 
         $user1 = $this->userManager->createUser($email1, 'password');
-        $user1->setCustomField($customField, $customVal);
         $this->userManager->insert($user1);
 
         $user2 = $this->userManager->createUser($email2, 'password');
-        $user2->setCustomField($customField, $customVal);
         $this->userManager->insert($user2);
 
         $criteria = array('email' => $email1);
@@ -237,22 +254,15 @@ class OrmUserManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(1, $results);
         $this->assertEquals(1, $numResults);
         $this->assertEquals($user1, reset($results));
-
-        $criteria = array('customFields' => array($customField => $customVal));
-        $results = $this->userManager->findBy($criteria);
-        $numResults = $this->userManager->findCount($criteria);
-        $this->assertCount(2, $results);
-        $this->assertEquals(2, $numResults);
-        $this->assertContains($user1, $results);
-        $this->assertContains($user2, $results);
     }
 
     public function testCustomUserClass()
     {
-        $this->userManager->setUserClass('\rootLogin\UserProvider\Tests\CustomUser');
+        $this->userManager->setUserClass('\rootLogin\UserProvider\Tests\Entity\Orm\CustomUser');
 
+        /** @var CustomUser $user */
         $user = $this->userManager->createUser('test@example.com', 'password');
-        $this->assertInstanceOf('rootLogin\UserProvider\Tests\CustomUser', $user);
+        $this->assertInstanceOf('rootLogin\UserProvider\Tests\Entity\Orm\CustomUser', $user);
 
         $user->setTwitterUsername('foo');
         $errors = $this->userManager->validate($user);
@@ -282,7 +292,7 @@ class OrmUserManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testSupportsSubClass()
     {
-        $this->userManager->setUserClass('\rootLogin\UserProvider\Tests\CustomUser');
+        $this->userManager->setUserClass('\rootLogin\UserProvider\Tests\Entity\Orm\CustomUser');
 
         $user = $this->userManager->createUser('test@example.com', 'password');
 
@@ -325,7 +335,6 @@ class OrmUserManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('bar', $user->getCustomField('foo'));
 
         // The user was stored with the custom field (since we set it BEFORE insert).
-        $this->userManager->clearIdentityMap(); // Clear the cache to force a fresh lookup from the database.
         $storedUser = $this->userManager->getUser($user->getId());
         $this->assertEquals('bar', $storedUser->getCustomField('foo'));
     }
@@ -333,21 +342,14 @@ class OrmUserManagerTest extends \PHPUnit_Framework_TestCase
     public function testAfterInsertEvents()
     {
         $this->dispatcher->addListener(UserEvents::AFTER_INSERT, function(UserEvent $event) {
-            $event->getUser()->setCustomField('foo', 'bar');
+            $event->getUser()->setName("Foo Bar");
         });
 
         $user = $this->userManager->createUser('test@example.com', 'password');
 
         // After insert, the custom field set by the listener is available.
-        $this->assertFalse($user->hasCustomField('foo'));
         $this->userManager->insert($user);
-        $this->assertEquals('bar', $user->getCustomField('foo'));
-
-        // The user was NOT stored with the custom field (because we set it AFTER insert).
-        // We'd have to save it again from within the after listener for it to be stored.
-        $this->userManager->clearIdentityMap(); // Clear the cache to force a fresh lookup from the database.
-        $storedUser = $this->userManager->getUser($user->getId());
-        $this->assertFalse($storedUser->hasCustomField('foo'));
+        $this->assertEquals('Foo Bar', $user->getName());
     }
 
     public function testBeforeUpdateEvents()
@@ -365,7 +367,6 @@ class OrmUserManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('bar', $user->getCustomField('foo'));
 
         // The user was stored with the custom field (since we set it BEFORE insert).
-        $this->userManager->clearIdentityMap(); // Clear the cache to force a fresh lookup from the database.
         $storedUser = $this->userManager->getUser($user->getId());
         $this->assertEquals('bar', $storedUser->getCustomField('foo'));
     }
@@ -373,22 +374,15 @@ class OrmUserManagerTest extends \PHPUnit_Framework_TestCase
     public function testAfterUpdateEvents()
     {
         $this->dispatcher->addListener(UserEvents::AFTER_UPDATE, function(UserEvent $event) {
-            $event->getUser()->setCustomField('foo', 'bar');
+            $event->getUser()->setName("Foo Bar");
         });
 
         $user = $this->userManager->createUser('test@example.com', 'password');
         $this->userManager->insert($user);
 
         // After update, the custom field set by the listener is available on the existing user instance.
-        $this->assertFalse($user->hasCustomField('foo'));
         $this->userManager->update($user);
-        $this->assertEquals('bar', $user->getCustomField('foo'));
-
-        // The user was NOT stored with the custom field (because we set it AFTER update).
-        // We'd have to save it again from within the after listener for it to be stored.
-        $this->userManager->clearIdentityMap(); // Clear the cache to force a fresh lookup from the database.
-        $storedUser = $this->userManager->getUser($user->getId());
-        $this->assertFalse($storedUser->hasCustomField('foo'));
+        $this->assertEquals('Foo Bar', $user->getName());
     }
 
     public function testPasswordStrengthValidator()
@@ -414,9 +408,13 @@ class OrmUserManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('Password must have at least 2 characters.', $error);
     }
 
-    public function testChangeUserColumns()
-    {
-        $this->userManager->setUserColumns(array('email' => 'foo'));
-        $this->assertEquals('"foo"', $this->userManager->getUserColumns('email'));
+    protected function createSchema() {
+        $metadatas = $this->em->getMetadataFactory()->getAllMetadata();
+
+        if (!empty($metadatas)) {
+            // Create SchemaTool
+            $tool = new SchemaTool($this->em);
+            $tool->createSchema($metadatas);
+        }
     }
 }
