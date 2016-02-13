@@ -32,6 +32,8 @@ use Symfony\Component\Security\Core\User\AdvancedUserInterface;
  *
  * @ORM\Entity()
  * @ORM\Table(name="user")
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="discr", type="string")
  *
  * @package rootLogin\UserProvider
  */
