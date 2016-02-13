@@ -13,6 +13,12 @@ The User Provider is an easy way to set up user accounts (authentication, author
 Usage
 -----
 
+### Dependencies
+  * PHP ~5.4
+  * Silex ~1.0
+  * Doctrine DBAL ~2.4
+  * Symfony Security ~2.3
+
 ### Demo
 
 * [Online demo](http://silex-simpleuser-demo.grimesit.com/)
@@ -216,7 +222,7 @@ If you have enabled the symfony console, as with [saxulum-console](https://githu
 
 ### Doctrine ORM
 
-There is an extension which enables the use of Doctrine ORM instead of Doctrine DBAL: [Silex Simple Orm User Provider](https://github.com/chrootLogin/silex-simpleormuser)
+The provider uses the Doctrine Orm (Object-relational mapper) automatically, if the necessairy provider are found.
 
 Developer documentation
 -----------------------
