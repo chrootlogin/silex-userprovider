@@ -100,7 +100,7 @@ class UserController
                     $user->setEnabled(false);
                     $user->setConfirmationToken($app['user.tokenGenerator']->generateToken());
                 }
-                $this->userManager->insert($user);
+                $this->userManager->save($user);
 
                 if ($this->isEmailConfirmationRequired) {
                     // Send email confirmation.
@@ -156,7 +156,7 @@ class UserController
 
         $user->setConfirmationToken(null);
         $user->setEnabled(true);
-        $this->userManager->update($user);
+        $this->userManager->save($user);
 
         $this->userManager->loginAsUser($user);
 
@@ -217,7 +217,7 @@ class UserController
 
         if (!$user->getConfirmationToken()) {
             $user->setConfirmationToken($app['user.tokenGenerator']->generateToken());
-            $this->userManager->update($user);
+            $this->userManager->save($user);
         }
 
         $app['user.mailer']->sendConfirmationMessage($user);
@@ -252,7 +252,7 @@ class UserController
                 if (!$user->getConfirmationToken()) {
                     $user->setConfirmationToken($app['user.tokenGenerator']->generateToken());
                 }
-                $this->userManager->update($user);
+                $this->userManager->save($user);
 
                 $app['user.mailer']->sendResetMessage($user);
                 $app['session']->getFlashBag()->set('alert', 'Instructions for resetting your password have been emailed to you.');
@@ -315,7 +315,7 @@ class UserController
                 $this->userManager->setUserPassword($user, $password);
                 $user->setConfirmationToken(null);
                 $user->setEnabled(true);
-                $this->userManager->update($user);
+                $this->userManager->save($user);
 
                 $this->userManager->loginAsUser($user);
 
@@ -461,7 +461,7 @@ class UserController
             $errors += $this->userManager->validate($user);
 
             if (empty($errors)) {
-                $this->userManager->update($user);
+                $this->userManager->save($user);
                 $msg = 'Saved account information.' . ($request->request->get('password') ? ' Changed password.' : '');
                 $app['session']->getFlashBag()->set('alert', $msg);
             }
