@@ -97,6 +97,9 @@ class UserProviderServiceProvider implements ServiceProviderInterface
                 'attribute' => 'attribute',
                 'value' => 'value',
             ),
+
+            // Use Orm if available
+            "useOrmIfAvailable" => true
         );
 
         // Initialize $app['user.options'].
@@ -132,35 +135,24 @@ class UserProviderServiceProvider implements ServiceProviderInterface
         // Token generator.
         $app['user.tokenGenerator'] = $app->share(function($app) { return new TokenGenerator($app['logger']); });
 
-        // User Manager
-        if(isset($app['orm.em'])) { // Check if ORM is installed or not
-            // use orm usermanager
-            $app['user.manager'] = $app->share(function($app) {
-                $app['user.options.init']();
+        $app['user.manager'] = $app->share(function($app) {
+            $app['user.options.init']();
 
+            if(isset($app['orm.em']) && $app['user.options']['useOrmIfAvailable']) {
                 $userManager = new OrmUserManager($app);
                 $userManager->setUserClass($app['user.options']['userClass']);
                 $userManager->setUsernameRequired($app['user.options']['isUsernameRequired']);
-
-                return $userManager;
-            });
-
-            $this->addDoctrineOrmMappings($app);
-        } else {
-            // use dbal user manager
-            $app['user.manager'] = $app->share(function($app) {
-                $app['user.options.init']();
-
+            } else {
                 $userManager = new UserManager($app['db'], $app);
                 $userManager->setUserClass($app['user.options']['userClass']);
                 $userManager->setUsernameRequired($app['user.options']['isUsernameRequired']);
                 $userManager->setUserTableName($app['user.options']['userTableName']);
                 $userManager->setUserCustomFieldsTableName($app['user.options']['userCustomFieldsTableName']);
                 $userManager->setUserColumns($app['user.options']['userColumns']);
+            }
 
-                return $userManager;
-            });
-        }
+            return $userManager;
+        });
 
         // Current user.
         $app['user'] = $app->share(function($app) {
