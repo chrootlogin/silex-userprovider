@@ -22,16 +22,14 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class OrmUserManager implements UserManagerInterface
 {
-    /**
-     * @var ManagerRegistry
-     */
-    protected $doctrine;
-
     /** @var \Silex\Application */
     protected $app;
 
     /** @var EventDispatcher */
     protected $dispatcher;
+
+    /** @var EntityManager */
+    protected $em;
 
     /** @var string */
     protected $userClass = '\rootLogin\UserProvider\Entity\User';
@@ -50,8 +48,8 @@ class OrmUserManager implements UserManagerInterface
     public function __construct(Application $app)
     {
         $this->app = $app;
-        $this->doctrine = $app['doctrine'];
         $this->dispatcher = $app['dispatcher'];
+        $this->em = $app['orm.em'];
     }
 
     // ----- UserProviderInterface -----
@@ -291,7 +289,7 @@ class OrmUserManager implements UserManagerInterface
      */
     public function getUser($id)
     {
-        return $this->doctrine->getRepository($this->userClass)->findOneById($id);
+        return $this->em->getRepository($this->userClass)->findOneById($id);
     }
 
     /**
@@ -299,7 +297,7 @@ class OrmUserManager implements UserManagerInterface
      */
     public function findOneBy(array $criteria)
     {
-        return $this->doctrine->getRepository($this->userClass)->findOneBy($criteria);
+        return $this->em->getRepository($this->userClass)->findOneBy($criteria);
     }
 
     /**
@@ -307,7 +305,7 @@ class OrmUserManager implements UserManagerInterface
      */
     public function findBy(array $criteria = array(), array $options = array())
     {
-        return $this->doctrine->getRepository($this->userClass)->findBy($criteria);
+        return $this->em->getRepository($this->userClass)->findBy($criteria);
     }
 
     /**
@@ -330,8 +328,8 @@ class OrmUserManager implements UserManagerInterface
     {
         $this->dispatcher->dispatch(UserEvents::BEFORE_INSERT, new UserEvent($user));
 
-        $this->doctrine->getManager()->persist($user);
-        $this->doctrine->getManager()->flush();
+        $this->em->persist($user);
+        $this->em->flush();
 
         $this->dispatcher->dispatch(UserEvents::AFTER_INSERT, new UserEvent($user));
     }
@@ -345,8 +343,8 @@ class OrmUserManager implements UserManagerInterface
     {
         $this->dispatcher->dispatch(UserEvents::BEFORE_UPDATE, new UserEvent($user));
 
-        $this->doctrine->getManager()->persist($user);
-        $this->doctrine->getManager()->flush();
+        $this->em->persist($user);
+        $this->em->flush();
 
         $this->dispatcher->dispatch(UserEvents::AFTER_UPDATE, new UserEvent($user));
     }
@@ -360,8 +358,8 @@ class OrmUserManager implements UserManagerInterface
     {
         $this->dispatcher->dispatch(UserEvents::BEFORE_DELETE, new UserEvent($user));
 
-        $this->doctrine->getManager()->remove($user);
-        $this->doctrine->getManager()->flush();
+        $this->em->remove($user);
+        $this->em->flush();
 
         $this->dispatcher->dispatch(UserEvents::AFTER_DELETE, new UserEvent($user));
     }

@@ -133,7 +133,7 @@ class UserProviderServiceProvider implements ServiceProviderInterface
         $app['user.tokenGenerator'] = $app->share(function($app) { return new TokenGenerator($app['logger']); });
 
         // User Manager
-        if(isset($app['orm.ems'])) { // Check if ORM is installed or not
+        if(isset($app['orm.em'])) { // Check if ORM is installed or not
             // use orm usermanager
             $app['user.manager'] = $app->share(function($app) {
                 $app['user.options.init']();
