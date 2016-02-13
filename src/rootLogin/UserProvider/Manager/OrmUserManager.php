@@ -87,34 +87,22 @@ class OrmUserManager extends UserManager
         return count($this->findBy($criteria));
     }
 
-    /**
-     * Insert a new User instance into the database.
-     *
-     * @param User $user
-     */
-    public function insert(User $user)
-    {
-        $this->dispatcher->dispatch(UserEvents::BEFORE_INSERT, new UserEvent($user));
+    public function save(User $user) {
+        $id = $user->getId();
+        if($id != null) {
+            $this->dispatcher->dispatch(UserEvents::BEFORE_UPDATE, new UserEvent($user));
+        } else {
+            $this->dispatcher->dispatch(UserEvents::BEFORE_INSERT, new UserEvent($user));
+        }
 
         $this->em->persist($user);
         $this->em->flush();
 
-        $this->dispatcher->dispatch(UserEvents::AFTER_INSERT, new UserEvent($user));
-    }
-
-    /**
-     * Update data in the database for an existing user.
-     *
-     * @param User $user
-     */
-    public function update(User $user)
-    {
-        $this->dispatcher->dispatch(UserEvents::BEFORE_UPDATE, new UserEvent($user));
-
-        $this->em->persist($user);
-        $this->em->flush();
-
-        $this->dispatcher->dispatch(UserEvents::AFTER_UPDATE, new UserEvent($user));
+        if($id != null) {
+            $this->dispatcher->dispatch(UserEvents::AFTER_UPDATE, new UserEvent($user));
+        } else {
+            $this->dispatcher->dispatch(UserEvents::AFTER_INSERT, new UserEvent($user));
+        }
     }
 
     /**

@@ -288,12 +288,20 @@ class DBALUserManager extends UserManager
         return $this->conn->fetchColumn($sql, $params) ?: 0;
     }
 
+    public function save(User $user) {
+        if($user->getId() != null) {
+            $this->update($user);
+        } else {
+            $this->insert($user);
+        }
+    }
+
     /**
      * Insert a new User instance into the database.
      *
-     * @param LegacyUser $user
+     * @param User $user
      */
-    public function insert(LegacyUser $user)
+    protected function insert(User $user)
     {
         $this->dispatcher->dispatch(UserEvents::BEFORE_INSERT, new UserEvent($user));
 
@@ -335,9 +343,9 @@ class DBALUserManager extends UserManager
     /**
      * Update data in the database for an existing user.
      *
-     * @param LegacyUser $user
+     * @param User $user
      */
-    public function update(LegacyUser $user)
+    protected function update(User $user)
     {
         $this->dispatcher->dispatch(UserEvents::BEFORE_UPDATE, new UserEvent($user));
 

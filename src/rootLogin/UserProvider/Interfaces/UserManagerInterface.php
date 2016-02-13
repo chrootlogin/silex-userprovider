@@ -41,6 +41,14 @@ interface UserManagerInterface extends UserProviderInterface {
     public function create($email, $plainPassword, $name = null, $roles = array());
 
     /**
+     * Persist a user
+     *
+     * @param User $user
+     * @return mixed
+     */
+    public function save(User $user);
+
+    /**
      * Delete a User from the database.
      *
      * @param User $user
