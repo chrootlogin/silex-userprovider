@@ -48,6 +48,14 @@ interface UserManagerInterface extends UserProviderInterface {
     public function delete(User $user);
 
     /**
+     * Get a User instance by its ID.
+     *
+     * @param int $id
+     * @return User|null The User, or null if there is no User with that ID.
+     */
+    public function getUser($id);
+
+    /**
      * Find User instances that match the given criteria.
      *
      * @param array $criteria

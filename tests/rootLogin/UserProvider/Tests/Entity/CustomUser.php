@@ -2,9 +2,9 @@
 
 namespace rootLogin\UserProvider\Tests\Entity;
 
-use rootLogin\UserProvider\Entity\User;
+use rootLogin\UserProvider\Entity\LegacyUser;
 
-class CustomUser extends User
+class CustomUser extends LegacyUser
 {
     public function __construct($email)
     {

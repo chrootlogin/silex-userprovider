@@ -5,7 +5,7 @@ namespace rootLogin\UserProvider\Tests;
 use rootLogin\UserProvider\Entity\User;
 use rootLogin\UserProvider\Event\UserEvent;
 use rootLogin\UserProvider\Event\UserEvents;
-use rootLogin\UserProvider\Manager\UserManager;
+use rootLogin\UserProvider\Manager\DBALUserManager;
 use rootLogin\UserProvider\Tests\Entity\CustomUser;
 use Silex\Application;
 use Silex\Provider\DoctrineServiceProvider;
@@ -16,7 +16,7 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 class UserManagerTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var UserManager
+     * @var DBALUserManager
      */
     protected $userManager;
 
@@ -40,7 +40,7 @@ class UserManagerTest extends \PHPUnit_Framework_TestCase
         ));
         $app['db']->executeUpdate(file_get_contents(__DIR__ . '/../../../../sql/sqlite.sql'));
 
-        $this->userManager = new UserManager($app['db'], $app);
+        $this->userManager = new DBALUserManager($app['db'], $app);
         $this->conn = $app['db'];
         $this->dispatcher = $app['dispatcher'];
     }

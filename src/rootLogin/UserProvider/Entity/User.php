@@ -447,48 +447,7 @@ class User implements AdvancedUserInterface, \Serializable
         return $errors;
     }
 
-    /**
-     * @param string $customField
-     * @return bool
-     */
-    public function hasCustomField($customField)
-    {
-        return array_key_exists($customField, $this->customFields);
-    }
 
-    /**
-     * @param string $customField
-     * @return mixed|null
-     */
-    public function getCustomField($customField)
-    {
-        return $this->hasCustomField($customField) ? $this->customFields[$customField] : null;
-    }
-
-    /**
-     * @param string $customField
-     * @param mixed $value
-     */
-    public function setCustomField($customField, $value)
-    {
-        $this->customFields[$customField] = $value;
-    }
-
-    /**
-     * @param array|null $customFields
-     */
-    public function setCustomFields($customFields)
-    {
-        $this->customFields = $customFields;
-    }
-
-    /**
-     * @return array
-     */
-    public function getCustomFields()
-    {
-        return $this->customFields;
-    }
 
 
     /**

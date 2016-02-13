@@ -324,19 +324,14 @@ class OrmUserManagerTest extends \PHPUnit_Framework_TestCase
     public function testBeforeInsertEvents()
     {
         $this->dispatcher->addListener(UserEvents::BEFORE_INSERT, function(UserEvent $event) {
-           $event->getUser()->setCustomField('foo', 'bar');
+           $event->getUser()->setName('Foo Bar');
         });
 
         $user = $this->userManager->create('test@example.com', 'password');
 
         // After insert, the custom field set by the listener is available.
-        $this->assertFalse($user->hasCustomField('foo'));
         $this->userManager->insert($user);
-        $this->assertEquals('bar', $user->getCustomField('foo'));
-
-        // The user was stored with the custom field (since we set it BEFORE insert).
-        $storedUser = $this->userManager->getUser($user->getId());
-        $this->assertEquals('bar', $storedUser->getCustomField('foo'));
+        $this->assertEquals('Foo Bar', $user->getName());
     }
 
     public function testAfterInsertEvents()
@@ -355,20 +350,16 @@ class OrmUserManagerTest extends \PHPUnit_Framework_TestCase
     public function testBeforeUpdateEvents()
     {
         $this->dispatcher->addListener(UserEvents::BEFORE_UPDATE, function(UserEvent $event) {
-            $event->getUser()->setCustomField('foo', 'bar');
+            $event->getUser()->setName('Foo Bar');
         });
 
         $user = $this->userManager->create('test@example.com', 'password');
         $this->userManager->insert($user);
 
         // After update, the custom field set by the listener is available.
-        $this->assertFalse($user->hasCustomField('foo'));
+        $this->assertNotEquals('Foo Bar', $user->getName());
         $this->userManager->update($user);
-        $this->assertEquals('bar', $user->getCustomField('foo'));
-
-        // The user was stored with the custom field (since we set it BEFORE insert).
-        $storedUser = $this->userManager->getUser($user->getId());
-        $this->assertEquals('bar', $storedUser->getCustomField('foo'));
+        $this->assertEquals('Foo Bar', $user->getName('foo'));
     }
 
     public function testAfterUpdateEvents()

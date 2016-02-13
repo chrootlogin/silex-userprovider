@@ -8,8 +8,8 @@ use rootLogin\UserProvider\Command\UserListCommand;
 use rootLogin\UserProvider\Controller\UserController;
 use rootLogin\UserProvider\Lib\Mailer;
 use rootLogin\UserProvider\Lib\TokenGenerator;
+use rootLogin\UserProvider\Manager\DBALUserManager;
 use rootLogin\UserProvider\Manager\OrmUserManager;
-use rootLogin\UserProvider\Manager\UserManager;
 use rootLogin\UserProvider\Voter\EditUserVoter;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
@@ -143,7 +143,7 @@ class UserProviderServiceProvider implements ServiceProviderInterface
                 $userManager->setUserClass($app['user.options']['userClass']);
                 $userManager->setUsernameRequired($app['user.options']['isUsernameRequired']);
             } else {
-                $userManager = new UserManager($app['db'], $app);
+                $userManager = new DBALUserManager($app['db'], $app);
                 $userManager->setUserClass($app['user.options']['userClass']);
                 $userManager->setUsernameRequired($app['user.options']['isUsernameRequired']);
                 $userManager->setUserTableName($app['user.options']['userTableName']);
