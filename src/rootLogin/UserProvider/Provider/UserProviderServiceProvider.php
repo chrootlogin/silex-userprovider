@@ -142,6 +142,8 @@ class UserProviderServiceProvider implements ServiceProviderInterface
                 $userManager = new OrmUserManager($app);
                 $userManager->setUserClass($app['user.options']['userClass']);
                 $userManager->setUsernameRequired($app['user.options']['isUsernameRequired']);
+
+                $this->addDoctrineOrmMappings($app);
             } else {
                 $userManager = new DBALUserManager($app['db'], $app);
                 $userManager->setUserClass($app['user.options']['userClass']);
