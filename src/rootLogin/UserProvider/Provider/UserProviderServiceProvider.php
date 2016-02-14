@@ -20,6 +20,16 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
 class UserProviderServiceProvider implements ServiceProviderInterface
 {
     /**
+     * @var bool
+     */
+    protected $forceDBAL;
+
+    public function __construct($forceDBAL = false)
+    {
+        $this->forceDBAL = $forceDBAL;
+    }
+
+    /**
      * Registers services on the given app.
      *
      * This method should only be used to configure services and parameters.
@@ -138,12 +148,10 @@ class UserProviderServiceProvider implements ServiceProviderInterface
         $app['user.manager'] = $app->share(function($app) {
             $app['user.options.init']();
 
-            if(isset($app['orm.em']) && $app['user.options']['useOrmIfAvailable']) {
+            if($this->useOrm($app)) {
                 $userManager = new OrmUserManager($app);
                 $userManager->setUserClass($app['user.options']['userClass']);
                 $userManager->setUsernameRequired($app['user.options']['isUsernameRequired']);
-
-                $this->addDoctrineOrmMappings($app);
             } else {
                 $userManager = new DBALUserManager($app['db'], $app);
                 $userManager->setUserClass($app['user.options']['userClass']);
@@ -155,6 +163,11 @@ class UserProviderServiceProvider implements ServiceProviderInterface
 
             return $userManager;
         });
+
+        // Enable orm mappings
+        if($this->useOrm($app)) {
+            $this->addDoctrineOrmMappings($app);
+        }
 
         // Current user.
         $app['user'] = $app->share(function($app) {
@@ -308,5 +321,15 @@ class UserProviderServiceProvider implements ServiceProviderInterface
     protected function getEntityPath()
     {
         return realpath(__DIR__ . "/../Entity/");
+    }
+
+    /**
+     * True if Orm is available.
+     *
+     * @return bool
+     */
+    protected function useOrm($app)
+    {
+        return (isset($app['orm.em']) && !$this->forceDBAL);
     }
 }
