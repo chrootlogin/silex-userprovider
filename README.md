@@ -205,10 +205,7 @@ $app['user.options'] = array(
         'user_id' => 'user_id',
         'attribute' => 'attribute',
         'value' => 'value',
-    ),
-
-    // Use Doctrine Orm if available
-    "useOrmIfAvailable" => true
+    )
 );
 ```
 
@@ -222,9 +219,21 @@ If you have enabled the symfony console, as with [saxulum-console](https://githu
 
 ### Doctrine ORM
 
-The provider uses the Doctrine Orm (Object-relational mapper) automatically, if the necessairy provider are found.
+The provider uses the Doctrine ORM (Object-relational mapper) automatically, if the necessairy providers are found.
 
 An auto migration is no possible.
+
+#### Force DBAL
+
+If you use Doctrine ORM in your project and you want to force the DBAL handling for the UserProvider, register the provider like this:
+
+```
+// ...
+
+$app->register(new UserProviderServiceProvider(true));
+
+// ... 
+```
 
 Developer documentation
 -----------------------
@@ -240,6 +249,10 @@ _If you want to get sure that you only use the BSD licensed code, please use a v
 
 Project documentation
 ---------------------
+
+### Mirror
+
+This code is mirrored at [gitlab.dini-mueter.net](https://gitlab.dini-mueter.net/rootlogin/silex-userprovider).
 
 ### About the roots
 

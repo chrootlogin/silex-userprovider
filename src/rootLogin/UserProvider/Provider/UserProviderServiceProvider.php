@@ -82,14 +82,14 @@ class UserProviderServiceProvider implements ServiceProviderInterface
             // By default, users sign in with their email address instead.
             'isUsernameRequired' => false,
 
-            // A list of custom fields to support in the edit controller.
+            // A list of custom fields to support in the edit controller. (dbal mode only)
             'editCustomFields' => array(),
 
             // Override table names, if necessary.
             'userTableName' => 'users',
             'userCustomFieldsTableName' => 'user_custom_fields',
 
-            // Override column names if necessary.
+            // Override column names if necessary. (dbal mode only)
             'userColumns' => array(
                 'id' => 'id',
                 'email' => 'email',
@@ -106,10 +106,7 @@ class UserProviderServiceProvider implements ServiceProviderInterface
                 'user_id' => 'user_id',
                 'attribute' => 'attribute',
                 'value' => 'value',
-            ),
-
-            // Use Orm if available
-            "useOrmIfAvailable" => true
+            )
         );
 
         // Initialize $app['user.options'].
