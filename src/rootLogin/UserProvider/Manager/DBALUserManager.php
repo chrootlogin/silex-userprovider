@@ -421,15 +421,9 @@ class DBALUserManager extends UserManager
     }
 
     /**
-     * Validate a user object.
-     *
-     * Invokes User::validate(),
-     * and additionally tests that the User's email address and username (if set) are unique across all users.'.
-     *
-     * @param LegacyUser $user
-     * @return array An array of error messages, or an empty array if the User is valid.
+     * @inheritdoc
      */
-    public function validate(LegacyUser $user)
+    public function validate(User $user)
     {
         $errors = $user->validate();
 
@@ -444,19 +438,21 @@ class DBALUserManager extends UserManager
             }
         }
 
-        // Ensure username is unique.
-        $duplicates = $this->findBy(array($this->getUserColumns('username') => $user->getRealUsername()));
-        if (!empty($duplicates)) {
-            foreach ($duplicates as $dup) {
-                if ($user->getId() && $dup->getId() == $user->getId()) {
-                    continue;
+        // Ensure username is unique or null.
+        if($user->hasRealUsername()) {
+            $duplicates = $this->findBy(array($this->getUserColumns('username') => $user->getRealUsername()));
+            if (!empty($duplicates)) {
+                foreach ($duplicates as $dup) {
+                    if ($user->getId() && $dup->getId() == $user->getId()) {
+                        continue;
+                    }
+                    $errors['username'] = 'An account with that username already exists.';
                 }
-                $errors['username'] = 'An account with that username already exists.';
             }
         }
 
         // If username is required, ensure it is set.
-        if ($this->isUsernameRequired && !$user->getRealUsername()) {
+        if ($this->isUsernameRequired && !$user->hasRealUsername()) {
             $errors['username'] = 'Username is required.';
         }
 

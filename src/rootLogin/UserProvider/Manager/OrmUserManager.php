@@ -119,13 +119,7 @@ class OrmUserManager extends UserManager
     }
 
     /**
-     * Validate a user object.
-     *
-     * Invokes User::validate(),
-     * and additionally tests that the User's email address and username (if set) are unique across all users.'.
-     *
-     * @param User $user
-     * @return array An array of error messages, or an empty array if the User is valid.
+     * @inheritdoc
      */
     public function validate(User $user)
     {
@@ -142,14 +136,16 @@ class OrmUserManager extends UserManager
             }
         }
 
-        // Ensure username is unique.
-        $duplicates = $this->findBy(array('username' => $user->getRealUsername()));
-        if (!empty($duplicates)) {
-            foreach ($duplicates as $dup) {
-                if ($user->getId() && $dup->getId() == $user->getId()) {
-                    continue;
+        // Ensure username is unique or null.
+        if($user->hasRealUsername()) {
+            $duplicates = $this->findBy(array('username' => $user->getRealUsername()));
+            if (!empty($duplicates)) {
+                foreach ($duplicates as $dup) {
+                    if ($user->getId() && $dup->getId() == $user->getId()) {
+                        continue;
+                    }
+                    $errors['username'] = 'An account with that username already exists.';
                 }
-                $errors['username'] = 'An account with that username already exists.';
             }
         }
 
