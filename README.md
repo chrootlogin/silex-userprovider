@@ -14,15 +14,16 @@ Usage
 -----
 
 ### Dependencies
-  * PHP ~5.4
-  * Silex ~1.0
-  * Doctrine DBAL ~2.4
-  * Symfony Security ~2.3
+
+* PHP ~5.4
+* Silex ~1.0
+* Doctrine DBAL ~2.4
+* Symfony Security ~2.3
 
 ### Demo
 
-* [Online demo](http://silex-simpleuser-demo.grimesit.com/)
-* [Demo App](https://github.com/chrootlogin/silex-demoapp)
+* [Online demo](http://demoapp.rootlogin.ch/)
+* [Demo code](https://github.com/chrootLogin/silex-demoapp)
 
 ### Quick start example config
 
@@ -115,6 +116,7 @@ $app['db.options'] = array(
     'dbname' => 'mydbname',
     'user' => 'mydbuser',
     'password' => 'mydbpassword',
+    'charset' => 'utf8'
 );
 
 return $app;
@@ -242,11 +244,6 @@ Developer documentation
 
 Everyone is welcome to contribute to this project. The only thing you need to do is opening a pull request or an issue. By pushing code to the repository or doing pull requests, you accept that your code will be published under the GNU LGPL.
 
-### Licensing
-
-The original library was developed by [jasongrimes](https://github.com/jasongrimes) under the BSD Clause-2 license. However, I wanted a transition to the LGPL v3.0, so please be aware of the fact that all codes from now on are released under the GNU LGPL v3.0. I try to make it as transparent as possible. 
-_If you want to get sure that you only use the BSD licensed code, please use a version lower or equal 2.0.1._
-
 Project documentation
 ---------------------
 
@@ -258,10 +255,10 @@ This code is mirrored at [gitlab.dini-mueter.net](https://gitlab.dini-mueter.net
 
 This is a fork of [jasongrimes/silex-simpleuser](https://github.com/jasongrimes/silex-simpleuser). it has been made one year after the abandonment of the original project. I will maintain and keep it up-to-date under this name. Until version 3.0 there should be complete compatibility.
 
+### Licensing
 
-### More information
-
-See the [Silex SimpleUser tutorial](http://www.jasongrimes.org/2014/09/simple-user-management-in-silex/).
+The original library was developed by [jasongrimes](https://github.com/jasongrimes) under the BSD Clause-2 license. However, I wanted a transition to the LGPL v3.0, so please be aware of the fact that all codes from now on are released under the GNU LGPL v3.0. I try to make it as transparent as possible. 
+_If you want to get sure that you only use the BSD licensed code, please use a version lower or equal 2.0.1._
 
 Changelog
 ---------
@@ -272,6 +269,7 @@ Changelog
   * Updated tests
   * Renamed commands
   * Works with Doctrine DBAL and ORM, as you wish
+  * Updated links to demo application
 * Version 2.0.2
   * Mainly changes in the documentation
   * Added commands for creating, listing and deleting users
