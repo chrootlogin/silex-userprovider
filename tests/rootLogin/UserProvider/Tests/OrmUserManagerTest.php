@@ -399,6 +399,26 @@ class OrmUserManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('Password must have at least 2 characters.', $error);
     }
 
+    public function testRoleSystem()
+    {
+        $user = $this->userManager->create('admin@example.com', 'adminpassword');
+        $this->userManager->save($user);
+
+        $id = $user->getId();
+
+        unset($user);
+
+        $user = $this->userManager->getUser($id);
+        $this->assertNotContains("ROLE_ADMIN", $user->getRoles());
+        $user->addRole("ROLE_ADMIN");
+        $this->userManager->save($user);
+
+        unset($user);
+
+        $user = $this->userManager->getUser($id);
+        $this->assertContains("ROLE_ADMIN", $user->getRoles());
+    }
+
     protected function createSchema() {
         $metadatas = $this->em->getMetadataFactory()->getAllMetadata();
 

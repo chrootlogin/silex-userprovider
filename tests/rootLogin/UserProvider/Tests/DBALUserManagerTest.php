@@ -419,4 +419,26 @@ class DBALUserManagerTest extends \PHPUnit_Framework_TestCase
         $this->userManager->setUserColumns(array('email' => 'foo'));
         $this->assertEquals('"foo"', $this->userManager->getUserColumns('email'));
     }
+
+    public function testRoleSystem()
+    {
+        $user = $this->userManager->create('admin@example.com', 'adminpassword');
+        $this->userManager->save($user);
+
+        $id = $user->getId();
+
+        unset($user);
+        $this->userManager->clearIdentityMap();
+
+        $user = $this->userManager->getUser($id);
+        $this->assertNotContains("ROLE_ADMIN", $user->getRoles());
+        $user->addRole("ROLE_ADMIN");
+        $this->userManager->save($user);
+
+        unset($user);
+        $this->userManager->clearIdentityMap();
+
+        $user = $this->userManager->getUser($id);
+        $this->assertContains("ROLE_ADMIN", $user->getRoles());
+    }
 }

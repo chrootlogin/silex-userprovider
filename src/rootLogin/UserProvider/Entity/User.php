@@ -83,6 +83,11 @@ class User implements AdvancedUserInterface, \Serializable
      */
     protected $name = '';
 
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="roles", type="array")
+     */
     protected $roles = array();
 
     /**
