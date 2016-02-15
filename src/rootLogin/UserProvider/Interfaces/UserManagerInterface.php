@@ -66,22 +66,23 @@ interface UserManagerInterface extends UserProviderInterface {
     /**
      * Find User instances that match the given criteria.
      *
-     * @param array $criteria
-     * @param array $options An array of the following options (all optional):<pre>
-     *      limit (int|array) The maximum number of results to return, or an array of (offset, limit).
-     *      order_by (string|array) The name of the column to order by, or an array of column name and direction, ex. array(time_created, DESC)
-     * </pre>
-     * @return User[] An array of matching User instances, or an empty array if no matching users were found.
+     * @param array      $criteria
+     * @param array|null $orderBy
+     * @param int|null   $limit
+     * @param int|null   $offset
+     *
+     * @return array The users.
      */
-    public function findBy(array $criteria = array(), array $options = array());
+    public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null);
 
     /**
      * Get a single User instance that matches the given criteria. If more than one User matches, the first result is returned.
      *
      * @param array $criteria
+     * @param array|null $orderBy
      * @return User|null
      */
-    public function findOneBy(array $criteria);
+    public function findOneBy(array $criteria, array $orderBy = null);
 
     /**
      * Count users that match the given criteria.

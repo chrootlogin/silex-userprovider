@@ -60,23 +60,23 @@ class OrmUserManager extends UserManager
      */
     public function getUser($id)
     {
-        return $this->em->getRepository($this->userClass)->findOneById($id);
+        return $this->em->getRepository($this->userClass)->find($id);
     }
 
     /**
      * @inheritdoc
      */
-    public function findOneBy(array $criteria)
+    public function findOneBy(array $criteria, array $orderBy = null)
     {
-        return $this->em->getRepository($this->userClass)->findOneBy($criteria);
+        return $this->em->getRepository($this->userClass)->findOneBy($criteria, $orderBy);
     }
 
     /**
      * @inheritdoc
      */
-    public function findBy(array $criteria = array(), array $options = array())
+    public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
     {
-        return $this->em->getRepository($this->userClass)->findBy($criteria);
+        return $this->em->getRepository($this->userClass)->findBy($criteria, $orderBy, $limit, $offset);
     }
 
     /**

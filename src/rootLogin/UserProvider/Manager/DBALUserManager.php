@@ -165,9 +165,9 @@ class DBALUserManager extends UserManager
     /**
      * @inheritdoc
      */
-    public function findOneBy(array $criteria)
+    public function findOneBy(array $criteria, array $orderBy = null)
     {
-        $users = $this->findBy($criteria);
+        $users = $this->findBy($criteria, $orderBy);
 
         if (empty($users)) {
             return null;
@@ -179,7 +179,7 @@ class DBALUserManager extends UserManager
     /**
      * @inheritdoc
      */
-    public function findBy(array $criteria = array(), array $options = array())
+    public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
     {
         // Check the identity map first.
         if (array_key_exists($this->getUserColumns('id'), $criteria) 
@@ -191,12 +191,13 @@ class DBALUserManager extends UserManager
 
         $sql = 'SELECT * ' . $common_sql;
 
-        if (array_key_exists('order_by', $options)) {
-            list ($order_by, $order_dir) = is_array($options['order_by']) ? $options['order_by'] : array($options['order_by']);
-            $sql .= 'ORDER BY ' . $this->conn->quoteIdentifier($order_by) . ' ' . ($order_dir == 'DESC' ? 'DESC' : 'ASC') . ' ';
+        if (is_array($orderBy)) {
+            foreach($orderBy as $attribute => $direction)
+            $sql .= 'ORDER BY ' . $this->conn->quoteIdentifier($attribute) . ' ' . ($direction == 'DESC' ? 'DESC' : 'ASC') . ' ';
         }
-        if (array_key_exists('limit', $options)) {
-            list ($offset, $limit) = is_array($options['limit']) ? $options['limit'] : array(0, $options['limit']);
+        if ($limit !== null) {
+            $offset = ($offset === null ? 0 : $offset);
+
             $sql .=   ' LIMIT ' . (int) $limit . ' ' .' OFFSET ' . (int) $offset ;
         }
 

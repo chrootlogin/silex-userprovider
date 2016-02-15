@@ -502,10 +502,8 @@ class UserController
             $criteria['isEnabled'] = true;
         }
 
-        $users = $this->userManager->findBy($criteria, array(
-            'limit' => array($offset, $limit),
-            'order_by' => array($order_by, $order_dir),
-        ));
+        $users = $this->userManager->findBy($criteria, array($order_by => $order_dir), $limit, $offset);
+
         $numResults = $this->userManager->findCount($criteria);
 
         $paginator = new Paginator($numResults, $limit, $page,
