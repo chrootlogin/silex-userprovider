@@ -20,10 +20,12 @@ Usage
 * Doctrine DBAL ~2.4
 * Symfony Security ~2.3
 
+
 ### Demo
 
 * [Online demo](http://demoapp.rootlogin.ch/)
 * [Demo code](https://github.com/chrootLogin/silex-demoapp)
+
 
 ### Quick start example config
 
@@ -215,15 +217,23 @@ $app['user.options'] = array(
 
 If you have enabled the symfony console, as with [saxulum-console](https://github.com/saxulum/saxulum-console) for example, the provider will add some commands to the console:
 
-* `simpleuser:create`: Create an user
-* `simpleuser:list`: List users
-* `simpleuser:delete`: Delete an user
+* `userprovider:create`: Create an user
+* `userprovider:list`: List users
+* `userprovider:delete`: Delete an user
 
-### Doctrine ORM
+### Use Doctrine ORM instead of DBAL
 
-The provider uses the Doctrine ORM (Object-relational mapper) automatically, if the necessairy providers are found.
+The provider uses the Doctrine Orm (Object-relational mapper) automatically, if the necessairy providers are found. (See Additional Dependencies)
 
-An auto migration is no possible.
+ATTENTION! An auto migration is no possible.
+
+#### Additional dependencies
+
+* A Doctrine Orm Provider, like [dflydev/dflydev-doctrine-orm-service-provider](https://github.com/dflydev/dflydev-doctrine-orm-service-provider).
+
+##### Usage
+
+If the server provider finds another orm service provider it will automatically add itself.
 
 #### Force DBAL
 
@@ -239,6 +249,9 @@ $app->register(new UserProviderServiceProvider(true));
 
 Developer documentation
 -----------------------
+### User vs. LegacyUser
+
+This application has two user entity classes defined: A class User and a class LegacyUser which extends the User class. This is because of the different database handling in DBAL and Orm. The only difference between the LegacyUser class and his parent is that it supports custom fields, via an array. This makes it easier to extend it if you use DBAL whereas Orm can easily add fields.
 
 ### Contribution
 
