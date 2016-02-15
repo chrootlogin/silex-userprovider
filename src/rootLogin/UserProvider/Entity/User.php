@@ -118,8 +118,6 @@ class User implements AdvancedUserInterface, \Serializable
      */
     protected $timePasswordResetRequested;
 
-    protected $customFields = array();
-
     /**
      * Constructor.
      *

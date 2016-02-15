@@ -26,6 +26,8 @@ namespace rootLogin\UserProvider\Entity;
 
 class LegacyUser extends User {
 
+    protected $customFields = array();
+
     /**
      * @param string $customField
      * @return bool
