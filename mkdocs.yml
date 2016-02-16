@@ -1,0 +1,10 @@
+site_name: UserProvider
+site_description: An user and login provider for the Silex framework.
+site_author: Simon Erhardt
+
+repo_name: "Silex UserProvider on GitHub"
+repo_url: https://github.com/chrootlogin/silex-userprovider
+
+theme: flatly
+pages:
+  - 'Home': 'index.md'
