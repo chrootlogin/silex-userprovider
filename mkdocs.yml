@@ -5,6 +5,9 @@ site_author: Simon Erhardt
 repo_name: "Silex UserProvider on GitHub"
 repo_url: https://github.com/chrootlogin/silex-userprovider
 
-theme: flatly
+theme: readthedocs
 pages:
   - 'Home': 'index.md'
+  - 'Developer documentation': 'developer_documentation.md'
+  - 'Project documentation': 'project_documentation.md'
+  - 'Changelog': 'changelog.md'
