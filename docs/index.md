@@ -188,10 +188,16 @@ $app['user.options'] = array(
     // By default, users sign in with their email address instead.
     'isUsernameRequired' => false,
 
-    // A list of custom fields to support in the edit controller. (DBAL only)
+	/** 
+	 * Advanced Settings for DBAL mode.
+	 *
+	 * This settings don't have impact in ORM mode
+	 */
+
+    // A list of custom fields to support in the edit controller.
     'editCustomFields' => array(),
 
-    // Override table names, if necessary. (Works only in DBAL mode)
+    // Override table names, if necessary.
     'userTableName' => 'users',
     'userCustomFieldsTableName' => 'user_custom_fields',
 
