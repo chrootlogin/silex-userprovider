@@ -57,6 +57,11 @@ class UserProviderServiceProvider implements ServiceProviderInterface
                 'list' => '@user/list.twig',
             ),
 
+            // Specify the forms
+            'forms' => [
+                'register' => 'user'
+            ],
+
             // Configure the user mailer for sending password reset and email confirmation messages.
             'mailer' => array(
                 'enabled' => true, // When false, email notifications are not sent (they're silently discarded).
@@ -181,6 +186,7 @@ class UserProviderServiceProvider implements ServiceProviderInterface
             $controller->setEmailConfirmationRequired($app['user.options']['emailConfirmation']['required']);
             $controller->setTemplates($app['user.options']['templates']);
             $controller->setEditCustomFields($app['user.options']['editCustomFields']);
+            $controller->setForms($app['user.options']['forms']);
 
             return $controller;
         });

@@ -40,12 +40,7 @@ class UserType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        parent::buildForm($builder, $options);
-
         $builder
-            ->add("name","text", array(
-                "constraints" => array(new Assert\NotBlank())
-            ))
             ->add("email","email", array(
                 "constraints" => array(new Assert\NotBlank(), new Assert\Email(array(
                     "strict" => true,

@@ -41,6 +41,10 @@ class UserController
         'list' => '@user/list.twig',
     );
 
+    protected $forms = [
+        'register' => 'user'
+    ];
+
     // Custom fields to support in the editAction().
     protected $editCustomFields = array();
 
@@ -60,34 +64,6 @@ class UserController
     }
 
     /**
-     * @param string $key
-     * @param string $template
-     */
-    public function setTemplate($key, $template)
-    {
-        $this->templates[$key] = $template;
-    }
-
-    /**
-     * @param array $templates
-     */
-    public function setTemplates(array $templates)
-    {
-        foreach ($templates as $key => $val) {
-            $this->setTemplate($key, $val);
-        }
-    }
-
-    /**
-     * @param string $key
-     * @return string|null
-     */
-    public function getTemplate($key)
-    {
-        return $this->templates[$key];
-    }
-
-    /**
      * Register action.
      *
      * @param Application $app
@@ -96,12 +72,17 @@ class UserController
      */
     public function registerAction(Application $app, Request $request)
     {
-        $registerForm = $this->formFactory->createBuilder('user');
+        $registerForm = $this->formFactory->createBuilder($this->forms['register']);
         $registerForm = $registerForm->getForm();
 
+        $registerForm->handleRequest($request);
 
+        if ($registerForm->isValid()) {
+            $data = $registerForm->getData();
+            var_dump($data); exit;
+        }
 
-
+        /*
         if ($request->isMethod('POST')) {
             try {
                 $user = $this->createUserFromRequest($request);
@@ -136,7 +117,7 @@ class UserController
             } catch (InvalidArgumentException $e) {
                 $error = $e->getMessage();
             }
-        }
+        } */
 
         return $app['twig']->render($this->getTemplate('register'), array(
             'layout_template' => $this->getTemplate('layout'),
@@ -571,65 +552,59 @@ class UserController
         $this->isEmailConfirmationRequired = (bool) $isRequired;
     }
 
-    // ---------------------------------------------------------------------------
-    //
-    // Deprecated methods.
-    //
-    // Retained for backwards compatibility.
-    //
-    // ---------------------------------------------------------------------------
-
     /**
-     * @param string $layoutTemplate
-     * @deprecated Use setTemplate() or setTemplates() instead.
+     * @param string $key
+     * @param string $template
      */
-    public function setLayoutTemplate($layoutTemplate)
+    public function setTemplate($key, $template)
     {
-        $this->setTemplate('layout', $layoutTemplate);
+        $this->templates[$key] = $template;
     }
 
     /**
-     * @deprecated Use setTemplate() or setTemplates() instead.
-     * @param string $editTemplate
+     * @param array $templates
      */
-    public function setEditTemplate($editTemplate)
+    public function setTemplates(array $templates)
     {
-        $this->setTemplate('edit', $editTemplate);
+        foreach ($templates as $key => $val) {
+            $this->setTemplate($key, $val);
+        }
     }
 
     /**
-     * @deprecated Use setTemplate() or setTemplates() instead.
-     * @param string $listTemplate
+     * @param string $key
+     * @return string|null
      */
-    public function setListTemplate($listTemplate)
+    public function getTemplate($key)
     {
-        $this->setTemplate('list', $listTemplate);
+        return $this->templates[$key];
     }
 
     /**
-     * @deprecated Use setTemplate() or setTemplates() instead.
-     * @param string $loginTemplate
+     * @param string $key
+     * @param string $form
      */
-    public function setLoginTemplate($loginTemplate)
+    public function setForm($key, $form)
     {
-        $this->setTemplate('login', $loginTemplate);
+        $this->forms[$key] = $form;
     }
 
     /**
-     * @deprecated Use setTemplate() or setTemplates() instead.
-     * @param string $registerTemplate
+     * @param array $forms
      */
-    public function setRegisterTemplate($registerTemplate)
+    public function setForms(array $forms)
     {
-        $this->setTemplate('register', $registerTemplate);
+        foreach ($forms as $key => $val) {
+            $this->setForm($key, $val);
+        }
     }
 
     /**
-     * @deprecated Use setTemplate() or setTemplates() instead.
-     * @param string $viewTemplate
+     * @param string $key
+     * @return string|null
      */
-    public function setViewTemplate($viewTemplate)
+    public function getForm($key)
     {
-        $this->setTemplate('view', $viewTemplate);
+        return $this->forms[$key];
     }
 }
