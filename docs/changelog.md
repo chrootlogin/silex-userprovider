@@ -8,6 +8,8 @@
  * Works with Doctrine DBAL and ORM, as you wish
  * Updated links to demo application
  * Moved the documentation to [ReadTheDocs](http://silex-userprovider.readthedocs.org/en/nextgen/).
+ * Now using symfony forms
+ * Added EMailIsUnique validator
  
 # Version 2.0.2
 
