@@ -2,6 +2,7 @@
 
 namespace rootLogin\UserProvider\Provider;
 
+use rootLogin\UserProvider\Validator\Constraints\EMailIsUniqueValidator;
 use rootLogin\UserProvider\Command\UserCreateCommand;
 use rootLogin\UserProvider\Command\UserDeleteCommand;
 use rootLogin\UserProvider\Command\UserListCommand;
@@ -191,6 +192,25 @@ class UserProviderServiceProvider implements ServiceProviderInterface
 
             return $controller;
         });
+
+        // add validator
+        $app['validator.emailisunique'] = $app->share(function ($app) {
+            $validator =  new EMailIsUniqueValidator();
+            $validator->setUserManager($app['user.manager']);
+
+            return $validator;
+        });
+
+        if(is_array($app['validator.validator_service_ids'])) {
+            $app['validator.validator_service_ids'] = array_merge(
+                $app['validator.validator_service_ids'],
+                array('validator.emailisunique' => 'validator.emailisunique')
+            );
+        } else {
+            $app['validator.validator_service_ids'] = array(
+                'validator.emailisunique' => 'validator.emailisunique'
+            );
+        }
 
         // Add the form types
         $app['form.types'] = $app->share($app->extend('form.types', function ($types) use ($app) {

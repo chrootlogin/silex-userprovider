@@ -226,7 +226,7 @@ class UserController
             $user = $this->userManager->findOneBy(array('email' => $email));
             if ($user) {
                 // Initialize and send the password reset request.
-                $user->setTimePasswordResetRequested(time());
+                $user->setTimePasswordResetRequested(new \DateTime());
                 if (!$user->getConfirmationToken()) {
                     $user->setConfirmationToken($app['user.tokenGenerator']->generateToken());
                 }

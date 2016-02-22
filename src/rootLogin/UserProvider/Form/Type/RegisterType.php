@@ -24,6 +24,7 @@
 
 namespace rootLogin\UserProvider\Form\Type;
 
+use rootLogin\UserProvider\Validator\Constraints\EMailIsUnique;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -40,7 +41,11 @@ class RegisterType extends AbstractType
     {
         $builder
             ->add('email', 'email', array(
-                "constraints" => array(new Assert\NotBlank(), new Assert\Email()),
+                'constraints' => array(
+                    new Assert\NotBlank(),
+                    new Assert\Email(),
+                    new EMailIsUnique()
+                ),
             ))
             ->add('plainPassword', 'repeated', [
                 'type' => 'password',
@@ -48,7 +53,11 @@ class RegisterType extends AbstractType
                 'options' => array('attr' => array('class' => 'password-field')),
                 'required' => true,
                 'first_options'  => array('label' => 'Password'),
-                'second_options' => array('label' => 'Repeat Password')
+                'second_options' => array('label' => 'Repeat Password'),
+                'constraints' => array(
+                    new Assert\NotBlank(),
+                    new Assert\Length(array("min" => 8))
+                ),
             ])
             ->add('register', 'submit');
         ;
