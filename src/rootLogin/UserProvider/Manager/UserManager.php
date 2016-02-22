@@ -153,11 +153,7 @@ abstract class UserManager implements UserManagerInterface
     }
 
     /**
-     * Encode a plain text password and set it on the given User object.
-     *
-     * @param User $user
-     * @param string $password A plain text password.
-     * @return UserManager
+     * @inheritdoc
      */
     public function setUserPassword(User $user, $password)
     {

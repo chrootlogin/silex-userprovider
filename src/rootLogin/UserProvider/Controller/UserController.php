@@ -78,54 +78,38 @@ class UserController
         $registerForm->handleRequest($request);
 
         if ($registerForm->isValid()) {
-            $data = $registerForm->getData();
-            var_dump($data); exit;
-        }
+            /** @var User $user */
+            $user = $registerForm->getData();
 
-        /*
-        if ($request->isMethod('POST')) {
-            try {
-                $user = $this->createUserFromRequest($request);
-                if ($error = $this->userManager->validatePasswordStrength($user, $request->request->get('password'))) {
-                    throw new InvalidArgumentException($error);
-                }
-                if ($this->isEmailConfirmationRequired) {
-                    $user->setEnabled(false);
-                    $user->setConfirmationToken($app['user.tokenGenerator']->generateToken());
-                }
-                $this->userManager->save($user);
-
-                if ($this->isEmailConfirmationRequired) {
-                    // Send email confirmation.
-                    $app['user.mailer']->sendConfirmationMessage($user);
-
-                    // Render the "go check your email" page.
-                    return $app['twig']->render($this->getTemplate('register-confirmation-sent'), array(
-                        'layout_template' => $this->getTemplate('layout'),
-                        'email' => $user->getEmail(),
-                    ));
-                } else {
-                    // Log the user in to the new account.
-                    $this->userManager->loginAsUser($user);
-
-                    $app['session']->getFlashBag()->set('alert', 'Account created.');
-
-                    // Redirect to user's new profile page.
-                    return $app->redirect($app['url_generator']->generate('user.view', array('id' => $user->getId())));
-                }
-
-            } catch (InvalidArgumentException $e) {
-                $error = $e->getMessage();
+            if ($this->isEmailConfirmationRequired) {
+                $user->setEnabled(false);
+                $user->setConfirmationToken($app['user.tokenGenerator']->generateToken());
             }
-        } */
+            $this->userManager->setUserPassword($user, $user->getPlainPassword());
+            $this->userManager->save($user);
+
+            if ($this->isEmailConfirmationRequired) {
+                // Send email confirmation.
+                $app['user.mailer']->sendConfirmationMessage($user);
+
+                // Render the "go check your email" page.
+                return $app['twig']->render($this->getTemplate('register-confirmation-sent'), array(
+                    'layout_template' => $this->getTemplate('layout'),
+                    'email' => $user->getEmail(),
+                ));
+            } else {
+                // Log the user in to the new account.
+                $this->userManager->loginAsUser($user);
+
+                $app['session']->getFlashBag()->set('alert', 'Account created.');
+
+                // Redirect to user's new profile page.
+                return $app->redirect($app['url_generator']->generate('user.view', array('id' => $user->getId())));
+            }
+        }
 
         return $app['twig']->render($this->getTemplate('register'), array(
             'layout_template' => $this->getTemplate('layout'),
-            'error' => isset($error) ? $error : null,
-            'name' => $request->request->get('name'),
-            'email' => $request->request->get('email'),
-            'username' => $request->request->get('username'),
-            'isUsernameRequired' => $this->isUsernameRequired,
             'registerForm' => $registerForm->createView()
         ));
     }

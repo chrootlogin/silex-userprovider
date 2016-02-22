@@ -19,10 +19,6 @@
             Already have an account? <a href="{{ path('user.login') }}">Sign in now.</a>
         </p>
 
-        {% if error %}
-            <div class="alert alert-danger">{{ error|nl2br }}</div>
-        {% endif %}
-
         {{ form_start(registerForm) }}
         {{ form_widget(registerForm) }}
         {{ form_end(registerForm) }}

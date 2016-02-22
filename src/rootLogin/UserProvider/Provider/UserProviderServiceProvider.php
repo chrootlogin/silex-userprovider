@@ -6,6 +6,7 @@ use rootLogin\UserProvider\Command\UserCreateCommand;
 use rootLogin\UserProvider\Command\UserDeleteCommand;
 use rootLogin\UserProvider\Command\UserListCommand;
 use rootLogin\UserProvider\Controller\UserController;
+use rootLogin\UserProvider\Form\Type\RegisterType;
 use rootLogin\UserProvider\Form\Type\UserType;
 use rootLogin\UserProvider\Lib\Mailer;
 use rootLogin\UserProvider\Lib\TokenGenerator;
@@ -59,7 +60,7 @@ class UserProviderServiceProvider implements ServiceProviderInterface
 
             // Specify the forms
             'forms' => [
-                'register' => 'user'
+                'register' => 'rup_register'
             ],
 
             // Configure the user mailer for sending password reset and email confirmation messages.
@@ -193,7 +194,7 @@ class UserProviderServiceProvider implements ServiceProviderInterface
 
         // Add the form types
         $app['form.types'] = $app->share($app->extend('form.types', function ($types) use ($app) {
-            $types[] = new UserType();
+            $types[] = new RegisterType();
 
             return $types;
         }));

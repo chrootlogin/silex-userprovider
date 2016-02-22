@@ -70,6 +70,13 @@ class User implements AdvancedUserInterface, \Serializable
     protected $password;
 
     /**
+     * Plain password. Used for model validation. Must not be persisted.
+     *
+     * @var string
+     */
+    protected $plainPassword;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="salt", type="string")
@@ -218,6 +225,18 @@ class User implements AdvancedUserInterface, \Serializable
     public function getId()
     {
         return $this->id;
+    }
+
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword($plainPassword)
+    {
+        $this->plainPassword = $plainPassword;
+
+        return $this;
     }
 
     /**

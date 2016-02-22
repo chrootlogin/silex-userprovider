@@ -116,4 +116,13 @@ interface UserManagerInterface extends UserProviderInterface {
      * @return array An array of error messages, or an empty array if the User is valid.
      */
     public function validate(User $user);
+
+    /**
+     * Encode a plain text password and set it on the given User object.
+     *
+     * @param User $user
+     * @param string $password A plain text password.
+     * @return UserManagerInterface
+     */
+    public function setUserPassword(User $user, $password);
 }
