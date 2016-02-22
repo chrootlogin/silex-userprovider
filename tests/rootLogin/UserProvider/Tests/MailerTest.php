@@ -60,7 +60,8 @@ Hello, {{ user.name }}. {{ confirmationUrl }}
         $this->mailer->setFromAddress('from@example.com');
         $this->mailer->setFromName('From Name');
 
-        $user = new User('to@example.com');
+        $user = new User();
+        $user->setEmail('to@example.com');
 
         $this->swiftmailer->expects($this->once())
             ->method('send')

@@ -82,10 +82,18 @@ abstract class UserManager implements UserManagerInterface
     /**
      * @inheritdoc
      */
-    public function create($email, $plainPassword, $name = null, $roles = array()) {
+    public function getEmptyUser() {
         $userClass = $this->getUserClass();
 
-        $user = new $userClass($email);
+        return new $userClass();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function create($email, $plainPassword, $name = null, $roles = array()) {
+        $user = $this->getEmptyUser();
+        $user->setEmail($email);
 
         if (!empty($plainPassword)) {
             $this->setUserPassword($user, $plainPassword);

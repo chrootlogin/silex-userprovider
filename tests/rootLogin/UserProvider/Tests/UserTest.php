@@ -20,7 +20,8 @@ class UserTest extends \PHPUnit_Framework_TestCase
     public function getValidUser()
     {
 
-        $user = new User('email@example.com');
+        $user = new User();
+        $user->setEmail('email@example.com');
         $user->setPassword('test');
 
         return $user;

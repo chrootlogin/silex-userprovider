@@ -132,9 +132,10 @@ class DBALUserManager extends UserManager
         $userClass = $this->getUserClass();
 
         /** @var User $user */
-        $user = new $userClass($data['email']);
+        $user = new $userClass();
 
         $user->setId($data['id']);
+        $user->setEmail($data['email']);
         $user->setPassword($data['password']);
         $user->setSalt($data['salt']);
         $user->setName($data['name']);

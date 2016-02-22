@@ -6,11 +6,6 @@ use rootLogin\UserProvider\Entity\LegacyUser;
 
 class CustomUser extends LegacyUser
 {
-    public function __construct($email)
-    {
-        parent::__construct($email);
-    }
-
     public function getTwitterUsername()
     {
         return $this->getCustomField('twitterUsername');

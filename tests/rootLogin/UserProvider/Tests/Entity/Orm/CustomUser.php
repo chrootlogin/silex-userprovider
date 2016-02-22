@@ -26,11 +26,6 @@ class CustomUser extends User
      */
     protected $twitterUsername;
 
-    public function __construct($email)
-    {
-        parent::__construct($email);
-    }
-
     public function getTwitterUsername()
     {
         return $this->twitterUsername;

@@ -5,6 +5,7 @@ namespace rootLogin\UserProvider\Controller;
 use rootLogin\UserProvider\Entity\User;
 use rootLogin\UserProvider\Interfaces\UserManagerInterface;
 use Silex\Application;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -19,6 +20,11 @@ use JasonGrimes\Paginator;
  */
 class UserController
 {
+    /**
+     * @var FormFactoryInterface
+     */
+    protected $formFactory;
+
     /** @var UserManagerInterface */
     protected $userManager;
 
@@ -46,11 +52,11 @@ class UserController
      * Constructor.
      *
      * @param UserManagerInterface $userManager
-     * @param array $deprecated - Deprecated. No longer used.
      */
-    public function __construct(UserManagerInterface $userManager, $deprecated = null)
+    public function __construct(UserManagerInterface $userManager, FormFactoryInterface $formFactory)
     {
         $this->userManager = $userManager;
+        $this->formFactory = $formFactory;
     }
 
     /**
@@ -90,6 +96,12 @@ class UserController
      */
     public function registerAction(Application $app, Request $request)
     {
+        $registerForm = $this->formFactory->createBuilder('user');
+        $registerForm = $registerForm->getForm();
+
+
+
+
         if ($request->isMethod('POST')) {
             try {
                 $user = $this->createUserFromRequest($request);
@@ -133,6 +145,7 @@ class UserController
             'email' => $request->request->get('email'),
             'username' => $request->request->get('username'),
             'isUsernameRequired' => $this->isUsernameRequired,
+            'registerForm' => $registerForm->createView()
         ));
     }
 

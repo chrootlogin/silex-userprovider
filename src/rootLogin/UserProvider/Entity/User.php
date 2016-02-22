@@ -123,9 +123,8 @@ class User implements AdvancedUserInterface, \Serializable
      *
      * @param string $email
      */
-    public function __construct($email)
+    public function __construct()
     {
-        $this->email = $email;
         $this->timeCreated = new \DateTime();
         $this->salt = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
     }

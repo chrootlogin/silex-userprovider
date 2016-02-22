@@ -30,6 +30,11 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 interface UserManagerInterface extends UserProviderInterface {
 
     /**
+     * @return User
+     */
+    public function getEmptyUser();
+
+    /**
      * Factory method for creating a new User instance.
      *
      * @param string $email

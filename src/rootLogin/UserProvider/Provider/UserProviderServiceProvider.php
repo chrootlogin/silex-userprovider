@@ -6,6 +6,7 @@ use rootLogin\UserProvider\Command\UserCreateCommand;
 use rootLogin\UserProvider\Command\UserDeleteCommand;
 use rootLogin\UserProvider\Command\UserListCommand;
 use rootLogin\UserProvider\Controller\UserController;
+use rootLogin\UserProvider\Form\Type\UserType;
 use rootLogin\UserProvider\Lib\Mailer;
 use rootLogin\UserProvider\Lib\TokenGenerator;
 use rootLogin\UserProvider\Manager\DBALUserManager;
@@ -175,7 +176,7 @@ class UserProviderServiceProvider implements ServiceProviderInterface
         $app['user.controller'] = $app->share(function ($app) {
             $app['user.options.init']();
 
-            $controller = new UserController($app['user.manager']);
+            $controller = new UserController($app['user.manager'], $app['form.factory']);
             $controller->setUsernameRequired($app['user.options']['isUsernameRequired']);
             $controller->setEmailConfirmationRequired($app['user.options']['emailConfirmation']['required']);
             $controller->setTemplates($app['user.options']['templates']);
@@ -183,6 +184,13 @@ class UserProviderServiceProvider implements ServiceProviderInterface
 
             return $controller;
         });
+
+        // Add the form types
+        $app['form.types'] = $app->share($app->extend('form.types', function ($types) use ($app) {
+            $types[] = new UserType();
+
+            return $types;
+        }));
 
         // User mailer.
         $app['user.mailer'] = $app->share(function($app) {
