@@ -137,87 +137,6 @@ class User implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Returns the roles granted to the user. Note that all users have the ROLE_USER role.
-     *
-     * @return array A list of the user's roles.
-     */
-    public function getRoles()
-    {
-        $roles = $this->roles;
-
-        // Every user must have at least one role, per Silex security docs.
-        $roles[] = 'ROLE_USER';
-
-        return array_unique($roles);
-    }
-
-    /**
-     * Set the user's roles to the given list.
-     *
-     * @param array $roles
-     */
-    public function setRoles(array $roles)
-    {
-        $this->roles = array();
-
-        foreach ($roles as $role) {
-            $this->addRole($role);
-        }
-    }
-
-    /**
-     * Test whether the user has the given role.
-     *
-     * @param string $role
-     * @return bool
-     */
-    public function hasRole($role)
-    {
-        return in_array(strtoupper($role), $this->getRoles(), true);
-    }
-
-    /**
-     * Add the given role to the user.
-     *
-     * @param string $role
-     */
-    public function addRole($role)
-    {
-        $role = strtoupper($role);
-
-        if ($role === 'ROLE_USER') {
-            return;
-        }
-
-        if (!$this->hasRole($role)) {
-            $this->roles[] = $role;
-        }
-    }
-
-    /**
-     * Remove the given role from the user.
-     *
-     * @param string $role
-     */
-    public function removeRole($role)
-    {
-        if (false !== $key = array_search(strtoupper($role), $this->roles, true)) {
-            unset($this->roles[$key]);
-            $this->roles = array_values($this->roles);
-        }
-    }
-
-    /**
-     * Set the user ID.
-     *
-     * @param int $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
      * Get the user ID.
      *
      * @return int
@@ -227,61 +146,18 @@ class User implements AdvancedUserInterface, \Serializable
         return $this->id;
     }
 
-    public function getPlainPassword()
-    {
-        return $this->plainPassword;
-    }
 
-    public function setPlainPassword($plainPassword)
+    /**
+     * Set the user ID.
+     *
+     * @param int $id
+     * @return User
+     */
+    public function setId($id)
     {
-        $this->plainPassword = $plainPassword;
+        $this->id = $id;
 
         return $this;
-    }
-
-    /**
-     * Get the encoded password used to authenticate the user.
-     *
-     * On authentication, a plain-text password will be salted,
-     * encoded, and then compared to this value.
-     *
-     * @return string The encoded password.
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    /**
-     * Set the encoded password.
-     *
-     * @param string $password
-     */
-    public function setPassword($password)
-    {
-        $this->password = $password;
-    }
-
-    /**
-     * Set the salt that should be used to encode the password.
-     *
-     * @param string $salt
-     */
-    public function setSalt($salt)
-    {
-        $this->salt = $salt;
-    }
-
-    /**
-     * Returns the salt that was originally used to encode the password.
-     *
-     * This can return null if the password was not encoded using a salt.
-     *
-     * @return string The salt
-     */
-    public function getSalt()
-    {
-        return $this->salt;
     }
 
     /**
@@ -325,14 +201,21 @@ class User implements AdvancedUserInterface, \Serializable
     }
 
     /**
+     * Sets the username
+     *
      * @param string $username
+     * @return User
      */
     public function setUsername($username)
     {
         $this->username = $username;
+
+        return $this;
     }
 
     /**
+     * Gets the Email
+     *
      * @return string The user's email address.
      */
     public function getEmail()
@@ -341,22 +224,97 @@ class User implements AdvancedUserInterface, \Serializable
     }
 
     /**
+     * Sets the Email
+     *
      * @param string $email
+     * @return User
      */
     public function setEmail($email)
     {
         $this->email = $email;
+
+        return $this;
     }
 
     /**
-     * @param string $name
+     * Get the encoded password used to authenticate the user.
+     *
+     * On authentication, a plain-text password will be salted,
+     * encoded, and then compared to this value.
+     *
+     * @return string The encoded password.
      */
-    public function setName($name)
+    public function getPassword()
     {
-        $this->name = $name;
+        return $this->password;
     }
 
     /**
+     * Sets the encoded password.
+     *
+     * @param string $password
+     * @return User
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * Gets the plain password.
+     * Used for model validation. Must not be persisted.
+     *
+     * @return string
+     */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * Sets the plain password.
+     * Used for model validation. Must not be persisted.
+     *
+     * @param $plainPassword
+     * @return User
+     */
+    public function setPlainPassword($plainPassword)
+    {
+        $this->plainPassword = $plainPassword;
+
+        return $this;
+    }
+
+    /**
+     * Returns the salt that was originally used to encode the password.
+     *
+     * This can return null if the password was not encoded using a salt.
+     *
+     * @return string The salt
+     */
+    public function getSalt()
+    {
+        return $this->salt;
+    }
+
+    /**
+     * Set the salt that should be used to encode the password.
+     *
+     * @param string $salt
+     * @return User
+     */
+    public function setSalt($salt)
+    {
+        $this->salt = $salt;
+
+        return $this;
+    }
+
+    /**
+     * Get the name
+     *
      * @return string
      */
     public function getName()
@@ -375,13 +333,123 @@ class User implements AdvancedUserInterface, \Serializable
     }
 
     /**
+     * Sets the name
+     *
+     * @param string $name
+     * @return User
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Returns the roles granted to the user. Note that all users have the ROLE_USER role.
+     *
+     * @return array A list of the user's roles.
+     */
+    public function getRoles()
+    {
+        $roles = $this->roles;
+
+        // Every user must have at least one role, per Silex security docs.
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    /**
+     * Set the user's roles to the given list.
+     *
+     * @param array $roles
+     * @return User
+     */
+    public function setRoles(array $roles)
+    {
+        $this->roles = array();
+
+        foreach ($roles as $role) {
+            $this->addRole($role);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Test whether the user has the given role.
+     *
+     * @param string $role
+     * @return bool
+     */
+    public function hasRole($role)
+    {
+        return in_array(strtoupper($role), $this->getRoles(), true);
+    }
+
+    /**
+     * Add the given role to the user.
+     *
+     * @param string $role
+     * @return User
+     */
+    public function addRole($role)
+    {
+        $role = strtoupper($role);
+
+        if ($role === 'ROLE_USER') {
+            return $this;
+        }
+
+        if (!$this->hasRole($role)) {
+            $this->roles[] = $role;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Remove the given role from the user.
+     *
+     * @param string $role
+     * @return User
+     */
+    public function removeRole($role)
+    {
+        if (false !== $key = array_search(strtoupper($role), $this->roles, true)) {
+            unset($this->roles[$key]);
+            $this->roles = array_values($this->roles);
+        }
+
+        return $this;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
      * Set the time the user was originally created.
      *
      * @param \DateTime $timeCreated A timestamp value.
+     * @return User
      */
     public function setTimeCreated(\DateTime $timeCreated)
     {
         $this->timeCreated = $timeCreated;
+
+        return $this;
     }
 
     /**
@@ -395,15 +463,102 @@ class User implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Removes sensitive data from the user.
+     * Checks whether the user is enabled.
      *
-     * This is a no-op, since we never store the plain text credentials in this object.
-     * It's required by UserInterface.
+     * Internally, if this method returns false, the authentication system
+     * will throw a DisabledException and prevent login.
+     *
+     * Users are enabled by default.
+     *
+     * @return bool    true if the user is enabled, false otherwise
+     *
+     * @see DisabledException
+     */
+    public function isEnabled()
+    {
+        return $this->isEnabled;
+    }
+
+    /**
+     * Set whether the user is enabled.
+     *
+     * @param bool $isEnabled
+     * @return User
+     */
+    public function setEnabled($isEnabled)
+    {
+        $this->isEnabled = (bool) $isEnabled;
+
+        return $this;
+    }
+
+    /**
+     * Gets the confirmation token
+     *
+     * @return string
+     */
+    public function getConfirmationToken()
+    {
+        return $this->confirmationToken;
+    }
+
+    /**
+     * Sets the confirmation token
+     *
+     * @param string $token
+     * @return User
+     */
+    public function setConfirmationToken($token)
+    {
+        $this->confirmationToken = $token;
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getTimePasswordResetRequested()
+    {
+        return $this->timePasswordResetRequested;
+    }
+
+    /**
+     * @param int $ttl Password reset request TTL, in seconds.
+     *
+     * @return bool
+     */
+    public function isPasswordResetRequestExpired($ttl)
+    {
+        $timeRequested = $this->getTimePasswordResetRequested();
+        if (!$timeRequested) {
+            return true;
+        }
+
+        return $timeRequested->getTimestamp() + $ttl < time();
+    }
+
+    /**
+     * Sets the password requested time
+     *
+     * @param \DateTime|null $dateTime
+     * @return User
+     */
+    public function setTimePasswordResetRequested(\DateTime $dateTime)
+    {
+        $this->timePasswordResetRequested = $dateTime ?: null;
+
+        return $this;
+    }
+
+    /**
+     * Removes sensitive data from the user.
      *
      * @return void
      */
     public function eraseCredentials()
     {
+        unset($this->plainPassword);
     }
 
     /**
@@ -430,46 +585,7 @@ class User implements AdvancedUserInterface, \Serializable
             ) = unserialize($serialized);
     }
 
-    /**
-     * Validate the user object.
-     *
-     * @return array An array of error messages, or an empty array if there were no errors.
-     */
-    public function validate()
-    {
-        $errors = array();
-
-        if (!$this->getEmail()) {
-            $errors['email'] = 'Email address is required.';
-        } else if (!strpos($this->getEmail(), '@')) {
-            // Basic email format sanity check. Real validation comes from sending them an email with a link they have to click.
-            $errors['email'] = 'Email address appears to be invalid.';
-        } else if (strlen($this->getEmail()) > 100) {
-            $errors['email'] = 'Email address can\'t be longer than 100 characters.';
-        }
-
-        if (!$this->getPassword()) {
-            $errors['password'] = 'Password is required.';
-        } else if (strlen($this->getPassword()) > 255) {
-            $errors['password'] = 'Password can\'t be longer than 255 characters.';
-        }
-
-        if (strlen($this->getName()) > 100) {
-            $errors['name'] = 'Name can\'t be longer than 100 characters.';
-        }
-
-        // Username can't contain "@",
-        // because that's how we distinguish between email and username when signing in.
-        // (It's possible to sign in by providing either one.)
-        if ($this->getRealUsername() && strpos($this->getRealUsername(), '@') !== false) {
-            $errors['username'] = 'Username cannot contain the "@" symbol.';
-        }
-
-        return $errors;
-    }
-
-
-
+    // @TODO Not implemented stuff
 
     /**
      * Checks whether the user's account has expired.
@@ -516,71 +632,44 @@ class User implements AdvancedUserInterface, \Serializable
         return true;
     }
 
-    /**
-     * Checks whether the user is enabled.
-     *
-     * Internally, if this method returns false, the authentication system
-     * will throw a DisabledException and prevent login.
-     *
-     * Users are enabled by default.
-     *
-     * @return bool    true if the user is enabled, false otherwise
-     *
-     * @see DisabledException
-     */
-    public function isEnabled()
-    {
-        return $this->isEnabled;
-    }
+    // @TODO Deprecated stuff
 
     /**
-     * Set whether the user is enabled.
+     * Validate the user object.
      *
-     * @param bool $isEnabled
+     * @deprecated
+     * @return array An array of error messages, or an empty array if there were no errors.
      */
-    public function setEnabled($isEnabled)
+    public function validate()
     {
-        $this->isEnabled = (bool) $isEnabled;
-    }
+        $errors = array();
 
-    public function setConfirmationToken($token)
-    {
-        $this->confirmationToken = $token;
-    }
-
-    public function getConfirmationToken()
-    {
-        return $this->confirmationToken;
-    }
-
-    /**
-     * @param \DateTime|null $dateTime
-     */
-    public function setTimePasswordResetRequested(\DateTime $dateTime)
-    {
-        $this->timePasswordResetRequested = $dateTime ?: null;
-    }
-
-    /**
-     * @return \DateTime|null
-     */
-    public function getTimePasswordResetRequested()
-    {
-        return $this->timePasswordResetRequested;
-    }
-
-    /**
-     * @param int $ttl Password reset request TTL, in seconds.
-     *
-     * @return bool
-     */
-    public function isPasswordResetRequestExpired($ttl)
-    {
-        $timeRequested = $this->getTimePasswordResetRequested();
-        if (!$timeRequested) {
-            return true;
+        if (!$this->getEmail()) {
+            $errors['email'] = 'Email address is required.';
+        } else if (!strpos($this->getEmail(), '@')) {
+            // Basic email format sanity check. Real validation comes from sending them an email with a link they have to click.
+            $errors['email'] = 'Email address appears to be invalid.';
+        } else if (strlen($this->getEmail()) > 100) {
+            $errors['email'] = 'Email address can\'t be longer than 100 characters.';
         }
 
-        return $timeRequested->getTimestamp() + $ttl < time();
+        if (!$this->getPassword()) {
+            $errors['password'] = 'Password is required.';
+        } else if (strlen($this->getPassword()) > 255) {
+            $errors['password'] = 'Password can\'t be longer than 255 characters.';
+        }
+
+        if (strlen($this->getName()) > 100) {
+            $errors['name'] = 'Name can\'t be longer than 100 characters.';
+        }
+
+        // Username can't contain "@",
+        // because that's how we distinguish between email and username when signing in.
+        // (It's possible to sign in by providing either one.)
+        if ($this->getRealUsername() && strpos($this->getRealUsername(), '@') !== false) {
+            $errors['username'] = 'Username cannot contain the "@" symbol.';
+        }
+
+        return $errors;
     }
 }
