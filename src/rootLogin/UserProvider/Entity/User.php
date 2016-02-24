@@ -24,9 +24,10 @@
 
 namespace rootLogin\UserProvider\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
-
+use rootLogin\UserProvider\Validator\Constraints\EMailIsUnique;
 /**
  * A user
  *
@@ -34,6 +35,7 @@ use Symfony\Component\Security\Core\User\AdvancedUserInterface;
  * @ORM\Table(name="user")
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
+ * @EMailIsUnique()
  *
  * @package rootLogin\UserProvider
  */
@@ -58,6 +60,9 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * @var string
      *
+     * @Assert\NotBlank()
+     * @Assert\Email()
+     *
      * @ORM\Column(name="email", type="string", unique=true)
      */
     protected $email;
@@ -72,6 +77,8 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Plain password. Used for model validation. Must not be persisted.
      *
+     * @Assert\NotBlank(groups={"full"})
+     * @Assert\Length(min=8, groups={"full"})
      * @var string
      */
     protected $plainPassword;
@@ -86,9 +93,9 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string")
+     * @ORM\Column(name="name", type="string", nullable=true)
      */
-    protected $name = '';
+    protected $name;
 
     /**
      * @var array
@@ -424,20 +431,6 @@ class User implements AdvancedUserInterface, \Serializable
 
         return $this;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     /**
      * Set the time the user was originally created.

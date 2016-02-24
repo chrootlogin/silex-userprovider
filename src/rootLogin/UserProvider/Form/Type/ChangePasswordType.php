@@ -24,14 +24,13 @@
 
 namespace rootLogin\UserProvider\Form\Type;
 
-use rootLogin\UserProvider\Validator\Constraints\EMailIsUnique;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Form\AbstractType;
 
-class RegisterType extends AbstractType
+class ChangePasswordType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -40,8 +39,8 @@ class RegisterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email')
-            ->add('plainPassword', 'repeated', [
+            ->add('oldPassword', 'password')
+            ->add('newPassword', 'repeated', [
                 'type' => 'password',
                 'invalid_message' => 'The password fields must match.',
                 'options' => array('attr' => array('class' => 'password-field')),
@@ -49,20 +48,19 @@ class RegisterType extends AbstractType
                 'first_options'  => array('label' => 'Password'),
                 'second_options' => array('label' => 'Repeat Password'),
             ])
-            ->add('register', 'submit')
+            ->add('save', 'submit')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'data_class' => 'rootLogin\UserProvider\Entity\User',
-            'validation_groups' => ['full', 'Default']
-        ]);
+        $resolver->setDefaults(array(
+            'data_class' => 'rootLogin\UserProvider\Form\Model\PasswordChange',
+        ));
     }
 
     public function getName()
     {
-        return 'rup_register';
+        return 'rup_change_password';
     }
 }

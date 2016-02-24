@@ -24,6 +24,7 @@
 
 namespace rootLogin\UserProvider\Validator\Constraints;
 
+use rootLogin\UserProvider\Entity\User;
 use rootLogin\UserProvider\Interfaces\UserManagerInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -35,14 +36,15 @@ class EMailIsUniqueValidator extends ConstraintValidator
      */
     private $userManager;
 
-    public function validate($value, Constraint $constraint)
+    public function validate($user, Constraint $constraint)
     {
+        /** @var User $user */
         $exists = $this->userManager->findOneBy(
-            array('email' => $value)
+            array('email' => $user->getEmail())
         );
 
-        if ($exists != null) {
-            $this->context->addViolation($constraint->eMailExists, array('{{ email }}' => $value));
+        if ($exists !== null && $user !== $exists) {
+            $this->context->addViolationAt('email',$constraint->eMailExists, array('{{ email }}' => $user->getEmail()));
 
             return false;
         }

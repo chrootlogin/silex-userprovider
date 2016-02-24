@@ -2,6 +2,8 @@
 
 namespace rootLogin\UserProvider\Provider;
 
+use rootLogin\UserProvider\Form\Type\ChangePasswordType;
+use rootLogin\UserProvider\Form\Type\EditType;
 use rootLogin\UserProvider\Validator\Constraints\EMailIsUniqueValidator;
 use rootLogin\UserProvider\Command\UserCreateCommand;
 use rootLogin\UserProvider\Command\UserDeleteCommand;
@@ -61,7 +63,8 @@ class UserProviderServiceProvider implements ServiceProviderInterface
 
             // Specify the forms
             'forms' => [
-                'register' => 'rup_register'
+                'register' => 'rup_register',
+                'edit' => 'rup_edit'
             ],
 
             // Configure the user mailer for sending password reset and email confirmation messages.
@@ -215,6 +218,8 @@ class UserProviderServiceProvider implements ServiceProviderInterface
         // Add the form types
         $app['form.types'] = $app->share($app->extend('form.types', function ($types) use ($app) {
             $types[] = new RegisterType();
+            $types[] = new EditType();
+            $types[] = new ChangePasswordType();
 
             return $types;
         }));

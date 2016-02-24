@@ -24,14 +24,13 @@
 
 namespace rootLogin\UserProvider\Form\Type;
 
-use rootLogin\UserProvider\Validator\Constraints\EMailIsUnique;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Form\AbstractType;
 
-class RegisterType extends AbstractType
+class EditType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -40,29 +39,21 @@ class RegisterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email')
-            ->add('plainPassword', 'repeated', [
-                'type' => 'password',
-                'invalid_message' => 'The password fields must match.',
-                'options' => array('attr' => array('class' => 'password-field')),
-                'required' => true,
-                'first_options'  => array('label' => 'Password'),
-                'second_options' => array('label' => 'Repeat Password'),
-            ])
-            ->add('register', 'submit')
+            ->add('name', 'text')
+            ->add('email', 'email')
+            ->add('save', 'submit')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
+        $resolver->setDefaults(array(
             'data_class' => 'rootLogin\UserProvider\Entity\User',
-            'validation_groups' => ['full', 'Default']
-        ]);
+        ));
     }
 
     public function getName()
     {
-        return 'rup_register';
+        return 'rup_edit';
     }
 }

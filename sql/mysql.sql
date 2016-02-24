@@ -4,7 +4,7 @@ CREATE TABLE `users` (
   `password` VARCHAR(255) DEFAULT NULL,
   `salt` VARCHAR(255) NOT NULL DEFAULT '',
   `roles` VARCHAR(255) NOT NULL DEFAULT '',
-  `name` VARCHAR(100) NOT NULL DEFAULT '',
+  `name` VARCHAR(100),
   `time_created` INT(11) UNSIGNED NOT NULL DEFAULT 0,
   `username` VARCHAR(100),
   `isEnabled` TINYINT(1) NOT NULL DEFAULT 1,

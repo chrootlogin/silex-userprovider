@@ -3,9 +3,11 @@
 namespace rootLogin\UserProvider\Controller;
 
 use rootLogin\UserProvider\Entity\User;
+use rootLogin\UserProvider\Form\Model\PasswordChange;
 use rootLogin\UserProvider\Interfaces\UserManagerInterface;
 use Silex\Application;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -38,11 +40,14 @@ class UserController
         'reset-password' => '@user/reset-password.twig',
         'view' => '@user/view.twig',
         'edit' => '@user/edit.twig',
+        'change_password' => '@user/change-password.twig',
         'list' => '@user/list.twig',
     );
 
     protected $forms = [
-        'register' => 'user'
+        'register' => 'rup_register',
+        'edit' => 'rup_edit',
+        'change_password' => 'rup_change_password'
     ];
 
     // Custom fields to support in the editAction().
@@ -72,7 +77,7 @@ class UserController
      */
     public function registerAction(Application $app, Request $request)
     {
-        $registerForm = $this->formFactory->createBuilder($this->forms['register']);
+        $registerForm = $this->formFactory->createBuilder($this->forms['register'], $this->userManager->getEmptyUser());
         $registerForm = $registerForm->getForm();
 
         $registerForm->handleRequest($request);
@@ -111,6 +116,84 @@ class UserController
         return $app['twig']->render($this->getTemplate('register'), array(
             'layout_template' => $this->getTemplate('layout'),
             'registerForm' => $registerForm->createView()
+        ));
+    }
+
+    /**
+     * Edit user action.
+     *
+     * @param Application $app
+     * @param Request $request
+     * @param int $id
+     * @return Response
+     * @throws NotFoundHttpException if no user is found with that ID.
+     */
+    public function editAction(Application $app, Request $request, $id)
+    {
+        $user = $this->userManager->getUser($id);
+        if(!$user) {
+            throw new NotFoundHttpException('No user was found with that ID.');
+        }
+
+        $editForm = $this->formFactory->createBuilder($this->forms['edit'], $user);
+        $editForm = $editForm->getForm();
+
+        $editForm->handleRequest($request);
+
+        if ($editForm->isValid()) {
+            /** @var User $user */
+            $user = $editForm->getData();
+
+            //$this->userManager->setUserPassword($user, $user->getPlainPassword());
+            $this->userManager->save($user);
+
+            $msg = 'Saved account information.' . ($request->request->get('password') ? ' Changed password.' : '');
+            $app['session']->getFlashBag()->set('alert', $msg);
+        }
+
+        return $app['twig']->render($this->getTemplate('edit'), array(
+            'layout_template' => $this->getTemplate('layout'),
+            'editForm' => $editForm->createView(),
+            'user' => $user
+        ));
+    }
+
+    /**
+     * Edit user action.
+     *
+     * @param Application $app
+     * @param Request $request
+     * @param int $id
+     * @return Response
+     * @throws NotFoundHttpException if no user is found with that ID.
+     */
+    public function changePasswordAction(Application $app, Request $request)
+    {
+        /** @var User $user */
+        $user = $this->userManager->getCurrentUser();
+        if(!$user) {
+            throw new AccessDeniedException('You need to be logged in.');
+        }
+
+        $changePasswordForm = $this->formFactory->createBuilder($this->forms['change_password'], new PasswordChange());
+        $changePasswordForm = $changePasswordForm->getForm();
+
+        $changePasswordForm->handleRequest($request);
+
+        if ($changePasswordForm->isValid()) {
+            /** @var PasswordChange $passwordChange */
+            $passwordChange = $changePasswordForm->getData();
+
+            $this->userManager->setUserPassword($user, $passwordChange->getNewPassword());
+            $this->userManager->save($user);
+
+            $msg = 'Changed password.';
+            $app['session']->getFlashBag()->set('alert', $msg);
+        }
+
+        return $app['twig']->render($this->getTemplate('change_password'), array(
+            'layout_template' => $this->getTemplate('layout'),
+            'changePasswordForm' => $changePasswordForm->createView()
         ));
     }
 
@@ -389,71 +472,6 @@ class UserController
     {
         // See https://en.gravatar.com/site/implement/images/ for available options.
         return '//www.gravatar.com/avatar/' . md5(strtolower(trim($email))) . '?s=' . $size . '&d=identicon';
-    }
-
-    /**
-     * Edit user action.
-     *
-     * @param Application $app
-     * @param Request $request
-     * @param int $id
-     * @return Response
-     * @throws NotFoundHttpException if no user is found with that ID.
-     */
-    public function editAction(Application $app, Request $request, $id)
-    {
-        $errors = array();
-
-        $user = $this->userManager->getUser($id);
-        if (!$user) {
-            throw new NotFoundHttpException('No user was found with that ID.');
-        }
-
-        $customFields = $this->editCustomFields ?: array();
-
-        if ($request->isMethod('POST')) {
-            $user->setName($request->request->get('name'));
-            $user->setEmail($request->request->get('email'));
-            if ($request->request->has('username')) {
-                $user->setUsername($request->request->get('username'));
-            }
-            if ($request->request->get('password')) {
-                if ($request->request->get('password') != $request->request->get('confirm_password')) {
-                    $errors['password'] = 'Passwords don\'t match.';
-                } else if ($error = $this->userManager->validatePasswordStrength($user, $request->request->get('password'))) {
-                    $errors['password'] = $error;
-                } else {
-                    $this->userManager->setUserPassword($user, $request->request->get('password'));
-                }
-            }
-            if ($app['security']->isGranted('ROLE_ADMIN') && $request->request->has('roles')) {
-                $user->setRoles($request->request->get('roles'));
-            }
-
-            foreach (array_keys($customFields) as $customField) {
-                if ($request->request->has($customField)) {
-                    $user->setCustomField($customField, $request->request->get($customField));
-                }
-            }
-
-            $errors += $this->userManager->validate($user);
-
-            if (empty($errors)) {
-                $this->userManager->save($user);
-                $msg = 'Saved account information.' . ($request->request->get('password') ? ' Changed password.' : '');
-                $app['session']->getFlashBag()->set('alert', $msg);
-            }
-        }
-
-        return $app['twig']->render($this->getTemplate('edit'), array(
-            'layout_template' => $this->getTemplate('layout'),
-            'error' => implode("\n", $errors),
-            'user' => $user,
-            'available_roles' => array('ROLE_USER', 'ROLE_ADMIN'),
-            'image_url' => $this->getGravatarUrl($user->getEmail()),
-            'customFields' => $customFields,
-            'isUsernameRequired' => $this->isUsernameRequired,
-        ));
     }
 
     /**

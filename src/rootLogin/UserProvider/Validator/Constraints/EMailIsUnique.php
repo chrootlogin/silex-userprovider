@@ -25,7 +25,14 @@
 namespace rootLogin\UserProvider\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
+use Doctrine\Common\Annotations\Annotation;
 
+/**
+ * Class EMailIsUnique
+ *
+ * @Annotation()
+ * @package rootLogin\UserProvider\Validator\Constraints
+ */
 class EMailIsUnique extends Constraint
 {
     public $eMailExists = 'E-Mail {{ email }} does already exist.';
@@ -35,5 +42,10 @@ class EMailIsUnique extends Constraint
     public function validatedBy()
     {
         return 'validator.emailisunique';
+    }
+
+    public function getTargets()
+    {
+        return self::CLASS_CONSTRAINT;
     }
 }
