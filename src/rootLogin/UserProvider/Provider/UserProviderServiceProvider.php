@@ -147,10 +147,10 @@ class UserProviderServiceProvider implements ServiceProviderInterface
 
     protected function setDefaultOptions(Application $app)
     {
-        $app['user.options.default'] = array(
+        $app['user.options.default'] = [
 
             // Specify custom view templates here.
-            'templates' => array(
+            'templates' => [
                 'layout' => '@user/layout.twig',
                 'register' => '@user/register.twig',
                 'register-confirmation-sent' => '@user/register-confirmation-sent.twig',
@@ -161,32 +161,35 @@ class UserProviderServiceProvider implements ServiceProviderInterface
                 'view' => '@user/view.twig',
                 'edit' => '@user/edit.twig',
                 'list' => '@user/list.twig',
-            ),
+            ],
 
             // Specify the forms
             'forms' => [
                 'register' => 'rup_register',
-                'edit' => 'rup_edit'
+                'edit' => 'rup_edit',
+                'change_password' => 'rup_change_password',
+                'forgot_password' => 'rup_forgot_password',
+                'reset_password' => 'rup_reset_password'
             ],
 
             // Configure the user mailer for sending password reset and email confirmation messages.
-            'mailer' => array(
+            'mailer' => [
                 'enabled' => true, // When false, email notifications are not sent (they're silently discarded).
-                'fromEmail' => array(
+                'fromEmail' => [
                     'address' => 'do-not-reply@' . (isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : gethostname()),
                     'name' => null,
-                ),
-            ),
+                ],
+            ],
 
-            'emailConfirmation' => array(
+            'emailConfirmation' => [
                 'required' => false, // Whether to require email confirmation before enabling new accounts.
                 'template' => '@user/email/confirm-email.twig',
-            ),
+            ],
 
-            'passwordReset' => array(
+            'passwordReset' => [
                 'template' => '@user/email/reset-password.twig',
                 'tokenTTL' => 86400, // How many seconds the reset token is valid for. Default: 1 day.
-            ),
+            ],
 
             // Set this to use a custom User class.
             'userClass' => 'rootLogin\UserProvider\Entity\User',
@@ -196,14 +199,14 @@ class UserProviderServiceProvider implements ServiceProviderInterface
             'isUsernameRequired' => false,
 
             // A list of custom fields to support in the edit controller. (dbal mode only)
-            'editCustomFields' => array(),
+            'editCustomFields' => [],
 
             // Override table names, if necessary.
             'userTableName' => 'users',
             'userCustomFieldsTableName' => 'user_custom_fields',
 
             // Override column names if necessary. (dbal mode only)
-            'userColumns' => array(
+            'userColumns' => [
                 'id' => 'id',
                 'email' => 'email',
                 'password' => 'password',
@@ -219,8 +222,8 @@ class UserProviderServiceProvider implements ServiceProviderInterface
                 'user_id' => 'user_id',
                 'attribute' => 'attribute',
                 'value' => 'value',
-            )
-        );
+            ]
+        ];
     }
 
     protected function initializeOptions(Application $app)
@@ -392,14 +395,6 @@ class UserProviderServiceProvider implements ServiceProviderInterface
     }
 
     /**
-     * @return string
-     */
-    protected function getEntityPath()
-    {
-        return realpath(__DIR__ . "/../Entity/");
-    }
-
-    /**
      * True if Orm is available.
      *
      * @return bool
@@ -407,5 +402,13 @@ class UserProviderServiceProvider implements ServiceProviderInterface
     protected function useOrm($app)
     {
         return (isset($app['orm.em']) && !$this->forceDBAL);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getEntityPath()
+    {
+        return realpath(__DIR__ . "/../Entity/");
     }
 }

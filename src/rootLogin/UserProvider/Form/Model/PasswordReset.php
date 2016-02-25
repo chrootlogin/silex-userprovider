@@ -26,6 +26,11 @@ namespace rootLogin\UserProvider\Form\Model;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
+/**
+ * Model for resetting the password
+ *
+ * @package rootLogin\UserProvider\Form\Model
+ */
 class PasswordReset {
 
     /**

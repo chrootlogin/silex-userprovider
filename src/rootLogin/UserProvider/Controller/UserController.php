@@ -42,7 +42,7 @@ use JasonGrimes\Paginator;
 /**
  * Controller with actions for handling form-based authentication and user management.
  *
- * @package UserProvider
+ * @package rootLogin\UserProvider\Controller
  */
 class UserController
 {
