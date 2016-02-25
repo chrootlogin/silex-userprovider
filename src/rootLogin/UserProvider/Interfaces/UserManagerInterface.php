@@ -114,6 +114,7 @@ interface UserManagerInterface extends UserProviderInterface {
      * and additionally tests that the User's email address and username (if set) are unique across all users.'.
      *
      * @param User $user
+     * @deprecated
      * @return array An array of error messages, or an empty array if the User is valid.
      */
     public function validate(User $user);

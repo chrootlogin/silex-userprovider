@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is based substantially on code from the FOSUserBundle package
  * <https://github.com/FriendsOfSymfony/FOSUserBundle>
