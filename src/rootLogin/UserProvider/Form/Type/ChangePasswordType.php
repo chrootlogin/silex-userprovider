@@ -45,8 +45,8 @@ class ChangePasswordType extends AbstractType
                 'invalid_message' => 'The password fields must match.',
                 'options' => array('attr' => array('class' => 'password-field')),
                 'required' => true,
-                'first_options'  => array('label' => 'Password'),
-                'second_options' => array('label' => 'Repeat Password'),
+                'first_options'  => array('label' => 'New password'),
+                'second_options' => array('label' => 'Repeat new password'),
             ])
             ->add('save', 'submit')
         ;

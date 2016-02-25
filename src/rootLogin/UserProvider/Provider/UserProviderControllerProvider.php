@@ -45,10 +45,10 @@ class UserProviderControllerProvider implements ControllerProviderInterface
                 }
             });
 
-        $controllers->get('/change-password', 'user.controller:changePasswordAction')
+        $controllers->method('GET|POST')->get('/change-password', 'user.controller:changePasswordAction')
             ->bind('user.change-password');
 
-        $controllers->get('/{id}', 'user.controller:viewAction')
+        $controllers->method('GET')->get('/{id}', 'user.controller:viewAction')
             ->bind('user.view')
             ->assert('id', '\d+');
 
