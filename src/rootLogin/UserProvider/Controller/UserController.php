@@ -1,5 +1,27 @@
 <?php
 
+/**
+ * Silex User Provider
+ *
+ *  Copyright 2016 by Simon Erhardt <hello@rootlogin.ch>
+ *
+ * This file is part of the silex user provider.
+ *
+ * The silex user provider is free software: you can redistribute
+ * it and/or modify it under the terms of the Lesser GNU General Public
+ * License version 3 as published by the Free Software Foundation.
+ *
+ * The silex user provider is distributed in the hope that it will
+ * be useful, but WITHOUT ANY WARRANTY; without even the implied warranty
+ * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * You should have received a copy of the Lesser GNU General Public
+ * License along with the silex user provider.  If not, see
+ * <http://www.gnu.org/licenses/>.
+ *
+ * @license LGPL-3.0 <http://spdx.org/licenses/LGPL-3.0>
+ */
+
 namespace rootLogin\UserProvider\Controller;
 
 use rootLogin\UserProvider\Entity\User;
@@ -32,7 +54,7 @@ class UserController
     /** @var UserManagerInterface */
     protected $userManager;
 
-    protected $templates = array(
+    protected $templates = [
         'layout' => '@user/layout.twig',
         'register' => '@user/register.twig',
         'register-confirmation-sent' => '@user/register-confirmation-sent.twig',
@@ -44,7 +66,7 @@ class UserController
         'edit' => '@user/edit.twig',
         'change-password' => '@user/change-password.twig',
         'list' => '@user/list.twig',
-    );
+    ];
 
     protected $forms = [
         'register' => 'rup_register',
@@ -102,10 +124,10 @@ class UserController
                 $app['user.mailer']->sendConfirmationMessage($user);
 
                 // Render the "go check your email" page.
-                return $app['twig']->render($this->getTemplate('register-confirmation-sent'), array(
+                return $app['twig']->render($this->getTemplate('register-confirmation-sent'), [
                     'layout_template' => $this->getTemplate('layout'),
                     'email' => $user->getEmail(),
-                ));
+                ]);
             } else {
                 // Log the user in to the new account.
                 $this->userManager->loginAsUser($user);
@@ -113,14 +135,14 @@ class UserController
                 $app['session']->getFlashBag()->set('alert', 'Account created.');
 
                 // Redirect to user's new profile page.
-                return $app->redirect($app['url_generator']->generate('user.view', array('id' => $user->getId())));
+                return $app->redirect($app['url_generator']->generate('user.view', ['id' => $user->getId()]));
             }
         }
 
-        return $app['twig']->render($this->getTemplate('register'), array(
+        return $app['twig']->render($this->getTemplate('register'), [
             'layout_template' => $this->getTemplate('layout'),
             'registerForm' => $registerForm->createView()
-        ));
+        ]);
     }
 
     /**
@@ -154,11 +176,11 @@ class UserController
             $app['session']->getFlashBag()->set('alert', $msg);
         }
 
-        return $app['twig']->render($this->getTemplate('edit'), array(
+        return $app['twig']->render($this->getTemplate('edit'), [
             'layout_template' => $this->getTemplate('layout'),
             'editForm' => $editForm->createView(),
             'user' => $user
-        ));
+        ]);
     }
 
     /**
@@ -192,10 +214,10 @@ class UserController
             $app['session']->getFlashBag()->set('alert', $msg);
         }
 
-        return $app['twig']->render($this->getTemplate('change-password'), array(
+        return $app['twig']->render($this->getTemplate('change-password'), [
             'layout_template' => $this->getTemplate('layout'),
             'changePasswordForm' => $changePasswordForm->createView()
-        ));
+        ]);
     }
 
     /**
@@ -209,7 +231,7 @@ class UserController
      */
     public function confirmEmailAction(Application $app, Request $request, $token)
     {
-        $user = $this->userManager->findOneBy(array('confirmationToken' => $token));
+        $user = $this->userManager->findOneBy(['confirmationToken' => $token]);
         if (!$user) {
             $app['session']->getFlashBag()->set('alert', 'Sorry, your email confirmation link has expired.');
 
@@ -222,7 +244,7 @@ class UserController
 
         $app['session']->getFlashBag()->set('alert', 'Thank you! Your account has been activated.');
 
-        return $app->redirect($app['url_generator']->generate('user.view', array('id' => $user->getId())));
+        return $app->redirect($app['url_generator']->generate('user.view', ['id' => $user->getId()]));
     }
 
     /**
@@ -242,21 +264,21 @@ class UserController
             // The Security system throws this exception before actually checking if the password was valid.
             $user = $this->userManager->refreshUser($authException->getUser());
 
-            return $app['twig']->render($this->getTemplate('login-confirmation-needed'), array(
+            return $app['twig']->render($this->getTemplate('login-confirmation-needed'), [
                 'layout_template' => $this->getTemplate('layout'),
                 'email' => $user->getEmail(),
                 'fromAddress' => $app['user.mailer']->getFromAddress(),
                 'resendUrl' => $app['url_generator']->generate('user.resend-confirmation'),
-            ));
+            ]);
         }
 
-        return $app['twig']->render($this->getTemplate('login'), array(
+        return $app['twig']->render($this->getTemplate('login'), [
             'layout_template' => $this->getTemplate('layout'),
             'error' => $authException ? $authException->getMessageKey() : null,
             'last_username' => $app['session']->get('_security.last_username'),
             'allowRememberMe' => isset($app['security.remember_me.response_listener']),
             'allowPasswordReset' => $this->isPasswordResetEnabled(),
-        ));
+        ]);
     }
 
     /**
@@ -270,7 +292,7 @@ class UserController
     public function resendConfirmationAction(Application $app, Request $request)
     {
         $email = $request->request->get('email');
-        $user = $this->userManager->findOneBy(array('email' => $email));
+        $user = $this->userManager->findOneBy(['email' => $email]);
         if (!$user) {
             throw new NotFoundHttpException('No user account was found with that email address.');
         }
@@ -283,10 +305,10 @@ class UserController
         $app['user.mailer']->sendConfirmationMessage($user);
 
         // Render the "go check your email" page.
-        return $app['twig']->render($this->getTemplate('register-confirmation-sent'), array(
+        return $app['twig']->render($this->getTemplate('register-confirmation-sent'), [
             'layout_template' => $this->getTemplate('layout'),
             'email' => $user->getEmail(),
-        ));
+        ]);
     }
 
     /**
@@ -331,11 +353,11 @@ class UserController
             $app['session']->getFlashBag()->set('alert', $msg);
         }
 
-        return $app['twig']->render($this->getTemplate('forgot-password'), array(
+        return $app['twig']->render($this->getTemplate('forgot-password'), [
             'layout_template' => $this->getTemplate('layout'),
             'forgotPasswordForm' => $forgotPasswordForm->createView(),
             'fromAddress' => $app['user.mailer']->getFromAddress()
-        ));
+        ]);
     }
 
     /**
@@ -354,7 +376,7 @@ class UserController
 
         $tokenExpired = false;
 
-        $user = $this->userManager->findOneBy(array('confirmationToken' => $token));
+        $user = $this->userManager->findOneBy(['confirmationToken' => $token]);
         if ($user === null || $user->isPasswordResetRequestExpired($app['user.options']['passwordReset']['tokenTTL'])) {
             $tokenExpired = true;
         }
@@ -381,14 +403,14 @@ class UserController
 
             $app['session']->getFlashBag()->set('alert', 'Your password has been reset and you are now signed in.');
 
-            return $app->redirect($app['url_generator']->generate('user.view', array('id' => $user->getId())));
+            return $app->redirect($app['url_generator']->generate('user.view', ['id' => $user->getId()]));
         }
 
-        return $app['twig']->render($this->getTemplate('reset-password'), array(
+        return $app['twig']->render($this->getTemplate('reset-password'), [
             'layout_template' => $this->getTemplate('layout'),
             'resetPasswordForm' => $resetPasswordForm->createView(),
             'user' => $user
-        ));
+        ]);
     }
 
     /**
@@ -412,11 +434,11 @@ class UserController
             throw new NotFoundHttpException('That user is disabled (pending email confirmation).');
         }
 
-        return $app['twig']->render($this->getTemplate('view'), array(
+        return $app['twig']->render($this->getTemplate('view'), [
             'layout_template' => $this->getTemplate('layout'),
             'user' => $user,
             'imageUrl' => $this->getGravatarUrl($user->getEmail()),
-        ));
+        ]);
 
     }
 
@@ -429,7 +451,7 @@ class UserController
             return $app->redirect($app['url_generator']->generate('user.login'));
         }
 
-        return $app->redirect($app['url_generator']->generate('user.view', array('id' => $app['user']->getId())));
+        return $app->redirect($app['url_generator']->generate('user.view', ['id' => $app['user']->getId()]));
     }
 
     /**
@@ -479,7 +501,7 @@ class UserController
             $user->imageUrl = $this->getGravatarUrl($user->getEmail(), 40);
         }
 
-        return $app['twig']->render($this->getTemplate('list'), array(
+        return $app['twig']->render($this->getTemplate('list'), [
             'layout_template' => $this->getTemplate('layout'),
             'users' => $users,
             'paginator' => $paginator,
@@ -491,7 +513,7 @@ class UserController
             'prevUrl' => $paginator->getPrevUrl(),
             'firstResult' => $paginator->getCurrentPageFirstItem(),
             'lastResult' => $paginator->getCurrentPageLastItem(),
-        ));
+        ]);
     }
 
     /**
