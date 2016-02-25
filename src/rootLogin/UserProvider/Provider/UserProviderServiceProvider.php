@@ -4,6 +4,8 @@ namespace rootLogin\UserProvider\Provider;
 
 use rootLogin\UserProvider\Form\Type\ChangePasswordType;
 use rootLogin\UserProvider\Form\Type\EditType;
+use rootLogin\UserProvider\Form\Type\ResetPasswordType;
+use rootLogin\UserProvider\Validator\Constraints\EMailExistsValidator;
 use rootLogin\UserProvider\Validator\Constraints\EMailIsUniqueValidator;
 use rootLogin\UserProvider\Command\UserCreateCommand;
 use rootLogin\UserProvider\Command\UserDeleteCommand;
@@ -44,7 +46,106 @@ class UserProviderServiceProvider implements ServiceProviderInterface
      */
     public function register(Application $app)
     {
-        // Default options.
+        $this->setDefaultOptions($app);
+        $this->initializeOptions($app);
+        $this->initializeUserManager($app);
+        $this->initializeUserController($app);
+        $this->initializeMailer($app);
+        $this->addValidators($app);
+        $this->addFormTypes($app);
+
+        // Token generator.
+        $app['user.tokenGenerator'] = $app->share(function($app) { return new TokenGenerator($app['logger']); });
+
+        // Current user.
+        $app['user'] = $app->share(function($app) {
+            return ($app['user.manager']->getCurrentUser());
+        });
+
+        // Add a custom security voter to support testing user attributes.
+        $app['security.voters'] = $app->extend('security.voters', function($voters) use ($app) {
+            foreach ($voters as $voter) {
+                if ($voter instanceof RoleHierarchyVoter) {
+                    $roleHierarchyVoter = $voter;
+                    break;
+                }
+            }
+            $voters[] = new EditUserVoter($roleHierarchyVoter);
+            return $voters;
+        });
+
+        // Helper function to get the last authentication exception thrown for the given request.
+        // It does the same thing as $app['security.last_error'](),
+        // except it returns the whole exception instead of just $exception->getMessage()
+        $app['user.last_auth_exception'] = $app->protect(function (Request $request) {
+            if ($request->attributes->has(SecurityContextInterface::AUTHENTICATION_ERROR)) {
+                return $request->attributes->get(SecurityContextInterface::AUTHENTICATION_ERROR);
+            }
+
+            $session = $request->getSession();
+            if ($session && $session->has(SecurityContextInterface::AUTHENTICATION_ERROR)) {
+                $exception = $session->get(SecurityContextInterface::AUTHENTICATION_ERROR);
+                $session->remove(SecurityContextInterface::AUTHENTICATION_ERROR);
+
+                return $exception;
+            }
+        });
+
+        // If symfony console is available, enable them
+        if (isset($app['console.commands'])) {
+            $app['console.commands'] = $app->share(
+                $app->extend('console.commands', function ($commands) use ($app) {
+                    $commands[] = new UserCreateCommand($app);
+                    $commands[] = new UserListCommand($app);
+                    $commands[] = new UserDeleteCommand($app);
+
+                    return $commands;
+                })
+            );
+        }
+    }
+
+    /**
+     * Bootstraps the application.
+     *
+     * This method is called after all services are registered
+     * and should be used for "dynamic" configuration (whenever
+     * a service must be requested).
+     */
+    public function boot(Application $app)
+    {
+        // Add twig template path.
+        if (isset($app['twig.loader.filesystem'])) {
+            $app['twig.loader.filesystem']->addPath(__DIR__ . '/../Resources/views/', 'user');
+        }
+
+        // Validate the mailer configuration.
+        $app['user.options.init']();
+        try {
+            /** @var Mailer $mailer */
+            $mailer = $app['user.mailer'];
+            $mailerExists = true;
+        } catch (\RuntimeException $e) {
+            $mailerExists = false;
+            $mailerError = $e->getMessage();
+        }
+        if ($app['user.options']['emailConfirmation']['required'] && !$mailerExists) {
+            throw new \RuntimeException('Invalid configuration. Cannot require email confirmation because user mailer is not available. ' . $mailerError);
+        }
+        if ($app['user.options']['mailer']['enabled'] && !$app['user.options']['mailer']['fromEmail']['address']) {
+            throw new \RuntimeException('Invalid configuration. Mailer fromEmail address is required when mailer is enabled.');
+        }
+        if (!$mailerExists) {
+            $app['user.controller']->setPasswordResetEnabled(false);
+        }
+
+        if (isset($app['user.passwordStrengthValidator'])) {
+            $app['user.manager']->setPasswordStrengthValidator($app['user.passwordStrengthValidator']);
+        }
+    }
+
+    protected function setDefaultOptions(Application $app)
+    {
         $app['user.options.default'] = array(
 
             // Specify custom view templates here.
@@ -119,8 +220,10 @@ class UserProviderServiceProvider implements ServiceProviderInterface
                 'value' => 'value',
             )
         );
+    }
 
-        // Initialize $app['user.options'].
+    protected function initializeOptions(Application $app)
+    {
         $app['user.options.init'] = $app->protect(function() use ($app) {
             $options = $app['user.options.default'];
             if (isset($app['user.options'])) {
@@ -149,10 +252,10 @@ class UserProviderServiceProvider implements ServiceProviderInterface
             }
             $app['user.options'] = $options;
         });
+    }
 
-        // Token generator.
-        $app['user.tokenGenerator'] = $app->share(function($app) { return new TokenGenerator($app['logger']); });
-
+    protected function initializeUserManager(Application $app)
+    {
         $app['user.manager'] = $app->share(function($app) {
             $app['user.options.init']();
 
@@ -176,13 +279,10 @@ class UserProviderServiceProvider implements ServiceProviderInterface
         if($this->useOrm($app)) {
             $this->addDoctrineOrmMappings($app);
         }
+    }
 
-        // Current user.
-        $app['user'] = $app->share(function($app) {
-            return ($app['user.manager']->getCurrentUser());
-        });
-
-        // User controller service.
+    protected function initializeUserController(Application $app)
+    {
         $app['user.controller'] = $app->share(function ($app) {
             $app['user.options.init']();
 
@@ -195,36 +295,10 @@ class UserProviderServiceProvider implements ServiceProviderInterface
 
             return $controller;
         });
+    }
 
-        // add validator
-        $app['validator.emailisunique'] = $app->share(function ($app) {
-            $validator =  new EMailIsUniqueValidator();
-            $validator->setUserManager($app['user.manager']);
-
-            return $validator;
-        });
-
-        if(is_array($app['validator.validator_service_ids'])) {
-            $app['validator.validator_service_ids'] = array_merge(
-                $app['validator.validator_service_ids'],
-                array('validator.emailisunique' => 'validator.emailisunique')
-            );
-        } else {
-            $app['validator.validator_service_ids'] = array(
-                'validator.emailisunique' => 'validator.emailisunique'
-            );
-        }
-
-        // Add the form types
-        $app['form.types'] = $app->share($app->extend('form.types', function ($types) use ($app) {
-            $types[] = new RegisterType();
-            $types[] = new EditType();
-            $types[] = new ChangePasswordType();
-
-            return $types;
-        }));
-
-        // User mailer.
+    protected function initializeMailer(Application $app)
+    {
         $app['user.mailer'] = $app->share(function($app) {
             $app['user.options.init']();
 
@@ -248,107 +322,70 @@ class UserProviderServiceProvider implements ServiceProviderInterface
 
             return $mailer;
         });
-
-        // Add a custom security voter to support testing user attributes.
-        $app['security.voters'] = $app->extend('security.voters', function($voters) use ($app) {
-            foreach ($voters as $voter) {
-                if ($voter instanceof RoleHierarchyVoter) {
-                    $roleHierarchyVoter = $voter;
-                    break;
-                }
-            }
-            $voters[] = new EditUserVoter($roleHierarchyVoter);
-            return $voters;
-        });
-
-        // Helper function to get the last authentication exception thrown for the given request.
-        // It does the same thing as $app['security.last_error'](),
-        // except it returns the whole exception instead of just $exception->getMessage()
-        $app['user.last_auth_exception'] = $app->protect(function (Request $request) {
-            if ($request->attributes->has(SecurityContextInterface::AUTHENTICATION_ERROR)) {
-                return $request->attributes->get(SecurityContextInterface::AUTHENTICATION_ERROR);
-            }
-
-            $session = $request->getSession();
-            if ($session && $session->has(SecurityContextInterface::AUTHENTICATION_ERROR)) {
-                $exception = $session->get(SecurityContextInterface::AUTHENTICATION_ERROR);
-                $session->remove(SecurityContextInterface::AUTHENTICATION_ERROR);
-
-                return $exception;
-            }
-        });
-
-        // If symfony console is available, enable them
-        if (isset($app['console.commands'])) {
-            $app['console.commands'] = $app->share(
-                $app->extend('console.commands', function ($commands) use ($app) {
-                    $commands[] = new UserCreateCommand($app);
-                    $commands[] = new UserListCommand($app);
-                    $commands[] = new UserDeleteCommand($app);
-
-                    return $commands;
-                })
-            );
-        }
-    }
-
-    /**
-     * Bootstraps the application.
-     *
-     * This method is called after all services are registered
-     * and should be used for "dynamic" configuration (whenever
-     * a service must be requested).
-     */
-    public function boot(Application $app)
-    {
-        // Add twig template path.
-        if (isset($app['twig.loader.filesystem'])) {
-            $app['twig.loader.filesystem']->addPath(__DIR__ . '/../Resources/views/', 'user');
-        }
-
-        // Validate the mailer configuration.
-        $app['user.options.init']();
-        try {
-            $mailer = $app['user.mailer'];
-            $mailerExists = true;
-        } catch (\RuntimeException $e) {
-            $mailerExists = false;
-            $mailerError = $e->getMessage();
-        }
-        if ($app['user.options']['emailConfirmation']['required'] && !$mailerExists) {
-            throw new \RuntimeException('Invalid configuration. Cannot require email confirmation because user mailer is not available. ' . $mailerError);
-        }
-        if ($app['user.options']['mailer']['enabled'] && !$app['user.options']['mailer']['fromEmail']['address']) {
-            throw new \RuntimeException('Invalid configuration. Mailer fromEmail address is required when mailer is enabled.');
-        }
-        if (!$mailerExists) {
-            $app['user.controller']->setPasswordResetEnabled(false);
-        }
-
-        if (isset($app['user.passwordStrengthValidator'])) {
-            $app['user.manager']->setPasswordStrengthValidator($app['user.passwordStrengthValidator']);
-        }
     }
 
     protected function addDoctrineOrmMappings(Application $app)
     {
         if (!isset($app['orm.ems.options'])) {
             $app['orm.ems.options'] = $app->share(function () use ($app) {
-                $options = array(
+                $options = [
                     'default' => $app['orm.em.default_options']
-                );
+                ];
                 return $options;
             });
         }
 
         $app['orm.ems.options'] = $app->share($app->extend('orm.ems.options', function (array $options) {
-            $options['default']['mappings'][] = array(
+            $options['default']['mappings'][] = [
                 'type' => 'annotation',
                 'namespace' => 'rootLogin\UserProvider\Entity',
                 'path' => $this->getEntityPath(),
                 'use_simple_annotation_reader' => false,
-            );
+            ];
             return $options;
+        }));
+    }
+
+    protected function addValidators(Application $app)
+    {
+        $app['validator.emailisunique'] = $app->share(function ($app) {
+            $validator =  new EMailIsUniqueValidator();
+            $validator->setUserManager($app['user.manager']);
+
+            return $validator;
+        });
+        $app['validator.emailexists'] = $app->share(function ($app) {
+            $validator =  new EMailExistsValidator();
+            $validator->setUserManager($app['user.manager']);
+
+            return $validator;
+        });
+
+        if(is_array($app['validator.validator_service_ids'])) {
+            $app['validator.validator_service_ids'] = array_merge(
+                $app['validator.validator_service_ids'],
+                [
+                    'validator.emailisunique' => 'validator.emailisunique',
+                    'validator.emailexists' => 'validator.emailexists'
+                ]
+            );
+        } else {
+            $app['validator.validator_service_ids'] = [
+                'validator.emailisunique' => 'validator.emailisunique',
+                'validator.emailexists' => 'validator.emailexists'
+            ];
+        }
+    }
+
+    protected function addFormTypes(Application $app)
+    {
+        $app['form.types'] = $app->share($app->extend('form.types', function ($types) use ($app) {
+            $types[] = new RegisterType();
+            $types[] = new EditType();
+            $types[] = new ChangePasswordType();
+            $types[] = new ResetPasswordType();
+
+            return $types;
         }));
     }
 
