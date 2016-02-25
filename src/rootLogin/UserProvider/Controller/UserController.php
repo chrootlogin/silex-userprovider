@@ -220,8 +220,6 @@ class UserController
         $user->setEnabled(true);
         $this->userManager->save($user);
 
-        $this->userManager->loginAsUser($user);
-
         $app['session']->getFlashBag()->set('alert', 'Thank you! Your account has been activated.');
 
         return $app->redirect($app['url_generator']->generate('user.view', array('id' => $user->getId())));
