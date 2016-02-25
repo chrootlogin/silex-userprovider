@@ -221,21 +221,7 @@ abstract class UserManager implements UserManagerInterface
     }
 
     /**
-     * Test whether a given plain text password matches a given User's encoded password.
-     *
-     * @param User $user
-     * @param string $password
-     * @return bool
-     */
-    public function checkUserPassword(User $user, $password)
-    {
-        return $user->getPassword() === $this->encodeUserPassword($user, $password);
-    }
-
-    /**
-     * Get a User instance for the currently logged in User, if any.
-     *
-     * @return UserInterface|null
+     * @inheritdoc
      */
     public function getCurrentUser()
     {

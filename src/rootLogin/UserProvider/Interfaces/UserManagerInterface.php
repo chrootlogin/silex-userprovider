@@ -25,6 +25,7 @@
 namespace rootLogin\UserProvider\Interfaces;
 
 use rootLogin\UserProvider\Entity\User;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 interface UserManagerInterface extends UserProviderInterface {
@@ -125,4 +126,11 @@ interface UserManagerInterface extends UserProviderInterface {
      * @return UserManagerInterface
      */
     public function setUserPassword(User $user, $password);
+
+    /**
+     * Get a User instance for the currently logged in User, if any.
+     *
+     * @return UserInterface|null
+     */
+    public function getCurrentUser();
 }
