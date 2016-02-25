@@ -8,6 +8,8 @@ repo_url: https://github.com/chrootlogin/silex-userprovider
 theme: readthedocs
 pages:
   - 'Home': 'index.md'
+  - 'Usage': 'usage.md'
+  - 'Configuration': 'configuration.md'
   - 'Developer documentation': 'developer_documentation.md'
   - 'Project documentation': 'project_documentation.md'
   - 'Changelog': 'changelog.md'

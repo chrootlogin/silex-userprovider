@@ -201,7 +201,7 @@ class UserProviderServiceProvider implements ServiceProviderInterface
             // A list of custom fields to support in the edit controller. (dbal mode only)
             'editCustomFields' => [],
 
-            // Override table names, if necessary.
+            // Override table names, if necessary. (dbal only)
             'userTableName' => 'users',
             'userCustomFieldsTableName' => 'user_custom_fields',
 

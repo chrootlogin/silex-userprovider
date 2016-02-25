@@ -26,13 +26,15 @@
         "symfony/form": "~2.7",
         "symfony/security-csrf": "~2.7",
         "symfony/validator": "~2.7",
+        "symfony/translation": "~2.7",
         "jasongrimes/paginator": "~1.0",
-        "swiftmailer/swiftmailer": "~5.3"
+        "swiftmailer/swiftmailer": "~5.3",
+        "twig/twig": "~1.2"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.2",
         "ext-pdo_sqlite": "*",
-        "symfony/console": "~2.8",
+        "symfony/console": "~2.7",
         "dflydev/doctrine-orm-service-provider": " ~1.0"
     },
     "suggest": {
