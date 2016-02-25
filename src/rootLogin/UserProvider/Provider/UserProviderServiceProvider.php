@@ -4,6 +4,7 @@ namespace rootLogin\UserProvider\Provider;
 
 use rootLogin\UserProvider\Form\Type\ChangePasswordType;
 use rootLogin\UserProvider\Form\Type\EditType;
+use rootLogin\UserProvider\Form\Type\ForgotPasswordType;
 use rootLogin\UserProvider\Form\Type\ResetPasswordType;
 use rootLogin\UserProvider\Validator\Constraints\EMailExistsValidator;
 use rootLogin\UserProvider\Validator\Constraints\EMailIsUniqueValidator;
@@ -383,6 +384,7 @@ class UserProviderServiceProvider implements ServiceProviderInterface
             $types[] = new RegisterType();
             $types[] = new EditType();
             $types[] = new ChangePasswordType();
+            $types[] = new ForgotPasswordType();
             $types[] = new ResetPasswordType();
 
             return $types;

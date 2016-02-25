@@ -4,6 +4,8 @@ namespace rootLogin\UserProvider\Controller;
 
 use rootLogin\UserProvider\Entity\User;
 use rootLogin\UserProvider\Form\Model\PasswordChange;
+use rootLogin\UserProvider\Form\Model\PasswordForgotten;
+use rootLogin\UserProvider\Form\Model\PasswordReset;
 use rootLogin\UserProvider\Interfaces\UserManagerInterface;
 use Silex\Application;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -40,14 +42,16 @@ class UserController
         'reset-password' => '@user/reset-password.twig',
         'view' => '@user/view.twig',
         'edit' => '@user/edit.twig',
-        'change_password' => '@user/change-password.twig',
+        'change-password' => '@user/change-password.twig',
         'list' => '@user/list.twig',
     );
 
     protected $forms = [
         'register' => 'rup_register',
         'edit' => 'rup_edit',
-        'change_password' => 'rup_change_password'
+        'change_password' => 'rup_change_password',
+        'forgot_password' => 'rup_forgot_password',
+        'reset_password' => 'rup_reset_password'
     ];
 
     // Custom fields to support in the editAction().
@@ -144,10 +148,9 @@ class UserController
             /** @var User $user */
             $user = $editForm->getData();
 
-            //$this->userManager->setUserPassword($user, $user->getPlainPassword());
             $this->userManager->save($user);
 
-            $msg = 'Saved account information.' . ($request->request->get('password') ? ' Changed password.' : '');
+            $msg = 'Saved account information.';
             $app['session']->getFlashBag()->set('alert', $msg);
         }
 
@@ -159,13 +162,11 @@ class UserController
     }
 
     /**
-     * Edit user action.
+     * Change password action.
      *
      * @param Application $app
      * @param Request $request
-     * @param int $id
      * @return Response
-     * @throws NotFoundHttpException if no user is found with that ID.
      */
     public function changePasswordAction(Application $app, Request $request)
     {
@@ -191,7 +192,7 @@ class UserController
             $app['session']->getFlashBag()->set('alert', $msg);
         }
 
-        return $app['twig']->render($this->getTemplate('change_password'), array(
+        return $app['twig']->render($this->getTemplate('change-password'), array(
             'layout_template' => $this->getTemplate('layout'),
             'changePasswordForm' => $changePasswordForm->createView()
         ));
@@ -291,10 +292,11 @@ class UserController
     }
 
     /**
+     * Forgot Password action.
+     *
      * @param Application $app
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @return mixed
      */
     public function forgotPasswordAction(Application $app, Request $request)
     {
@@ -302,11 +304,16 @@ class UserController
             throw new NotFoundHttpException('Password resetting is not enabled.');
         }
 
-        $error = null;
+        $forgotPasswordForm = $this->formFactory->createBuilder($this->forms['forgot_password'], new PasswordForgotten());
+        $forgotPasswordForm = $forgotPasswordForm->getForm();
 
-        if ($request->isMethod('POST')) {
-            $email = $request->request->get('email');
-            $user = $this->userManager->findOneBy(array('email' => $email));
+        $forgotPasswordForm->handleRequest($request);
+
+        if ($forgotPasswordForm->isValid()) {
+            /** @var PasswordForgotten $passwordForgotten */
+            $passwordForgotten = $forgotPasswordForm->getData();
+
+            $user = $this->userManager->findOneBy(['email' => $passwordForgotten->getEmail()]);
             if ($user) {
                 // Initialize and send the password reset request.
                 $user->setTimePasswordResetRequested(new \DateTime());
@@ -317,22 +324,19 @@ class UserController
 
                 $app['user.mailer']->sendResetMessage($user);
                 $app['session']->getFlashBag()->set('alert', 'Instructions for resetting your password have been emailed to you.');
-                $app['session']->set('_security.last_username', $email);
 
                 return $app->redirect($app['url_generator']->generate('user.login'));
             }
-            $error = 'No user account was found with that email address.';
 
-        } else {
-            $email = $request->request->get('email') ?: ($request->query->get('email') ?: $app['session']->get('_security.last_username'));
-            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) $email = '';
+            // This should not happen, because the form gets validated by the EMailExists validator.
+            $msg = 'Internal error: User was not found.';
+            $app['session']->getFlashBag()->set('alert', $msg);
         }
 
         return $app['twig']->render($this->getTemplate('forgot-password'), array(
             'layout_template' => $this->getTemplate('layout'),
-            'email' => $email,
-            'fromAddress' => $app['user.mailer']->getFromAddress(),
-            'error' => $error,
+            'forgotPasswordForm' => $forgotPasswordForm->createView(),
+            'fromAddress' => $app['user.mailer']->getFromAddress()
         ));
     }
 
@@ -340,6 +344,7 @@ class UserController
      * @param Application $app
      * @param Request $request
      * @param string $token
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
@@ -352,9 +357,7 @@ class UserController
         $tokenExpired = false;
 
         $user = $this->userManager->findOneBy(array('confirmationToken' => $token));
-        if (!$user) {
-            $tokenExpired = true;
-        } else if ($user->isPasswordResetRequestExpired($app['user.options']['passwordReset']['tokenTTL'])) {
+        if ($user === null || $user->isPasswordResetRequestExpired($app['user.options']['passwordReset']['tokenTTL'])) {
             $tokenExpired = true;
         }
 
@@ -363,63 +366,31 @@ class UserController
             return $app->redirect($app['url_generator']->generate('user.login'));
         }
 
-        $error = '';
-        if ($request->isMethod('POST')) {
-            // Validate the password
-            $password = $request->request->get('password');
-            if ($password != $request->request->get('confirm_password')) {
-                $error = 'Passwords don\'t match.';
-            } else if ($error = $this->userManager->validatePasswordStrength($user, $password)) {
-                ;
-            } else {
-                // Set the password and log in.
-                $this->userManager->setUserPassword($user, $password);
-                $user->setConfirmationToken(null);
-                $user->setEnabled(true);
-                $this->userManager->save($user);
+        $resetPasswordForm = $this->formFactory->createBuilder($this->forms['reset_password'], new PasswordReset());
+        $resetPasswordForm = $resetPasswordForm->getForm();
 
-                $this->userManager->loginAsUser($user);
+        $resetPasswordForm->handleRequest($request);
+        if ($resetPasswordForm->isValid()) {
+            /** @var PasswordReset $passwordReset */
+            $passwordReset = $resetPasswordForm->getData();
 
-                $app['session']->getFlashBag()->set('alert', 'Your password has been reset and you are now signed in.');
+            $this->userManager->setUserPassword($user, $passwordReset->getNewPassword());
+            $user->setConfirmationToken(null);
+            $user->setEnabled(true);
+            $this->userManager->save($user);
 
-                return $app->redirect($app['url_generator']->generate('user.view', array('id' => $user->getId())));
-            }
+            $this->userManager->loginAsUser($user);
+
+            $app['session']->getFlashBag()->set('alert', 'Your password has been reset and you are now signed in.');
+
+            return $app->redirect($app['url_generator']->generate('user.view', array('id' => $user->getId())));
         }
 
         return $app['twig']->render($this->getTemplate('reset-password'), array(
             'layout_template' => $this->getTemplate('layout'),
-            'user' => $user,
-            'token' => $token,
-            'error' => $error,
+            'resetPasswordForm' => $resetPasswordForm->createView(),
+            'user' => $user
         ));
-    }
-
-    /**
-     * @param Request $request
-     * @return User
-     * @throws InvalidArgumentException
-     */
-    protected function createUserFromRequest(Request $request)
-    {
-        if ($request->request->get('password') != $request->request->get('confirm_password')) {
-            throw new InvalidArgumentException('Passwords don\'t match.');
-        }
-
-        $user = $this->userManager->create(
-            $request->request->get('email'),
-            $request->request->get('password'),
-            $request->request->get('name') ?: null);
-
-        if ($username = $request->request->get('username')) {
-            $user->setUsername($username);
-        }
-
-        $errors = $this->userManager->validate($user);
-        if (!empty($errors)) {
-            throw new InvalidArgumentException(implode("\n", $errors));
-        }
-
-        return $user;
     }
 
     /**
