@@ -2,6 +2,9 @@
 
 namespace rootLogin\UserProvider\Provider;
 
+use rootLogin\UserProvider\Command\UserRoleAddCommand;
+use rootLogin\UserProvider\Command\UserRoleListCommand;
+use rootLogin\UserProvider\Command\UserRoleRemoveCommand;
 use rootLogin\UserProvider\Form\Type\ChangePasswordType;
 use rootLogin\UserProvider\Form\Type\EditType;
 use rootLogin\UserProvider\Form\Type\ForgotPasswordType;
@@ -99,6 +102,9 @@ class UserProviderServiceProvider implements ServiceProviderInterface
                     $commands[] = new UserCreateCommand($app);
                     $commands[] = new UserListCommand($app);
                     $commands[] = new UserDeleteCommand($app);
+                    $commands[] = new UserRoleAddCommand($app);
+                    $commands[] = new UserRoleListCommand($app);
+                    $commands[] = new UserRoleRemoveCommand($app);
 
                     return $commands;
                 })
