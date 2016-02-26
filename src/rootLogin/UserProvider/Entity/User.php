@@ -336,7 +336,7 @@ class User implements AdvancedUserInterface, \Serializable
      */
     public function getDisplayName()
     {
-        return $this->name ?: 'Anonymous ' . $this->id;
+        return $this->getName() ?: 'Anonymous ' . $this->id;
     }
 
     /**
