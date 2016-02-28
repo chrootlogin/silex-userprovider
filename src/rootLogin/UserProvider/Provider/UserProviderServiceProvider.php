@@ -96,6 +96,14 @@ class UserProviderServiceProvider implements ServiceProviderInterface
             }
         });
 
+        $app['translator'] = $app->share($app->extend('translator', function($translator, $app) {
+            $translator->addLoader('yaml', new YamlFileLoader());
+            $translator->addResource('yaml', __DIR__ . '/../Resources/translations/messages.de.yml', 'de', 'messages');
+            $translator->addResource('yaml', __DIR__ . '/../Resources/translations/validators.de.yml', 'de', 'validators');
+
+            return $translator;
+        }));
+
         // If symfony console is available, enable them
         if (isset($app['console.commands'])) {
             $app['console.commands'] = $app->share(
@@ -110,16 +118,6 @@ class UserProviderServiceProvider implements ServiceProviderInterface
                     return $commands;
                 })
             );
-        }
-
-        if(isset($app['translator'])) {
-            $app['translator'] = $app->share($app->extend('translator', function($translator, $app) {
-                $translator->addLoader('yaml', new YamlFileLoader());
-                $translator->addResource('yaml', __DIR__ . '/../Resources/translations/messages.de.yml', 'de', 'messages');
-                $translator->addResource('yaml', __DIR__ . '/../Resources/translations/validators.de.yml', 'de', 'validators');
-
-                return $translator;
-            }));
         }
     }
 
