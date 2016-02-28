@@ -35,7 +35,7 @@ class UserProviderControllerProvider implements ControllerProviderInterface
         /** @var ControllerCollection $controllers */
         $controllers = $app['controllers_factory'];
 
-        $controllers->get('/', 'user.controller:viewSelfAction')
+        $controllers->get('/profile', 'user.controller:viewSelfAction')
             ->bind('user')
             ->before(function(Request $request) use ($app) {
                 // Require login. This should never actually cause access to be denied,
@@ -45,20 +45,34 @@ class UserProviderControllerProvider implements ControllerProviderInterface
                 }
             });
 
-        $controllers->method('GET|POST')->get('/change-password', 'user.controller:changePasswordAction')
-            ->bind('user.change-password');
+        $controllers->get('/profile/edit', 'user.controller:editSelfAction')
+            ->bind('user.profile-edit')
+            ->before(function(Request $request) use ($app) {
+                if (!$app['user']) { // require login
+                    throw new AccessDeniedException();
+                }
+            });
 
-        $controllers->method('GET')->get('/{id}', 'user.controller:viewAction')
+        $controllers->method('GET|POST')->get('/change-password', 'user.controller:changePasswordAction')
+            ->bind('user.change-password')
+            ->before(function(Request $request) use ($app) {
+                if (!$app['user']) { // require login
+                    throw new AccessDeniedException();
+                }
+            });;
+
+        $controllers->method('GET')->get('/profile/{id}', 'user.controller:viewAction')
             ->bind('user.view')
             ->assert('id', '\d+');
 
-        $controllers->method('GET|POST')->match('/{id}/edit', 'user.controller:editAction')
+        $controllers->method('GET|POST')->match('/profile/{id}/edit', 'user.controller:editAction')
             ->bind('user.edit')
             ->before(function(Request $request) use ($app) {
                 if (!$app['security']->isGranted('EDIT_USER_ID', $request->get('id'))) {
                     throw new AccessDeniedException();
                 }
-            });
+            })
+            ->assert('id', '\d+');
 
         $controllers->get('/list', 'user.controller:listAction')
             ->bind('user.list');

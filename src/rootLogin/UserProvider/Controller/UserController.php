@@ -184,6 +184,20 @@ class UserController
     }
 
     /**
+     * Self-service of the user
+     *
+     * @param Application $app
+     * @param Request $request
+     * @return Response
+     */
+    public function editSelfAction(Application $app, Request $request)
+    {
+        $id = $app['user']->getId();
+
+        return $this->editAction($app, $request, $id);
+    }
+
+    /**
      * Change password action.
      *
      * @param Application $app
