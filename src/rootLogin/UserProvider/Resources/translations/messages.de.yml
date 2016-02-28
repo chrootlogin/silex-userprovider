@@ -1,0 +1,69 @@
+## Layout
+Create account: Registrieren
+List users: Benutzerliste
+Sign in: Einloggen
+
+## Login
+Don't have an account?: Hast du noch keinen Account?
+Register now.: Registriere dich jetzt.
+Email: E-Mail
+Password: Passwort
+Remember me on this computer: Mein Login auf diesem Computer speichern
+Forgot your password?: Hast du dein Passwort vergessen?
+
+## Register
+'Hello, %name%. You are already registered and signed in.': Hallo %name%. Du bist bereits registriert und eingeloggt.
+Sign out: Ausloggen
+Create an account: Einen Account erstellen
+Already have an account?: Hast du bereits einen Account?
+Sign in now.: Log dich jetzt ein.
+Repeat password: Passwort wiederholen
+Register: Registrieren
+
+## Login confirmation needed
+Email confirmation needed: Bestätigung der E-Mailadresse nötig.
+Your account is not yet active: Dein Account wurde noch nicht aktiviert.
+An email should have been sent to you at <strong>%email%</strong> when you registered.: Als du dich registriert hast haben wir eine E-Mail für dich an die Adresse <strong>%email%</strong> gesendet.
+Please click the link in that message to confirm your email address and activate your account.: Klicke auf den Link in dieser Nachricht um deine Adresse zu bestätigen.
+Resend the message: E-Mail erneuert senden
+If you don't get an email within a few minutes, make sure to check your spam or junk folder. The sender is <strong>%fromAddress%</strong>.: Wenn du in den nächsten paar Minuten keine E-Mail erhältst, überprüfe bitte deinen Spam oder Junk-Mail Ordner. Der Absender ist <strong>%fromAddress%</strong>.
+
+## Register confirmation sent
+Please click the link in that message to activate your account.: Bitte klicke auf den Link in dieser Nachricht um deinen Account zu aktivieren.
+An email has been sent to you at <strong>%email%</strong>.: Eine E-Mail für dich wurde für dich an <strong>%email%</strong> gesendet.
+
+## View
+Pending email confirmation.: Warten auf E-Mail Bestätigung.
+(visible to admins only): (Nur für Administratoren sichtbar)
+Registered: Registriert
+Edit: Bearbeiten
+Change password: Passwort ändern
+
+## Edit
+Edit your profile: Bearbeite dein Profil
+Edit User: Bearbeite Benutzer
+
+## Password change page
+Change your password: Ändere dein Passwort
+Old password: Aktuelles Passwort
+New password: Neues Passwort
+Repeat new password: Neues Passwort wiederholen
+Save: Speichern
+
+## Forgot password
+Enter your email address below and we'll send you password reset instructions.: Geib unten deine E-Mailadresse ein und wird werden dir die nötigen Anweisungen schicken, dein Passwort zurückzusetzen.
+Reset: Zurücksetzen
+
+## Controller
+No user was found with that ID.: Kein Benutzer mit dieser ID wurde gefunden.
+That user is disabled (pending email confirmation).: Dieser Benutzer ist deaktiviert (wartet auf E-Mail Bestätigung).
+Saved account information.: Die Benutzereinstellungen wurden gespeichert.
+You need to be logged in.: Du musst eingeloggt sein.
+Changed password.: Das Passwort wurde geändert.
+Sorry, your email confirmation link has expired.: Entschuldigung, aber dein E-Mail Bestätigungslink ist leider abgelaufen.
+Thank you! Your account has been activated.: Danke! Dein Account wurde aktiviert.
+No user account was found with that email address.: Es wurde kein Benutzeraccount mit dieser E-Mailadresse gefunden.
+Password resetting is not enabled.: Die Funktion "Passwort zurücksetzen" wurde vom Administrator deaktiviert.
+Instructions for resetting your password have been emailed to you.: Wir haben dir Anweisungen geschickt, wie du dein Passwort zurücksetzen kannst.
+Sorry, your password reset link has expired.: Es tut uns leid, aber der Link um dein Passwort zurückzusetzen ist leider abgelaufen.
+Your password has been reset and you are now signed in.: Dein Passwort wurde zurückgesetzt und du bist jetzt eingeloggt.

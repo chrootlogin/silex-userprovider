@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app.request.locale }}">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -40,8 +40,8 @@
                                 </ul>
                             </li>
                         {% else %}
-                            <li><a href="{{ path('user.login') }}">Sign in</a></li>
-                            <li><a href="{{ path('user.register') }}">Create account</a></li>
+                            <li><a href="{{ path('user.login') }}">{{ 'Sign in' | trans({}, 'messages') }}</a></li>
+                            <li><a href="{{ path('user.register') }}">{{ 'Create account' | trans({}, 'messages') }}</a></li>
                         {% endif %}
                     </ul>
                 </div><!-- /.navbar-collapse -->

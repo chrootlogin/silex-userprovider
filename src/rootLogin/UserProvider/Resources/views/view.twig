@@ -14,8 +14,8 @@
 
         {% if not user.isEnabled %}
             <div style="margin-bottom: 5px;">
-                <span class="label label-danger">Pending email confirmation</span>
-                <span class="text-muted">(visible to admins only)</span>
+                <span class="label label-danger">{{ 'Pending email confirmation.' | trans({}, 'messages') }}</span>
+                <span class="text-muted">{{ '(visible to admins only)' | trans({}, 'messages') }}</span>
             </div>
         {% endif %}
 
@@ -27,12 +27,16 @@
         {% endif %}
 
         <div class="text-muted">
-            Registered {{ user.timeCreated|date('F j, Y') }}
+            {{ 'Registered' | trans({}, 'messages') }} {{ user.timeCreated|date('F j, Y') }}
         </div>
 
-        {% if is_granted('EDIT_USER', user) %}
+        {% if user == app.user %}
+            <div style="margin-top: 10px;">
+                <a href="{{ path('user.profile-edit') }}"><span class="glyphicon glyphicon-edit" style="margin-right: 5px;"></span>{{ 'Edit' | trans({}, 'messages') }}</a> | <a href="{{ path('user.change-password') }}"><span class="glyphicon glyphicon-edit" style="margin-right: 5px;"></span>{{ 'Change password' | trans({}, 'messages') }}</a>
+            </div>
+        {% elseif is_granted('EDIT_USER', user) %}
             <div>
-                <a href="{{ path('user.edit', {'id': user.id}) }}"><span class="glyphicon glyphicon-edit" style="margin-right: 5px;"></span>Edit</a>
+                <a href="{{ path('user.edit', {'id': user.id}) }}"><span class="glyphicon glyphicon-edit" style="margin-right: 5px;"></span>{{ 'Edit' | trans({}, 'messages') }}</a>
             </div>
         {% endif %}
     </div>

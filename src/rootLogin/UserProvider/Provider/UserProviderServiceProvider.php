@@ -27,6 +27,7 @@ use Silex\ServiceProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authorization\Voter\RoleHierarchyVoter;
 use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Translation\Loader\YamlFileLoader;
 
 class UserProviderServiceProvider implements ServiceProviderInterface
 {
@@ -109,6 +110,16 @@ class UserProviderServiceProvider implements ServiceProviderInterface
                     return $commands;
                 })
             );
+        }
+
+        if(isset($app['translator'])) {
+            $app['translator'] = $app->share($app->extend('translator', function($translator, $app) {
+                $translator->addLoader('yaml', new YamlFileLoader());
+                $translator->addResource('yaml', __DIR__ . '/../Resources/translations/messages.de.yml', 'de', 'messages');
+                $translator->addResource('yaml', __DIR__ . '/../Resources/translations/validators.de.yml', 'de', 'validators');
+
+                return $translator;
+            }));
         }
     }
 
@@ -296,7 +307,7 @@ class UserProviderServiceProvider implements ServiceProviderInterface
         $app['user.controller'] = $app->share(function ($app) {
             $app['user.options.init']();
 
-            $controller = new UserController($app['user.manager'], $app['form.factory']);
+            $controller = new UserController($app['user.manager'], $app['form.factory'], $app['translator']);
             $controller->setUsernameRequired($app['user.options']['isUsernameRequired']);
             $controller->setEmailConfirmationRequired($app['user.options']['emailConfirmation']['required']);
             $controller->setTemplates($app['user.options']['templates']);

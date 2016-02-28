@@ -6,8 +6,8 @@
 
     <h1>Thank you!</h1>
 
-    <p>An email has been sent to you at <strong>{{ email }}</strong>.</p>
+    <p>{{ 'An email has been sent to you at <strong>%email%</strong>.' | trans({'%email%': email}, 'messages') | raw }}</p>
 
-    <p>Please click the link in that message to activate your account.</p>
+    <p>{{ 'Please click the link in that message to activate your account.' | trans({}, 'messages') }}</p>
 
 {% endblock %}

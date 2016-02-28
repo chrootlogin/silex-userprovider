@@ -25,6 +25,7 @@
 namespace rootLogin\UserProvider\Validator\Constraints;
 
 use rootLogin\UserProvider\Entity\User;
+use rootLogin\UserProvider\Form\Model\PasswordForgotten;
 use rootLogin\UserProvider\Interfaces\UserManagerInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -36,15 +37,15 @@ class EMailExistsValidator extends ConstraintValidator
      */
     private $userManager;
 
-    public function validate($user, Constraint $constraint)
+    public function validate($passwordForgotten, Constraint $constraint)
     {
-        /** @var User $user */
+        /** @var PasswordForgotten $user */
         $exists = $this->userManager->findOneBy(
-            array('email' => $user->getEmail())
+            array('email' => $passwordForgotten->getEmail())
         );
 
         if ($exists === null) {
-            $this->context->addViolationAt('email',$constraint->eMailDoesNotExist, array('{{ email }}' => $user->getEmail()));
+            $this->context->addViolationAt('email',$constraint->eMailDoesNotExist, array('{{ email }}' => $passwordForgotten->getEmail()));
 
             return false;
         }

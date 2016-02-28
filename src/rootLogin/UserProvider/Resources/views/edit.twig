@@ -2,12 +2,15 @@
 
 {% form_theme editForm 'bootstrap_3_layout.html.twig' %}
 
-{% block title %}Edit User: {{ user.displayName }}{% endblock %}
+{% block title %}{{ 'Edit User' | trans({}, 'messages') }}: {{ user.displayName }}{% endblock %}
 
 {% block content %}
-
     <h1>
-        Edit User: {{ user.displayName }}
+        {% if app.user == user %}
+            {{ 'Edit your profile' | trans({}, 'messages') }}
+        {% else %}
+            {{ 'Edit User' | trans({}, 'messages') }}: {{ user.displayName }}
+        {% endif %}
     </h1>
 
     {{ form_start(editForm) }}

@@ -35,7 +35,7 @@ use Doctrine\Common\Annotations\Annotation;
  */
 class EMailIsUnique extends Constraint
 {
-    public $eMailExists = 'E-Mail {{ email }} does already exist.';
+    public $eMailExists = 'Email {{ email }} already exist.';
     public $entity;
     public $field;
 

@@ -38,6 +38,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\DisabledException;
 use InvalidArgumentException;
 use JasonGrimes\Paginator;
+use Symfony\Component\Translation\Translator;
 
 /**
  * Controller with actions for handling form-based authentication and user management.
@@ -51,9 +52,21 @@ class UserController
      */
     protected $formFactory;
 
-    /** @var UserManagerInterface */
+    /**
+     * @var UserManagerInterface
+     */
     protected $userManager;
 
+    /**
+     * @var Translator
+     */
+    protected $translator;
+
+    /**
+     * Template settings
+     *
+     * @var array
+     */
     protected $templates = [
         'layout' => '@user/layout.twig',
         'register' => '@user/register.twig',
@@ -68,6 +81,11 @@ class UserController
         'list' => '@user/list.twig',
     ];
 
+    /**
+     * Form settings
+     *
+     * @var array
+     */
     protected $forms = [
         'register' => 'rup_register',
         'edit' => 'rup_edit',
@@ -88,10 +106,11 @@ class UserController
      *
      * @param UserManagerInterface $userManager
      */
-    public function __construct(UserManagerInterface $userManager, FormFactoryInterface $formFactory)
+    public function __construct(UserManagerInterface $userManager, FormFactoryInterface $formFactory, Translator $translator)
     {
         $this->userManager = $userManager;
         $this->formFactory = $formFactory;
+        $this->translator = $translator;
     }
 
     /**
@@ -146,6 +165,46 @@ class UserController
     }
 
     /**
+     * View user action.
+     *
+     * @param Application $app
+     * @param Request $request
+     * @param int $id
+     * @return Response
+     * @throws NotFoundHttpException if no user is found with that ID.
+     */
+    public function viewAction(Application $app, Request $request, $id)
+    {
+        $user = $this->userManager->getUser($id);
+
+        if (!$user) {
+            throw new NotFoundHttpException($this->trans('No user was found with that ID.'));
+        }
+
+        if (!$user->isEnabled() && !$app['security']->isGranted('ROLE_ADMIN')) {
+            throw new NotFoundHttpException($this->trans('That user is disabled (pending email confirmation).'));
+        }
+
+        return $app['twig']->render($this->getTemplate('view'), [
+            'layout_template' => $this->getTemplate('layout'),
+            'user' => $user,
+            'imageUrl' => $this->getGravatarUrl($user->getEmail()),
+        ]);
+
+    }
+
+    /**
+     * @param Application $app
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function viewSelfAction(Application $app, Request $request)
+    {
+        $id = $app['user']->getId();
+
+        return $this->viewAction($app, $request, $id);
+    }
+
+    /**
      * Edit user action.
      *
      * @param Application $app
@@ -158,7 +217,7 @@ class UserController
     {
         $user = $this->userManager->getUser($id);
         if(!$user) {
-            throw new NotFoundHttpException('No user was found with that ID.');
+            throw new NotFoundHttpException($this->trans('No user was found with that ID.'));
         }
 
         $editForm = $this->formFactory->createBuilder($this->forms['edit'], $user);
@@ -172,7 +231,7 @@ class UserController
 
             $this->userManager->save($user);
 
-            $msg = 'Saved account information.';
+            $msg = $this->trans('Saved account information.');
             $app['session']->getFlashBag()->set('alert', $msg);
         }
 
@@ -209,7 +268,7 @@ class UserController
         /** @var User $user */
         $user = $this->userManager->getCurrentUser();
         if(!$user) {
-            throw new AccessDeniedException('You need to be logged in.');
+            throw new AccessDeniedException($this->trans('You need to be logged in.'));
         }
 
         $changePasswordForm = $this->formFactory->createBuilder($this->forms['change_password'], new PasswordChange());
@@ -224,7 +283,7 @@ class UserController
             $this->userManager->setUserPassword($user, $passwordChange->getNewPassword());
             $this->userManager->save($user);
 
-            $msg = 'Changed password.';
+            $msg = $this->trans('Changed password.');
             $app['session']->getFlashBag()->set('alert', $msg);
         }
 
@@ -247,7 +306,7 @@ class UserController
     {
         $user = $this->userManager->findOneBy(['confirmationToken' => $token]);
         if (!$user) {
-            $app['session']->getFlashBag()->set('alert', 'Sorry, your email confirmation link has expired.');
+            $app['session']->getFlashBag()->set('alert', $this->trans('Sorry, your email confirmation link has expired.'));
 
             return $app->redirect($app['url_generator']->generate('user.login'));
         }
@@ -256,7 +315,7 @@ class UserController
         $user->setEnabled(true);
         $this->userManager->save($user);
 
-        $app['session']->getFlashBag()->set('alert', 'Thank you! Your account has been activated.');
+        $app['session']->getFlashBag()->set('alert', $this->trans('Thank you! Your account has been activated.'));
 
         return $app->redirect($app['url_generator']->generate('user.view', ['id' => $user->getId()]));
     }
@@ -308,7 +367,7 @@ class UserController
         $email = $request->request->get('email');
         $user = $this->userManager->findOneBy(['email' => $email]);
         if (!$user) {
-            throw new NotFoundHttpException('No user account was found with that email address.');
+            throw new NotFoundHttpException($this->trans('No user account was found with that email address.'));
         }
 
         if (!$user->getConfirmationToken()) {
@@ -335,7 +394,7 @@ class UserController
     public function forgotPasswordAction(Application $app, Request $request)
     {
         if (!$this->isPasswordResetEnabled()) {
-            throw new NotFoundHttpException('Password resetting is not enabled.');
+            throw new NotFoundHttpException($this->trans('Password resetting is not enabled.'));
         }
 
         $forgotPasswordForm = $this->formFactory->createBuilder($this->forms['forgot_password'], new PasswordForgotten());
@@ -357,7 +416,7 @@ class UserController
                 $this->userManager->save($user);
 
                 $app['user.mailer']->sendResetMessage($user);
-                $app['session']->getFlashBag()->set('alert', 'Instructions for resetting your password have been emailed to you.');
+                $app['session']->getFlashBag()->set('alert', $this->trans('Instructions for resetting your password have been emailed to you.'));
 
                 return $app->redirect($app['url_generator']->generate('user.login'));
             }
@@ -385,7 +444,7 @@ class UserController
     public function resetPasswordAction(Application $app, Request $request, $token)
     {
         if (!$this->isPasswordResetEnabled()) {
-            throw new NotFoundHttpException('Password resetting is not enabled.');
+            throw new NotFoundHttpException($this->trans('Password resetting is not enabled.'));
         }
 
         $tokenExpired = false;
@@ -396,7 +455,7 @@ class UserController
         }
 
         if ($tokenExpired) {
-            $app['session']->getFlashBag()->set('alert', 'Sorry, your password reset link has expired.');
+            $app['session']->getFlashBag()->set('alert', $this->trans('Sorry, your password reset link has expired.'));
             return $app->redirect($app['url_generator']->generate('user.login'));
         }
 
@@ -415,7 +474,7 @@ class UserController
 
             $this->userManager->loginAsUser($user);
 
-            $app['session']->getFlashBag()->set('alert', 'Your password has been reset and you are now signed in.');
+            $app['session']->getFlashBag()->set('alert', $this->trans('Your password has been reset and you are now signed in.'));
 
             return $app->redirect($app['url_generator']->generate('user.view', ['id' => $user->getId()]));
         }
@@ -425,47 +484,6 @@ class UserController
             'resetPasswordForm' => $resetPasswordForm->createView(),
             'user' => $user
         ]);
-    }
-
-    /**
-     * View user action.
-     *
-     * @param Application $app
-     * @param Request $request
-     * @param int $id
-     * @return Response
-     * @throws NotFoundHttpException if no user is found with that ID.
-     */
-    public function viewAction(Application $app, Request $request, $id)
-    {
-        $user = $this->userManager->getUser($id);
-
-        if (!$user) {
-            throw new NotFoundHttpException('No user was found with that ID.');
-        }
-
-        if (!$user->isEnabled() && !$app['security']->isGranted('ROLE_ADMIN')) {
-            throw new NotFoundHttpException('That user is disabled (pending email confirmation).');
-        }
-
-        return $app['twig']->render($this->getTemplate('view'), [
-            'layout_template' => $this->getTemplate('layout'),
-            'user' => $user,
-            'imageUrl' => $this->getGravatarUrl($user->getEmail()),
-        ]);
-
-    }
-
-    /**
-     * @param Application $app
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function viewSelfAction(Application $app) {
-        if (!$app['user']) {
-            return $app->redirect($app['url_generator']->generate('user.login'));
-        }
-
-        return $app->redirect($app['url_generator']->generate('user.view', ['id' => $app['user']->getId()]));
     }
 
     /**
@@ -613,5 +631,10 @@ class UserController
     public function getForm($key)
     {
         return $this->forms[$key];
+    }
+
+    protected function trans($message, array $parameters = [])
+    {
+        return $this->translator->trans($message, $parameters, 'messages');
     }
 }

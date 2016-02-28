@@ -35,7 +35,7 @@ use Doctrine\Common\Annotations\Annotation;
  */
 class EMailExists extends Constraint
 {
-    public $eMailDoesNotExist = 'E-Mail {{ email }} doesn\'t exist.';
+    public $eMailDoesNotExist = 'Email {{ email }} doesn\'t exist.';
     public $entity;
     public $field;
 

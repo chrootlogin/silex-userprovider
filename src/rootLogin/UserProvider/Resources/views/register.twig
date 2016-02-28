@@ -2,21 +2,19 @@
 
 {% form_theme registerForm 'bootstrap_3_layout.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}{{ 'Register' | trans({}, 'messages') }}{% endblock %}
 
 {% block content %}
-
     {% if app.user %}
-        <p>Hello, {{ app.user.displayName }}. You are already registered and signed in.</p>
-        <p><a href="{{ path('user.logout') }}">Sign out</a></p>
-
+        <p>{{ 'Hello, %name%. You are already registered and signed in.' | trans({ '%name%': app.user.displayName }, 'messages') }}</p>
+        <p><a href="{{ path('user.logout') }}">{{ 'Sign out' | trans({}, 'messages') }}</a></p>
     {% else %}
         <h1>
-            Create an account
+            {{ 'Create an account' | trans({}, 'messages') }}
         </h1>
 
         <p class="text-muted lead">
-            Already have an account? <a href="{{ path('user.login') }}">Sign in now.</a>
+            {{ 'Already have an account?' | trans({}, 'messages') }} <a href="{{ path('user.login') }}">{{ 'Sign in now.' | trans({}, 'messages') }}</a>
         </p>
 
         {{ form_start(registerForm) }}
