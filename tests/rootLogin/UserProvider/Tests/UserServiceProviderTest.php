@@ -13,6 +13,7 @@ class UserServiceProviderTest extends \PHPUnit_Framework_TestCase
     {
         $app = new Application();
 
+        $app->register(new Provider\TranslationServiceProvider());
         $app->register(new Provider\ValidatorServiceProvider());
         $app->register(new Provider\FormServiceProvider());
         $app->register(new Provider\SecurityServiceProvider(),
