@@ -10,6 +10,7 @@
  * Moved the documentation to [ReadTheDocs](http://silex-userprovider.readthedocs.org/en/nextgen/).
  * Now using symfony forms
  * Added EMailIsUnique validator
+ * Added EMailExists validator
  * Now comes with translations
  
 # Version 2.0.2
