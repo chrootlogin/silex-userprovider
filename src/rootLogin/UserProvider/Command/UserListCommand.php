@@ -65,7 +65,7 @@ EOT
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $users = $this->app['user.manager']->findBy();
+        $users = $this->app['user.manager']->findBy([]);
 
         $output->writeln("User list\n");
 

@@ -94,12 +94,13 @@ class UserController
         'reset_password' => 'rup_reset_password'
     ];
 
-    // Custom fields to support in the editAction().
-    protected $editCustomFields = array();
-
     protected $isUsernameRequired = false;
     protected $isEmailConfirmationRequired = false;
     protected $isPasswordResetEnabled = true;
+
+    // Custom fields to support in the editAction().
+    /** @deprecated not used anymore */
+    protected $editCustomFields = array();
 
     /**
      * Constructor.
@@ -111,6 +112,40 @@ class UserController
         $this->userManager = $userManager;
         $this->formFactory = $formFactory;
         $this->translator = $translator;
+    }
+
+    /**
+     * Login action.
+     *
+     * @param Application $app
+     * @param Request $request
+     * @return Response
+     */
+    public function loginAction(Application $app, Request $request)
+    {
+        $authException = $app['user.last_auth_exception']($request);
+
+        if ($authException instanceof DisabledException) {
+            // This exception is thrown if (!$user->isEnabled())
+            // Warning: Be careful not to disclose any user information besides the email address at this point.
+            // The Security system throws this exception before actually checking if the password was valid.
+            $user = $this->userManager->refreshUser($authException->getUser());
+
+            return $app['twig']->render($this->getTemplate('login-confirmation-needed'), [
+                'layout_template' => $this->getTemplate('layout'),
+                'email' => $user->getEmail(),
+                'fromAddress' => $app['user.mailer']->getFromAddress(),
+                'resendUrl' => $app['url_generator']->generate('user.resend-confirmation'),
+            ]);
+        }
+
+        return $app['twig']->render($this->getTemplate('login'), [
+            'layout_template' => $this->getTemplate('layout'),
+            'error' => $authException ? $authException->getMessageKey() : null,
+            'last_username' => $app['session']->get('_security.last_username'),
+            'allowRememberMe' => isset($app['security.remember_me.response_listener']),
+            'allowPasswordReset' => $this->isPasswordResetEnabled(),
+        ]);
     }
 
     /**
@@ -321,40 +356,6 @@ class UserController
     }
 
     /**
-     * Login action.
-     *
-     * @param Application $app
-     * @param Request $request
-     * @return Response
-     */
-    public function loginAction(Application $app, Request $request)
-    {
-        $authException = $app['user.last_auth_exception']($request);
-
-        if ($authException instanceof DisabledException) {
-            // This exception is thrown if (!$user->isEnabled())
-            // Warning: Be careful not to disclose any user information besides the email address at this point.
-            // The Security system throws this exception before actually checking if the password was valid.
-            $user = $this->userManager->refreshUser($authException->getUser());
-
-            return $app['twig']->render($this->getTemplate('login-confirmation-needed'), [
-                'layout_template' => $this->getTemplate('layout'),
-                'email' => $user->getEmail(),
-                'fromAddress' => $app['user.mailer']->getFromAddress(),
-                'resendUrl' => $app['url_generator']->generate('user.resend-confirmation'),
-            ]);
-        }
-
-        return $app['twig']->render($this->getTemplate('login'), [
-            'layout_template' => $this->getTemplate('layout'),
-            'error' => $authException ? $authException->getMessageKey() : null,
-            'last_username' => $app['session']->get('_security.last_username'),
-            'allowRememberMe' => isset($app['security.remember_me.response_listener']),
-            'allowPasswordReset' => $this->isPasswordResetEnabled(),
-        ]);
-    }
-
-    /**
      * Action to resend an email confirmation message.
      *
      * @param Application $app
@@ -486,28 +487,6 @@ class UserController
         ]);
     }
 
-    /**
-     * @param string $email
-     * @param int $size
-     * @return string
-     */
-    protected function getGravatarUrl($email, $size = 80)
-    {
-        // See https://en.gravatar.com/site/implement/images/ for available options.
-        return '//www.gravatar.com/avatar/' . md5(strtolower(trim($email))) . '?s=' . $size . '&d=identicon';
-    }
-
-    /**
-     * Specify custom fields to support in the editAction().
-     *
-     * @param array $editCustomFields
-     */
-    public function setEditCustomFields(array $editCustomFields)
-    {
-        $this->editCustomFields = $editCustomFields;
-    }
-
-
     public function listAction(Application $app, Request $request)
     {
         $order_by = $request->get('order_by') ?: 'name';
@@ -547,6 +526,18 @@ class UserController
             'lastResult' => $paginator->getCurrentPageLastItem(),
         ]);
     }
+
+    /**
+     * Specify custom fields to support in the editAction().
+     *
+     * @deprecated not in use anymore
+     * @param array $editCustomFields
+     */
+    public function setEditCustomFields(array $editCustomFields)
+    {
+        $this->editCustomFields = $editCustomFields;
+    }
+
 
     /**
      * @param boolean $passwordResetEnabled
@@ -633,8 +624,26 @@ class UserController
         return $this->forms[$key];
     }
 
+    /**
+     * Shortcut for translating a string
+     *
+     * @param $message
+     * @param array $parameters
+     * @return string
+     */
     protected function trans($message, array $parameters = [])
     {
         return $this->translator->trans($message, $parameters, 'messages');
+    }
+
+    /**
+     * @param string $email
+     * @param int $size
+     * @return string
+     */
+    protected function getGravatarUrl($email, $size = 80)
+    {
+        // See https://en.gravatar.com/site/implement/images/ for available options.
+        return '//www.gravatar.com/avatar/' . md5(strtolower(trim($email))) . '?s=' . $size . '&d=identicon';
     }
 }

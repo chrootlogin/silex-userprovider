@@ -24,45 +24,54 @@
 
 namespace rootLogin\UserProvider\Form\Type;
 
+use Doctrine\ORM\EntityManager;
+use rootLogin\UserProvider\Form\DataTransformer\RolesToRoleListTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class EditType extends AbstractType
+class UserRolesType extends AbstractType
 {
-    protected $security;
+    /**
+     * @var array
+     */
+    protected $userOptions;
 
-    public function __construct($security)
+    public function __construct(array $userOptions)
     {
-        $this->security = $security;
+        $this->userOptions = $userOptions;
     }
 
     /**
      * @param FormBuilderInterface $builder
-     * @param array                $options
+     * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('name', 'text')
-            ->add('email', 'email');
+        $transformer = new RolesToRoleListTransformer($this->userOptions);
+        $builder->addModelTransformer($transformer);
 
-        if($this->security->isGranted('ROLE_ADMIN')) {
-            $builder->add('roles', 'user_roles');
+        foreach($this->userOptions['roles'] as $role => $description)
+        {
+            $builder->add($role, 'checkbox', [
+                'label' => $role
+            ]);
         }
-
-        $builder->add('save', 'submit');
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'rootLogin\UserProvider\Entity\User',
-        ));
+        $resolver->setDefaults([
+            'type' => 'checkbox'
+        ]);
     }
 
     public function getName()
     {
-        return 'rup_edit';
+        return 'user_roles';
     }
 }

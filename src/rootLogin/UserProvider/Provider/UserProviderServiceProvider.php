@@ -9,6 +9,7 @@ use rootLogin\UserProvider\Form\Type\ChangePasswordType;
 use rootLogin\UserProvider\Form\Type\EditType;
 use rootLogin\UserProvider\Form\Type\ForgotPasswordType;
 use rootLogin\UserProvider\Form\Type\ResetPasswordType;
+use rootLogin\UserProvider\Form\Type\UserRolesType;
 use rootLogin\UserProvider\Validator\Constraints\EMailExistsValidator;
 use rootLogin\UserProvider\Validator\Constraints\EMailIsUniqueValidator;
 use rootLogin\UserProvider\Command\UserCreateCommand;
@@ -213,6 +214,11 @@ class UserProviderServiceProvider implements ServiceProviderInterface
             // By default, users sign in with their email address instead.
             'isUsernameRequired' => false,
 
+            // List of available roles.
+            'roles' => [
+                'ROLE_ADMIN' => 'This user has administrator privileges.'
+            ],
+
             // A list of custom fields to support in the edit controller. (dbal mode only)
             'editCustomFields' => [],
 
@@ -400,7 +406,8 @@ class UserProviderServiceProvider implements ServiceProviderInterface
     {
         $app['form.types'] = $app->share($app->extend('form.types', function ($types) use ($app) {
             $types[] = new RegisterType();
-            $types[] = new EditType();
+            $types[] = new EditType($app['security']);
+            $types[] = new UserRolesType($app['user.options']);
             $types[] = new ChangePasswordType();
             $types[] = new ForgotPasswordType();
             $types[] = new ResetPasswordType();
