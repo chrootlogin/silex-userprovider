@@ -29,14 +29,14 @@
                         {% if app.user %}
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    Hello, {{ app.user.displayName }}!
+                                    {{ 'Hello, %name%!' | trans({'%name%': app.user.displayName }, 'messages') }}
                                     <span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a href="{{ path('user') }}"><span class="glyphicon glyphicon-user"></span> View your profile</a></li>
-                                    <li><a href="{{ path('user.profile-edit') }}"><span class="glyphicon glyphicon-edit"></span> Edit your profile</a></li>
-                                    <li><a href="{{ path('user.change-password') }}"><span class="glyphicon glyphicon-edit"></span> Change your password</a></li>
-                                    <li><a href="{{ path('user.logout') }}"><span class="glyphicon glyphicon-off"></span> Sign out</a></li>
+                                    <li><a href="{{ path('user') }}"><span class="glyphicon glyphicon-user"></span> {{ 'View your profile' | trans({}, 'messages') }}</a></li>
+                                    <li><a href="{{ path('user.profile-edit') }}"><span class="glyphicon glyphicon-edit"></span> {{ 'Edit your profile' | trans({}, 'messages') }}</a></li>
+                                    <li><a href="{{ path('user.change-password') }}"><span class="glyphicon glyphicon-edit"></span> {{ 'Change your password' | trans({}, 'messages') }}</a></li>
+                                    <li><a href="{{ path('user.logout') }}"><span class="glyphicon glyphicon-off"></span> {{ 'Sign out' | trans({}, 'messages') }}</a></li>
                                 </ul>
                             </li>
                         {% else %}

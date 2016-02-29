@@ -2,6 +2,10 @@
 Create account: Registrieren
 List users: Benutzerliste
 Sign in: Einloggen
+Hello, %name%!: Hallo %name%!
+Edit your profile: Bearbeite dein Profil
+View your profile: Benutzerprofil ansehen
+Change your password: Ändere dein Passwort
 
 ## Login
 Don't have an account?: Hast du noch keinen Account?
@@ -40,11 +44,9 @@ Edit: Bearbeiten
 Change password: Passwort ändern
 
 ## Edit
-Edit your profile: Bearbeite dein Profil
 Edit User: Bearbeite Benutzer
 
 ## Password change page
-Change your password: Ändere dein Passwort
 Old password: Aktuelles Passwort
 New password: Neues Passwort
 Repeat new password: Neues Passwort wiederholen
