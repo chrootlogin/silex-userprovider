@@ -68,17 +68,17 @@ class UserController
      * @var array
      */
     protected $templates = [
-        'layout' => '@user/layout.twig',
-        'register' => '@user/register.twig',
-        'register-confirmation-sent' => '@user/register-confirmation-sent.twig',
-        'login' => '@user/login.twig',
-        'login-confirmation-needed' => '@user/login-confirmation-needed.twig',
-        'forgot-password' => '@user/forgot-password.twig',
-        'reset-password' => '@user/reset-password.twig',
-        'view' => '@user/view.twig',
-        'edit' => '@user/edit.twig',
-        'change-password' => '@user/change-password.twig',
-        'list' => '@user/list.twig',
+        'layout' => '@user/layout.html.twig',
+        'register' => '@user/register.html.twig',
+        'register-confirmation-sent' => '@user/register-confirmation-sent.html.twig',
+        'login' => '@user/login.html.twig',
+        'login-confirmation-needed' => '@user/login-confirmation-needed.html.twig',
+        'forgot-password' => '@user/forgot-password.html.twig',
+        'reset-password' => '@user/reset-password.html.twig',
+        'view' => '@user/view.html.twig',
+        'edit' => '@user/edit.html.twig',
+        'change-password' => '@user/change-password.html.twig',
+        'list' => '@user/list.html.twig',
     ];
 
     /**
