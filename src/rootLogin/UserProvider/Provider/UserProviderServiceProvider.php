@@ -168,6 +168,7 @@ class UserProviderServiceProvider implements ServiceProviderInterface
             // Specify custom view templates here.
             'templates' => [
                 'layout' => '@user/layout.html.twig',
+                'fragment-layout' => '@user/fragment-layout.html.twig',
                 'register' => '@user/register.html.twig',
                 'register-confirmation-sent' => '@user/register-confirmation-sent.html.twig',
                 'login' => '@user/login.html.twig',

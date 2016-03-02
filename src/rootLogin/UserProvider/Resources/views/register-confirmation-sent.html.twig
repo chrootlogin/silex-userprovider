@@ -4,7 +4,7 @@
 
 {% block content %}
 
-    <h1>Thank you!</h1>
+    <h1>{{ 'Thank you!' | trans({}, 'messages') }}</h1>
 
     <p>{{ 'An email has been sent to you at <strong>%email%</strong>.' | trans({'%email%': email}, 'messages') | raw }}</p>
 

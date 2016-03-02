@@ -35,6 +35,7 @@ If you don't get an email within a few minutes, make sure to check your spam or 
 ## Register confirmation sent
 Please click the link in that message to activate your account.: Bitte klicke auf den Link in dieser Nachricht um deinen Account zu aktivieren.
 An email has been sent to you at <strong>%email%</strong>.: Eine E-Mail für dich wurde für dich an <strong>%email%</strong> gesendet.
+Resend the message: Nachricht erneuert senden
 
 ## View
 Pending email confirmation.: Warten auf E-Mail Bestätigung.
@@ -57,6 +58,9 @@ Save: Speichern
 Enter your email address below and we'll send you password reset instructions.: Geib unten deine E-Mailadresse ein und wird werden dir die nötigen Anweisungen schicken, dein Passwort zurückzusetzen.
 Reset: Zurücksetzen
 
+## Confirmation sent
+Thank you!: Danke!
+
 ## Controller
 No user was found with that ID.: Kein Benutzer mit dieser ID wurde gefunden.
 That user is disabled (pending email confirmation).: Dieser Benutzer ist deaktiviert (wartet auf E-Mail Bestätigung).
@@ -70,3 +74,4 @@ Password resetting is not enabled.: Die Funktion "Passwort zurücksetzen" wurde 
 Instructions for resetting your password have been emailed to you.: Wir haben dir Anweisungen geschickt, wie du dein Passwort zurücksetzen kannst.
 Sorry, your password reset link has expired.: Es tut uns leid, aber der Link um dein Passwort zurückzusetzen ist leider abgelaufen.
 Your password has been reset and you are now signed in.: Dein Passwort wurde zurückgesetzt und du bist jetzt eingeloggt.
+Invalid credentials.: Deine Logindaten sind falsch. Bitte überprüfe E-Mail und Passwort.

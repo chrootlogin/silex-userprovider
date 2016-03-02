@@ -69,6 +69,7 @@ class UserController
      */
     protected $templates = [
         'layout' => '@user/layout.html.twig',
+        'fragment-layout' => '@user/fragment-layout.html.twig',
         'register' => '@user/register.html.twig',
         'register-confirmation-sent' => '@user/register-confirmation-sent.html.twig',
         'login' => '@user/login.html.twig',
@@ -139,9 +140,11 @@ class UserController
             ]);
         }
 
+        // if ?_fragment is set, then show the fragment template
+        $template = $request->get('_fragment') !== null ? $this->getTemplate('fragment-layout') : $this->getTemplate('layout');
         return $app['twig']->render($this->getTemplate('login'), [
-            'layout_template' => $this->getTemplate('layout'),
-            'error' => $authException ? $authException->getMessageKey() : null,
+            'layout_template' => $template,
+            'error' => $authException ? $this->trans($authException->getMessageKey()) : null,
             'last_username' => $app['session']->get('_security.last_username'),
             'allowRememberMe' => isset($app['security.remember_me.response_listener']),
             'allowPasswordReset' => $this->isPasswordResetEnabled(),
@@ -193,8 +196,10 @@ class UserController
             }
         }
 
+        // if ?_fragment is set, then show the fragment template
+        $template = $request->get('_fragment') !== null ? $this->getTemplate('fragment-layout') : $this->getTemplate('layout');
         return $app['twig']->render($this->getTemplate('register'), [
-            'layout_template' => $this->getTemplate('layout'),
+            'layout_template' => $template,
             'registerForm' => $registerForm->createView()
         ]);
     }
@@ -220,8 +225,10 @@ class UserController
             throw new NotFoundHttpException($this->trans('That user is disabled (pending email confirmation).'));
         }
 
+        // if ?_fragment is set, then show the fragment template
+        $template = $request->get('_fragment') !== null ? $this->getTemplate('fragment-layout') : $this->getTemplate('layout');
         return $app['twig']->render($this->getTemplate('view'), [
-            'layout_template' => $this->getTemplate('layout'),
+            'layout_template' => $template,
             'user' => $user,
             'imageUrl' => $this->getGravatarUrl($user->getEmail()),
         ]);
@@ -270,8 +277,10 @@ class UserController
             $app['session']->getFlashBag()->set('alert', $msg);
         }
 
+        // if ?_fragment is set, then show the fragment template
+        $template = $request->get('_fragment') !== null ? $this->getTemplate('fragment-layout') : $this->getTemplate('layout');
         return $app['twig']->render($this->getTemplate('edit'), [
-            'layout_template' => $this->getTemplate('layout'),
+            'layout_template' => $template,
             'editForm' => $editForm->createView(),
             'user' => $user
         ]);
@@ -322,8 +331,10 @@ class UserController
             $app['session']->getFlashBag()->set('alert', $msg);
         }
 
+        // if ?_fragment is set, then show the fragment template
+        $template = $request->get('_fragment') !== null ? $this->getTemplate('fragment-layout') : $this->getTemplate('layout');
         return $app['twig']->render($this->getTemplate('change-password'), [
-            'layout_template' => $this->getTemplate('layout'),
+            'layout_template' => $template,
             'changePasswordForm' => $changePasswordForm->createView()
         ]);
     }
@@ -379,8 +390,10 @@ class UserController
         $app['user.mailer']->sendConfirmationMessage($user);
 
         // Render the "go check your email" page.
+        // if ?_fragment is set, then show the fragment template
+        $template = $request->get('_fragment') !== null ? $this->getTemplate('fragment-layout') : $this->getTemplate('layout');
         return $app['twig']->render($this->getTemplate('register-confirmation-sent'), [
-            'layout_template' => $this->getTemplate('layout'),
+            'layout_template' => $template,
             'email' => $user->getEmail(),
         ]);
     }
@@ -427,8 +440,10 @@ class UserController
             $app['session']->getFlashBag()->set('alert', $msg);
         }
 
+        // if ?_fragment is set, then show the fragment template
+        $template = $request->get('_fragment') !== null ? $this->getTemplate('fragment-layout') : $this->getTemplate('layout');
         return $app['twig']->render($this->getTemplate('forgot-password'), [
-            'layout_template' => $this->getTemplate('layout'),
+            'layout_template' => $template,
             'forgotPasswordForm' => $forgotPasswordForm->createView(),
             'fromAddress' => $app['user.mailer']->getFromAddress()
         ]);
@@ -480,8 +495,10 @@ class UserController
             return $app->redirect($app['url_generator']->generate('user.view', ['id' => $user->getId()]));
         }
 
+        // if ?_fragment is set, then show the fragment template
+        $template = $request->get('_fragment') !== null ? $this->getTemplate('fragment-layout') : $this->getTemplate('layout');
         return $app['twig']->render($this->getTemplate('reset-password'), [
-            'layout_template' => $this->getTemplate('layout'),
+            'layout_template' => $template,
             'resetPasswordForm' => $resetPasswordForm->createView(),
             'user' => $user
         ]);
@@ -512,8 +529,10 @@ class UserController
             $user->imageUrl = $this->getGravatarUrl($user->getEmail(), 40);
         }
 
+        // if ?_fragment is set, then show the fragment template
+        $template = $request->get('_fragment') !== null ? $this->getTemplate('fragment-layout') : $this->getTemplate('layout');
         return $app['twig']->render($this->getTemplate('list'), [
-            'layout_template' => $this->getTemplate('layout'),
+            'layout_template' => $template,
             'users' => $users,
             'paginator' => $paginator,
 
