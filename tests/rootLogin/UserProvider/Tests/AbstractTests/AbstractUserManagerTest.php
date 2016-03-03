@@ -62,10 +62,10 @@ abstract class AbstractUserManagerTest extends AbstractTest
                 'orm.em.options' => [
                     'mappings' => [
                         [
-                            'type' => 'annotation',
+                            'type' => 'yml',
                             'namespace' => 'rootLogin\UserProvider\Entity',
-                            'path' => __DIR__ . '/../../../../../src/rootLogin/UserProvider/Entity',
-                            'use_simple_annotation_reader' => false
+                            'path' => __DIR__ . '/../../../../../src/rootLogin/UserProvider/Resources/mappings/',
+                            'alias' => 'rootLogin.UserProvider.Entity.User.orm.yml'
                         ],
                         [
                             'type' => 'annotation',
