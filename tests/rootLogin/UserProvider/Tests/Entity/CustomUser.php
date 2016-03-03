@@ -15,15 +15,4 @@ class CustomUser extends LegacyUser
     {
         $this->setCustomField('twitterUsername', $twitterUsername);
     }
-
-    public function validate()
-    {
-        $errors = parent::validate();
-
-        if ($this->getTwitterUsername() && strpos($this->getTwitterUsername(), '@') !== 0) {
-            $errors['twitterUsername'] = 'Twitter username must begin with @.';
-        }
-
-        return $errors;
-    }
 }

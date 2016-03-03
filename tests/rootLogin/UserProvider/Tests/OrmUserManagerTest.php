@@ -32,228 +32,36 @@ use rootLogin\UserProvider\Event\UserEvent;
 use rootLogin\UserProvider\Event\UserEvents;
 use rootLogin\UserProvider\Manager\OrmUserManager;
 use rootLogin\UserProvider\Manager\UserManager;
+use rootLogin\UserProvider\Tests\AbstractTests\AbstractUserManagerTest;
 use rootLogin\UserProvider\Tests\Entity\Orm\CustomUser;
 use Silex\Application;
 use Silex\Provider\DoctrineServiceProvider;
 use Silex\Provider\SecurityServiceProvider;
 use Doctrine\DBAL\Connection;
+use Silex\Provider\ValidatorServiceProvider;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Security\Http\Logout\DefaultLogoutSuccessHandler;
+use Symfony\Component\Validator\Validator;
 
-class OrmUserManagerTest extends \PHPUnit_Framework_TestCase
+class OrmUserManagerTest extends AbstractUserManagerTest
 {
     /**
-     * @var UserManager
+     * @var OrmUserManager
      */
     protected $userManager;
 
-    /**
-     * @var EntityManager
-     */
-    protected $em;
-
-    /** @var EventDispatcher */
-    protected $dispatcher;
-
     public function setUp()
     {
-        $app = new Application();
-        $app->register(new SecurityServiceProvider());
-        $app->register(new DoctrineServiceProvider(), [
-            'db.options' => [
-                'driver' => 'pdo_sqlite',
-                'memory' => true,
-            ],
-        ]);
-        $app->register(new DoctrineOrmServiceProvider(), [
-            'orm.em.options' => [
-                'mappings' => [
-                    [
-                        'type' => 'annotation',
-                        'namespace' => 'rootLogin\UserProvider\Entity',
-                        'path' => __DIR__ . '/../../../../src/rootLogin/UserProvider/Entity',
-                        'use_simple_annotation_reader' => false
-                    ],
-                    [
-                        'type' => 'annotation',
-                        'namespace' => 'rootLogin\UserProvider\Tests\Entity\Orm',
-                        'path' => __DIR__ . '/Entity',
-                        'use_simple_annotation_reader' => false
-                    ]
-                ]
-            ]
-        ]);
+        $app = parent::setUp(true);
 
-        $this->userManager = new OrmUserManager($app);
-        $this->em = $app['orm.em'];
-        $this->dispatcher = $app['dispatcher'];
+        $this->userManager = $app['user.manager'] = new OrmUserManager($app);
 
         $this->createSchema();
     }
 
     public function testUserManager()
     {
-        $this->assertInstanceOf('rootLogin\UserProvider\Interfaces\UserManagerInterface', $this->userManager);
-    }
-
-    public function testCreateUser()
-    {
-        $user = $this->userManager->create('test@example.com', 'pass');
-
-        $this->assertInstanceOf('rootLogin\UserProvider\Entity\User', $user);
-    }
-
-    public function testStoreAndFetchUser()
-    {
-        $user = $this->userManager->create('test@example.com', 'password');
-        $this->assertNull($user->getId());
-
-        $this->userManager->save($user);
-        $this->assertGreaterThan(0, $user->getId());
-
-        $storedUser = $this->userManager->getUser($user->getId());
-        $this->assertEquals($storedUser, $user);
-    }
-
-    public function testUpdateUser()
-    {
-        $user = $this->userManager->create('test@example.com', 'pass');
-        $this->userManager->save($user);
-
-        $user->setName('Foo');
-        $this->userManager->save($user);
-
-        $storedUser = $this->userManager->getUser($user->getId());
-
-        $this->assertEquals('Foo', $storedUser->getName());
-    }
-
-    public function testDeleteUser()
-    {
-        $email = 'test@example.com';
-
-        $user = $this->userManager->create($email, 'password');
-        $this->userManager->save($user);
-        $this->assertEquals($user, $this->userManager->findOneBy(array('email' => $email)));
-
-        $this->userManager->delete($user);
-        $this->assertNull($this->userManager->findOneBy(array('email' => $email)));
-    }
-
-    public function testLoadUserByUsernamePassingEmailAddress()
-    {
-        $email = 'test@example.com';
-
-        $user = $this->userManager->create($email, 'password');
-        $this->userManager->save($user);
-
-        $foundUser = $this->userManager->loadUserByUsername($email);
-        $this->assertEquals($user, $foundUser);
-    }
-
-    public function testLoadUserByUsernamePassingUsername()
-    {
-        $username = 'foo';
-
-        $user = $this->userManager->create('test@example.com', 'password');
-        $user->setUsername($username);
-        $this->userManager->save($user);
-
-        $foundUser = $this->userManager->loadUserByUsername($username);
-        $this->assertEquals($user, $foundUser);
-    }
-
-    /**
-     * @expectedException Symfony\Component\Security\Core\Exception\UsernameNotFoundException
-     */
-    public function testLoadUserByUsernameThrowsExceptionIfUserNotFound()
-    {
-        $this->userManager->loadUserByUsername('does-not-exist@example.com');
-    }
-
-    public function testGetUsernameReturnsEmailIfUsernameIsNull()
-    {
-        $email = 'test@example.com';
-
-        $user = $this->userManager->create($email, 'password');
-
-        $this->assertNull($user->getRealUsername());
-        $this->assertEquals($email, $user->getUsername());
-
-        $user->setUsername(null);
-        $this->assertEquals($email, $user->getUsername());
-    }
-
-    public function testGetUsernameReturnsUsernameIfNotNull()
-    {
-        $username = 'joe';
-
-        $user = $this->userManager->create('test@example.com', 'password');
-        $user->setUsername($username);
-
-        $this->assertEquals($username, $user->getUsername());
-    }
-
-    public function testUsernameCannotContainAtSymbol()
-    {
-        $user = $this->userManager->create('test@example.com', 'password');
-        $errors = $user->validate();
-        $this->assertEmpty($errors);
-
-        $user->setUsername('foo@example.com');
-        $errors = $user->validate();
-        $this->assertArrayHasKey('username', $errors);
-    }
-
-    public function testValidationFailsOnDuplicateEmail()
-    {
-        $email = 'test@example.com';
-
-        $user1 = $this->userManager->create($email, 'password');
-        $this->userManager->save($user1);
-        $errors = $this->userManager->validate($user1);
-        $this->assertEmpty($errors);
-
-        // Validation fails because a different user already exists in the database with that email address.
-        $user2 = $this->userManager->create($email, 'password');
-        $errors = $this->userManager->validate($user2);
-        $this->assertArrayHasKey('email', $errors);
-    }
-
-    public function testValidationFailsOnDuplicateUsername()
-    {
-        $username = 'foo';
-
-        $user1 = $this->userManager->create('test1@example.com', 'password');
-        $user1->setUsername($username);
-        $this->userManager->save($user1);
-        $errors = $this->userManager->validate($user1);
-        $this->assertEmpty($errors);
-
-        // Validation fails because a different user already exists in the database with that email address.
-        $user2 = $this->userManager->create('test2@example.com', 'password');
-        $user2->setUsername($username);
-        $errors = $this->userManager->validate($user2);
-        $this->assertArrayHasKey('username', $errors);
-    }
-
-    public function testFindAndCount()
-    {
-        $email1 = 'test1@example.com';
-        $email2 = 'test2@example.com';
-
-        $user1 = $this->userManager->create($email1, 'password');
-        $this->userManager->save($user1);
-
-        $user2 = $this->userManager->create($email2, 'password');
-        $this->userManager->save($user2);
-
-        $criteria = array('email' => $email1);
-        $results = $this->userManager->findBy($criteria);
-        $numResults = $this->userManager->findCount($criteria);
-        $this->assertCount(1, $results);
-        $this->assertEquals(1, $numResults);
-        $this->assertEquals($user1, reset($results));
+        $this->assertInstanceOf('rootLogin\UserProvider\Manager\OrmUserManager', $this->userManager);
     }
 
     public function testCustomUserClass()
@@ -265,29 +73,12 @@ class OrmUserManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('rootLogin\UserProvider\Tests\Entity\Orm\CustomUser', $user);
 
         $user->setTwitterUsername('foo');
-        $errors = $this->userManager->validate($user);
-        $this->assertArrayHasKey('twitterUsername', $errors);
+        $errors = $this->validator->validate($user);
+        $this->assertTrue($errors->count() == 1); /*@TODO*/
 
         $user->setTwitterUsername('@foo');
-        $errors = $this->userManager->validate($user);
+        $errors = $this->validator->validate($user);
         $this->assertEmpty($errors);
-    }
-
-
-    public function testSupportsBaseClass()
-    {
-        $user = $this->userManager->create('test@example.com', 'password');
-
-        $supportsObject = $this->userManager->supportsClass(get_class($user));
-        $this->assertTrue($supportsObject);
-
-        $this->userManager->save($user);
-        $freshUser = $this->userManager->refreshUser($user);
-
-        $supportsRefreshedObject = $this->userManager->supportsClass(get_class($freshUser));
-        $this->assertTrue($supportsRefreshedObject);
-
-        $this->assertTrue($freshUser instanceof User);
     }
 
     public function testSupportsSubClass()
@@ -306,97 +97,6 @@ class OrmUserManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($supportsRefreshedObject);
 
         $this->assertTrue($freshUser instanceof CustomUser);
-    }
-
-    public function testValidationWhenUsernameIsRequired()
-    {
-        $user = $this->userManager->create('test@example.com', 'password');
-        $this->userManager->setUsernameRequired(true);
-
-        $errors = $this->userManager->validate($user);
-        $this->assertArrayHasKey('username', $errors);
-
-        $user->setUsername('username');
-        $errors = $this->userManager->validate($user);
-        $this->assertEmpty($errors);
-    }
-
-    public function testBeforeInsertEvents()
-    {
-        $this->dispatcher->addListener(UserEvents::BEFORE_INSERT, function(UserEvent $event) {
-           $event->getUser()->setName('Foo Bar');
-        });
-
-        $user = $this->userManager->create('test@example.com', 'password');
-
-        // After insert, the custom field set by the listener is available.
-        $this->userManager->save($user);
-        $this->assertEquals('Foo Bar', $user->getName());
-    }
-
-    public function testAfterInsertEvents()
-    {
-        $this->dispatcher->addListener(UserEvents::AFTER_INSERT, function(UserEvent $event) {
-            $event->getUser()->setName("Foo Bar");
-        });
-
-        $user = $this->userManager->create('test@example.com', 'password');
-
-        // After insert, the custom field set by the listener is available.
-        $this->userManager->save($user);
-        $this->assertEquals('Foo Bar', $user->getName());
-    }
-
-    public function testBeforeUpdateEvents()
-    {
-        $this->dispatcher->addListener(UserEvents::BEFORE_UPDATE, function(UserEvent $event) {
-            $event->getUser()->setName('Foo Bar');
-        });
-
-        $user = $this->userManager->create('test@example.com', 'password');
-        $this->userManager->save($user);
-
-        // After update, the custom field set by the listener is available.
-        $this->assertNotEquals('Foo Bar', $user->getName());
-        $this->userManager->save($user);
-        $this->assertEquals('Foo Bar', $user->getName('foo'));
-    }
-
-    public function testAfterUpdateEvents()
-    {
-        $this->dispatcher->addListener(UserEvents::AFTER_UPDATE, function(UserEvent $event) {
-            $event->getUser()->setName("Foo Bar");
-        });
-
-        $user = $this->userManager->create('test@example.com', 'password');
-        $this->userManager->save($user);
-
-        // After update, the custom field set by the listener is available on the existing user instance.
-        $this->userManager->save($user);
-        $this->assertEquals('Foo Bar', $user->getName());
-    }
-
-    public function testPasswordStrengthValidator()
-    {
-        $user = new User('test@example.com');
-
-        // By default, an empty password is not allowed.
-        $error = $this->userManager->validatePasswordStrength($user, '');
-        $this->assertNotEmpty($error);
-
-        // By default, any non-empty password is allowed.
-        $error = $this->userManager->validatePasswordStrength($user, 'a');
-        $this->assertNull($error);
-
-        // Test setting a custom validator.
-        $this->userManager->setPasswordStrengthValidator(function(User $user, $password) {
-            if (strlen($password) < 2) {
-                return 'Password must have at least 2 characters.';
-            }
-        });
-
-        $error = $this->userManager->validatePasswordStrength($user, 'a');
-        $this->assertEquals('Password must have at least 2 characters.', $error);
     }
 
     public function testRoleSystem()

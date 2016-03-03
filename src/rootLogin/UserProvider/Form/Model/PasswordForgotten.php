@@ -24,8 +24,8 @@
 
 namespace rootLogin\UserProvider\Form\Model;
 
-use Symfony\Component\Validator\Constraints as Assert;
 use rootLogin\UserProvider\Validator\Constraints\EMailExists;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 /**
  * Class PasswordForgotten
@@ -60,5 +60,12 @@ class PasswordForgotten {
         $this->email = $email;
 
         return $this;
+    }
+
+    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    {
+        $metadata->addConstraints([
+            new EMailExists()
+        ]);
     }
 }

@@ -37,13 +37,7 @@ $app->register(new Provider\ServiceControllerServiceProvider());
 $app->register(new Provider\RouteControllerProvider());
 $app->register(new Provider\UrlGeneratorServiceProvider());
 $app->register(new Provider\FormServiceProvider());
-// The ValidatorServiceProvider needs to have annotations enabled
-$app->register(new Provider\ValidatorServiceProvider(), [
-    'validator.mapping.class_metadata_factory' => new LazyLoadingMetadataFactory(
-        new AnnotationLoader(new AnnotationReader()),
-        (extension_loaded('apc') ? new ApcuCache() : null)
-    ),
-]);
+$app->register(new Provider\ValidatorServiceProvider());
 $app->register(new Provider\TwigServiceProvider());
 $app->register(new Provider\SwiftmailerServiceProvider());
 

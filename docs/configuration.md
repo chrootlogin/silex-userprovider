@@ -94,6 +94,9 @@ If you have enabled the symfony console, as with [saxulum-console](https://githu
 * `userprovider:create`: Create an user
 * `userprovider:list`: List users
 * `userprovider:delete`: Delete an user
+* `userprovider:role:add`: Add a role to an user
+* `userprovider:role:list`: List user's roles
+* `userprovider:delete`: Remove a role from an user
 
 Use Doctrine ORM instead of DBAL
 --------------------------------

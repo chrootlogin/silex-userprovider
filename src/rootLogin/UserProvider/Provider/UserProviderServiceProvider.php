@@ -291,7 +291,7 @@ class UserProviderServiceProvider implements ServiceProviderInterface
                 $userManager->setUserClass($app['user.options']['userClass']);
                 $userManager->setUsernameRequired($app['user.options']['isUsernameRequired']);
             } else {
-                $userManager = new DBALUserManager($app['db'], $app);
+                $userManager = new DBALUserManager($app);
                 $userManager->setUserClass($app['user.options']['userClass']);
                 $userManager->setUsernameRequired($app['user.options']['isUsernameRequired']);
                 $userManager->setUserTableName($app['user.options']['userTableName']);

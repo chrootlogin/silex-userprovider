@@ -69,19 +69,6 @@ class DBALUserManager extends UserManager
         'value' => 'value',
     );
 
-    /**
-     * Constructor.
-     *
-     * @param Connection $conn
-     * @param Application $app
-     */
-    public function __construct(Connection $conn, Application $app)
-    {
-        parent::__construct($app);
-
-        $this->conn = $conn;
-    }
-
     // ----- UserProviderInterface -----
 
     /**
@@ -445,7 +432,7 @@ class DBALUserManager extends UserManager
      */
     public function validate(User $user)
     {
-        $errors = $user->validate();
+        //$errors = $user->validate();
 
         // Ensure email address is unique.
         $duplicates = $this->findBy(array($this->getUserColumns('email') => $user->getEmail()));

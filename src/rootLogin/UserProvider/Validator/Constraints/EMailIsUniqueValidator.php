@@ -44,7 +44,7 @@ class EMailIsUniqueValidator extends ConstraintValidator
         );
 
         if ($exists !== null && $user !== $exists) {
-            $this->context->addViolationAt('email',$constraint->eMailExists, array('{{ email }}' => $user->getEmail()));
+            $this->context->addViolationAt('email', $constraint->eMailExists, array('{{ email }}' => $user->getEmail()));
 
             return false;
         }

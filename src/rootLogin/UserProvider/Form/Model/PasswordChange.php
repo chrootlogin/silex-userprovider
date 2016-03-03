@@ -26,6 +26,7 @@ namespace rootLogin\UserProvider\Form\Model;
 
 use Symfony\Component\Security\Core\Validator\Constraints as SecurityAssert;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 /**
  * Modal for changing the password
@@ -36,18 +37,11 @@ class PasswordChange {
 
     /**
      * @var string
-     *
-     * @SecurityAssert\UserPassword(
-     *     message = "Wrong value for your current password"
-     * )
      */
     protected $oldPassword;
 
     /**
      * @var string
-     *
-     * @Assert\NotBlank()
-     * @Assert\Length(min=8)
      */
     protected $newPassword;
 
@@ -87,5 +81,20 @@ class PasswordChange {
         $this->newPassword = $newPassword;
 
         return $this;
+    }
+
+    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    {
+        $metadata->addPropertyConstraints('oldPassword', [
+            new SecurityAssert\UserPassword([
+                'message' => 'Wrong value for your current password'
+            ])
+        ]);
+        $metadata->addPropertyConstraints('newPassword', [
+            new Assert\NotBlank(),
+            new Assert\Length([
+                'min' => 8
+            ])
+        ]);
     }
 }

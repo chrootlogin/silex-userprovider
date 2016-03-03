@@ -28,6 +28,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use rootLogin\UserProvider\Validator\Constraints\EMailIsUnique;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
+
 /**
  * A user
  *
@@ -35,7 +37,6 @@ use rootLogin\UserProvider\Validator\Constraints\EMailIsUnique;
  * @ORM\Table(name="user")
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
- * @EMailIsUnique()
  *
  * @package rootLogin\UserProvider
  */
@@ -60,9 +61,6 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * @var string
      *
-     * @Assert\NotBlank()
-     * @Assert\Email()
-     *
      * @ORM\Column(name="email", type="string", unique=true)
      */
     protected $email;
@@ -77,8 +75,6 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * Plain password. Used for model validation. Must not be persisted.
      *
-     * @Assert\NotBlank(groups={"full"})
-     * @Assert\Length(min=8, groups={"full"})
      * @var string
      */
     protected $plainPassword;
@@ -625,44 +621,22 @@ class User implements AdvancedUserInterface, \Serializable
         return true;
     }
 
-    // @TODO Deprecated stuff
-
-    /**
-     * Validate the user object.
-     *
-     * @deprecated
-     * @return array An array of error messages, or an empty array if there were no errors.
-     */
-    public function validate()
+    public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
-        $errors = array();
-
-        if (!$this->getEmail()) {
-            $errors['email'] = 'Email address is required.';
-        } else if (!strpos($this->getEmail(), '@')) {
-            // Basic email format sanity check. Real validation comes from sending them an email with a link they have to click.
-            $errors['email'] = 'Email address appears to be invalid.';
-        } else if (strlen($this->getEmail()) > 100) {
-            $errors['email'] = 'Email address can\'t be longer than 100 characters.';
-        }
-
-        if (!$this->getPassword()) {
-            $errors['password'] = 'Password is required.';
-        } else if (strlen($this->getPassword()) > 255) {
-            $errors['password'] = 'Password can\'t be longer than 255 characters.';
-        }
-
-        if (strlen($this->getName()) > 100) {
-            $errors['name'] = 'Name can\'t be longer than 100 characters.';
-        }
-
-        // Username can't contain "@",
-        // because that's how we distinguish between email and username when signing in.
-        // (It's possible to sign in by providing either one.)
-        if ($this->getRealUsername() && strpos($this->getRealUsername(), '@') !== false) {
-            $errors['username'] = 'Username cannot contain the "@" symbol.';
-        }
-
-        return $errors;
+        $metadata->addConstraint(new EMailIsUnique());
+        $metadata->addPropertyConstraint('username', new Assert\Regex("/^[a-zA-Z0-9]{3,30}$/us"));
+        $metadata->addPropertyConstraints('email', [
+            new Assert\NotBlank(),
+            new Assert\Email()
+        ]);
+        $metadata->addPropertyConstraints('plainPassword', [
+            new Assert\NotBlank([
+                'groups' => ['full']
+            ]),
+            new Assert\Length([
+                'min' => 8,
+                'groups' => ['full']
+            ])
+        ]);
     }
 }

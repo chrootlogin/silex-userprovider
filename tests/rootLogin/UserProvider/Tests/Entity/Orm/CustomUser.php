@@ -8,6 +8,8 @@ namespace rootLogin\UserProvider\Tests\Entity\Orm;
 
 use rootLogin\UserProvider\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * A custom user
@@ -36,14 +38,9 @@ class CustomUser extends User
         $this->twitterUsername = $twitterUsername;
     }
 
-    public function validate()
+    public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
-        $errors = parent::validate();
-
-        if ($this->getTwitterUsername() && strpos($this->getTwitterUsername(), '@') !== 0) {
-            $errors['twitterUsername'] = 'Twitter username must begin with @.';
-        }
-
-        return $errors;
+        parent::loadValidatorMetadata($metadata);
+        $metadata->addPropertyConstraint('twitterUsername', new Assert\Regex('/^@(\w){1,15}$/s'));
     }
 }

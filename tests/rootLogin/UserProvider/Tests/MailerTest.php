@@ -118,13 +118,13 @@ Hello, {{ user.name }}. {{ confirmationUrl }}
         $this->mailer->sendConfirmationMessage(new User('test@example.com'));
     }
 
-    /*
+
     // A quick way to see what the rendered email template looks like.
     // Not a real unit test; normally this should be commented out.
-    public function testEchoDefaultTemplate()
+    /*public function testEchoDefaultTemplate()
     {
-        $this->twig->setLoader(new \Twig_Loader_Filesystem(__DIR__ . '/../../../src/SimpleUser/views/email'));
-        $this->mailer->setConfirmationTemplate('confirm-email.twig');
+        $this->twig->setLoader(new \Twig_Loader_Filesystem(__DIR__ . '/../../../../src/rootLogin/UserProvider/Resources/views/email'));
+        $this->mailer->setConfirmationTemplate('confirm-email.txt.twig');
 
         $this->swiftmailer->expects($this->once())
             ->method('send')
@@ -134,6 +134,6 @@ Hello, {{ user.name }}. {{ confirmationUrl }}
             }));
 
         $this->mailer->sendConfirmationMessage(new User('test@example.com'));
-    }
-    */
+    }*/
+
 }

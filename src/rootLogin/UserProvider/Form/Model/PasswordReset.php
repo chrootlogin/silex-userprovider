@@ -25,6 +25,7 @@
 namespace rootLogin\UserProvider\Form\Model;
 
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 /**
  * Model for resetting the password
@@ -35,9 +36,6 @@ class PasswordReset {
 
     /**
      * @var string
-     *
-     * @Assert\NotBlank()
-     * @Assert\Length(min=8)
      */
     protected $newPassword;
 
@@ -58,5 +56,15 @@ class PasswordReset {
         $this->newPassword = $newPassword;
 
         return $this;
+    }
+
+    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    {
+        $metadata->addPropertyConstraints('newPassword', [
+            new Assert\NotBlank(),
+            new Assert\Length([
+                'min' => 8
+            ])
+        ]);
     }
 }

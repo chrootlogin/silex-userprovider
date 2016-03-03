@@ -2,10 +2,51 @@
 
 namespace rootLogin\UserProvider\Tests;
 
+use Doctrine\DBAL\Connection;
 use rootLogin\UserProvider\Entity\User;
+use rootLogin\UserProvider\Manager\DBALUserManager;
+use rootLogin\UserProvider\Tests\AbstractTests\AbstractTest;
+use Silex\Application;
+use Silex\Provider\DoctrineServiceProvider;
+use Silex\Provider\ValidatorServiceProvider;
+use Symfony\Component\Validator\Validator;
 
-class UserTest extends \PHPUnit_Framework_TestCase
+class UserTest extends AbstractTest
 {
+    /**
+     * @var DBALUserManager
+     */
+    protected $userManager;
+
+    /**
+     * @var Connection
+     */
+    protected $conn;
+
+    /**
+     * @var Validator
+     */
+    protected $validator;
+
+    public function setUp()
+    {
+        $app = new Application();
+        $app->register(new ValidatorServiceProvider());
+        $app->register(new DoctrineServiceProvider(), array(
+            'db.options' => array(
+                'driver' => 'pdo_sqlite',
+                'memory' => true,
+            ),
+        ));
+        $this->addValidators($app);
+
+        $app['db']->executeUpdate(file_get_contents(__DIR__ . '/../../../../sql/sqlite.sql'));
+
+        $this->userManager = $app['user.manager'] = new DBALUserManager($app);
+        $this->conn = $app['db'];
+        $this->validator = $app['validator'];
+    }
+
     public function testNewUserHasInitialValues()
     {
         $user = new User('email@example.com');
@@ -34,13 +75,13 @@ class UserTest extends \PHPUnit_Framework_TestCase
     {
         $user = $this->getValidUser();
 
-        $this->assertEmpty($user->validate());
+        $this->assertEmpty($this->validator->validate($user));
 
         foreach ($data as $setter => $val) {
             $user->$setter($val);
         }
 
-        $this->assertEmpty($user->validate());
+        $this->assertEmpty($this->validator->validate($user));
     }
 
     public function getValidUserData()
@@ -63,25 +104,22 @@ class UserTest extends \PHPUnit_Framework_TestCase
             $user->$setter($val);
         }
 
-        $errors = $user->validate();
+        $errors = $this->validator->validate($user, ['full','Default']);
         foreach ($expectedErrors as $expected) {
-            $this->assertArrayHasKey($expected, $errors);
+            $this->assertSame($expected, $errors[0]->getMessage());
         }
     }
 
     public function getInvalidUserData()
     {
         // Format: array(array($setterMethod => $value, ...), array($expectedErrorKey, ...))
-        return array(
-            array(array('setEmail' => null), array('email')),
-            array(array('setEmail' => ''), array('email')),
-            array(array('setEmail' => 'invalidEmail'), array('email')),
-            array(array('setEmail' => str_repeat('x', 89) . '@example.com'), array('email')), // 101 character email is invalid
-            array(array('setPassword' => null), array('password')),
-            array(array('setPassword' => ''), array('password')),
-            array(array('setPassword' => str_repeat('x', 256)), array('password')), // 256 character password 256 character password is invalid
-            array(array('setName' => str_repeat('x', 101)), array('name')),
-        );
+        return [
+            [['setEmail' => null], ['This value should not be blank.']],
+            [['setEmail' => ''], ['This value should not be blank.']],
+            [['setEmail' => 'invalidEmail'], ['This value is not a valid email address.']],
+            [['setPlainPassword' => null], ['This value should not be blank.']],
+            [['setPlainPassword' => ''], ['This value should not be blank.']]
+        ];
     }
 
     public function testUserIsEnabledByDefault()
