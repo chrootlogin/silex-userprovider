@@ -364,10 +364,9 @@ class UserProviderServiceProvider implements ServiceProviderInterface
 
         $app['orm.ems.options'] = $app->share($app->extend('orm.ems.options', function (array $options) {
             $options['default']['mappings'][] = [
-                'type' => 'annotation',
+                'type' => 'yml',
                 'namespace' => 'rootLogin\UserProvider\Entity',
-                'path' => $this->getEntityPath(),
-                'use_simple_annotation_reader' => false,
+                'path' => $this->getEntityMappingsPath()
             ];
             return $options;
         }));
@@ -431,8 +430,8 @@ class UserProviderServiceProvider implements ServiceProviderInterface
     /**
      * @return string
      */
-    protected function getEntityPath()
+    protected function getEntityMappingsPath()
     {
-        return realpath(__DIR__ . "/../Entity/");
+        return realpath(__DIR__ . "/../Resources/mappings");
     }
 }
