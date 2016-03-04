@@ -54,8 +54,12 @@ New password: Neues Passwort
 Repeat new password: Neues Passwort wiederholen
 Save: Speichern
 
+## Reset password
+Reset your password: Passwort zurücksetzen
+Choose a new password, %name%: Wähle ein neues Passwort, %name%
+
 ## Forgot password
-Enter your email address below and we'll send you password reset instructions.: Geib unten deine E-Mailadresse ein und wird werden dir die nötigen Anweisungen schicken, dein Passwort zurückzusetzen.
+Enter your email address below and we'll send you password reset instructions.: Gib unten deine E-Mailadresse ein und wird werden dir die nötigen Anweisungen schicken, dein Passwort zurückzusetzen.
 Reset: Zurücksetzen
 
 ## Confirmation sent
@@ -63,7 +67,7 @@ Thank you!: Danke!
 
 ## Controller
 No user was found with that ID.: Kein Benutzer mit dieser ID wurde gefunden.
-That user is disabled (pending email confirmation).: Dieser Benutzer ist deaktiviert (wartet auf E-Mail Bestätigung).
+That user is disabled (pending email confirmation).: Dieser Benutzer ist deaktiviert (wartet auf E-Mail-Bestätigung).
 Saved account information.: Die Benutzereinstellungen wurden gespeichert.
 You need to be logged in.: Du musst eingeloggt sein.
 Changed password.: Das Passwort wurde geändert.
@@ -75,3 +79,4 @@ Instructions for resetting your password have been emailed to you.: Wir haben di
 Sorry, your password reset link has expired.: Es tut uns leid, aber der Link um dein Passwort zurückzusetzen ist leider abgelaufen.
 Your password has been reset and you are now signed in.: Dein Passwort wurde zurückgesetzt und du bist jetzt eingeloggt.
 Invalid credentials.: Deine Logindaten sind falsch. Bitte überprüfe E-Mail und Passwort.
+Pending email confirmation: Warte auf E-Mail-Bestätigung

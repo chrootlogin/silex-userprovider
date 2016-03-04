@@ -492,7 +492,7 @@ class UserController
 
             $app['session']->getFlashBag()->set('alert', $this->trans('Your password has been reset and you are now signed in.'));
 
-            return $app->redirect($app['url_generator']->generate('user.view', ['id' => $user->getId()]));
+            return $app->redirect($app['url_generator']->generate('user'));
         }
 
         // if ?_fragment is set, then show the fragment template
