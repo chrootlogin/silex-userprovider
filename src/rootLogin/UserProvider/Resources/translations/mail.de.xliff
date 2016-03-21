@@ -26,16 +26,8 @@
                 <target>Du wolltest dein Passwort nicht zurücksetzen?</target>
             </trans-unit>
             <trans-unit id="7">
-                <source>If you didn't ask to reset your password, it's likely that
-                    another user entered your username or email address by mistake
-                    while trying to reset their password. If that's the case, you
-                    don't need to take any further action and you can safely
-                    disregard this email.</source>
-                <target>Wenn du dein Passwort nicht zurücksetzen wolltest, ist es möglich,
-                    dass ein anderer Benutzer ausversehen deine E-Mailadresse oder Benutzernamen
-                    eingegeben hat, als er sein eigenes Passwort zurücksetzen wollte. Falls dies
-                    der Fall ist, musst du nicht weiter unternehmen und kannst diese E-Mail
-                    ignorieren.</target>
+                <source>If you didn't ask to reset your password, it's likely that another user entered your username or email address by mistake while trying to reset their password. If that's the case, you don't need to take any further action and you can safely disregard this email.</source>
+                <target>Wenn du dein Passwort nicht zurücksetzen wolltest, ist es möglich, dass ein anderer Benutzer ausversehen deine E-Mailadresse oder Benutzernamen eingegeben hat, als er sein eigenes Passwort zurücksetzen wollte. Falls dies der Fall ist, musst du nicht weiter unternehmen und kannst diese E-Mail ignorieren.</target>
             </trans-unit>
             <trans-unit id="8">
                 <source>Please click this link to reset your password.</source>
