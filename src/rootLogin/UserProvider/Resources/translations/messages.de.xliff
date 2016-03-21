@@ -2,95 +2,95 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
     <file source-language="en" datatype="plaintext" original="">
         <body>
-            <trans-unit id="1">
+            <trans-unit id="messages-1">
                 <source>Create account</source>
                 <target>Registrieren</target>
             </trans-unit>
-            <trans-unit id="2">
+            <trans-unit id="messages-2">
                 <source>List users</source>
                 <target>Benutzerliste</target>
             </trans-unit>
-            <trans-unit id="3">
+            <trans-unit id="messages-3">
                 <source>Sign in</source>
                 <target>Einloggen</target>
             </trans-unit>
-            <trans-unit id="4">
+            <trans-unit id="messages-4">
                 <source>Hello, %name%!</source>
                 <target>Hallo %name%!</target>
             </trans-unit>
-            <trans-unit id="5">
+            <trans-unit id="messages-5">
                 <source>Edit your profile</source>
                 <target>Bearbeite dein Profil</target>
             </trans-unit>
-            <trans-unit id="6">
+            <trans-unit id="messages-6">
                 <source>View your profile</source>
                 <target>Benutzerprofil ansehen</target>
             </trans-unit>
-            <trans-unit id="7">
+            <trans-unit id="messages-7">
                 <source>Change your password</source>
                 <target>&#xC4;ndere dein Passwort</target>
             </trans-unit>
-            <trans-unit id="8">
+            <trans-unit id="messages-8">
                 <source>Don't have an account?</source>
                 <target>Hast du noch keinen Account?</target>
             </trans-unit>
-            <trans-unit id="9">
+            <trans-unit id="messages-9">
                 <source>Register now.</source>
                 <target>Registriere dich jetzt.</target>
             </trans-unit>
-            <trans-unit id="10">
+            <trans-unit id="messages-10">
                 <source>Email</source>
                 <target>E-Mail</target>
             </trans-unit>
-            <trans-unit id="11">
+            <trans-unit id="messages-11">
                 <source>Password</source>
                 <target>Passwort</target>
             </trans-unit>
-            <trans-unit id="12">
+            <trans-unit id="messages-12">
                 <source>Remember me on this computer</source>
                 <target>Mein Login auf diesem Computer speichern</target>
             </trans-unit>
-            <trans-unit id="13">
+            <trans-unit id="messages-13">
                 <source>Forgot your password?</source>
                 <target>Hast du dein Passwort vergessen?</target>
             </trans-unit>
-            <trans-unit id="14">
+            <trans-unit id="messages-14">
                 <source>Hello, %name%. You are already registered and signed in.</source>
                 <target>Hallo %name%. Du bist bereits registriert und eingeloggt.</target>
             </trans-unit>
-            <trans-unit id="15">
+            <trans-unit id="messages-15">
                 <source>Sign out</source>
                 <target>Ausloggen</target>
             </trans-unit>
-            <trans-unit id="16">
+            <trans-unit id="messages-16">
                 <source>Create an account</source>
                 <target>Einen Account erstellen</target>
             </trans-unit>
-            <trans-unit id="17">
+            <trans-unit id="messages-17">
                 <source>Already have an account?</source>
                 <target>Hast du bereits einen Account?</target>
             </trans-unit>
-            <trans-unit id="18">
+            <trans-unit id="messages-18">
                 <source>Sign in now.</source>
                 <target>Log dich jetzt ein.</target>
             </trans-unit>
-            <trans-unit id="19">
+            <trans-unit id="messages-19">
                 <source>Repeat password</source>
                 <target>Passwort wiederholen</target>
             </trans-unit>
-            <trans-unit id="20">
+            <trans-unit id="messages-20">
                 <source>Register</source>
                 <target>Registrieren</target>
             </trans-unit>
-            <trans-unit id="21">
+            <trans-unit id="messages-21">
                 <source>Email confirmation needed</source>
                 <target>Best&#xE4;tigung der E-Mailadresse n&#xF6;tig.</target>
             </trans-unit>
-            <trans-unit id="22">
+            <trans-unit id="messages-22">
                 <source>Your account is not yet active</source>
                 <target>Dein Account wurde noch nicht aktiviert.</target>
             </trans-unit>
-            <trans-unit id="23">
+            <trans-unit id="messages-23">
                 <source>An email should have been sent to you at &lt;strong&gt;%email%&lt;/strong&gt; when you
                     registered.
                 </source>
@@ -98,16 +98,16 @@
                     gesendet.
                 </target>
             </trans-unit>
-            <trans-unit id="24">
+            <trans-unit id="messages-24">
                 <source>Please click the link in that message to confirm your email address and activate your account.
                 </source>
                 <target>Klicke auf den Link in dieser Nachricht um deine Adresse zu best&#xE4;tigen.</target>
             </trans-unit>
-            <trans-unit id="25">
+            <trans-unit id="messages-25">
                 <source>Resend the message</source>
                 <target>E-Mail erneuert senden</target>
             </trans-unit>
-            <trans-unit id="26">
+            <trans-unit id="messages-26">
                 <source>If you don't get an email within a few minutes, make sure to check your spam or junk folder. The
                     sender is &lt;strong&gt;%fromAddress%&lt;/strong&gt;.
                 </source>
@@ -115,136 +115,136 @@
                     deinen Spam oder Junk-Mail Ordner. Der Absender ist &lt;strong&gt;%fromAddress%&lt;/strong&gt;.
                 </target>
             </trans-unit>
-            <trans-unit id="27">
+            <trans-unit id="messages-27">
                 <source>Please click the link in that message to activate your account.</source>
                 <target>Bitte klicke auf den Link in dieser Nachricht um deinen Account zu aktivieren.</target>
             </trans-unit>
-            <trans-unit id="28">
+            <trans-unit id="messages-28">
                 <source>An email has been sent to you at &lt;strong&gt;%email%&lt;/strong&gt;.</source>
                 <target>Eine E-Mail f&#xFC;r dich wurde f&#xFC;r dich an &lt;strong&gt;%email%&lt;/strong&gt;
                     gesendet.
                 </target>
             </trans-unit>
-            <trans-unit id="29">
+            <trans-unit id="messages-29">
                 <source>Pending email confirmation.</source>
                 <target>Warten auf E-Mail Best&#xE4;tigung.</target>
             </trans-unit>
-            <trans-unit id="30">
+            <trans-unit id="messages-30">
                 <source>(visible to admins only)</source>
                 <target>(Nur f&#xFC;r Administratoren sichtbar)</target>
             </trans-unit>
-            <trans-unit id="31">
+            <trans-unit id="messages-31">
                 <source>Registered</source>
                 <target>Registriert</target>
             </trans-unit>
-            <trans-unit id="32">
+            <trans-unit id="messages-32">
                 <source>Edit</source>
                 <target>Bearbeiten</target>
             </trans-unit>
-            <trans-unit id="33">
+            <trans-unit id="messages-33">
                 <source>Change password</source>
                 <target>Passwort &#xE4;ndern</target>
             </trans-unit>
-            <trans-unit id="34">
+            <trans-unit id="messages-34">
                 <source>Edit User</source>
                 <target>Bearbeite Benutzer</target>
             </trans-unit>
-            <trans-unit id="35">
+            <trans-unit id="messages-35">
                 <source>Roles</source>
                 <target>Benutzerrollen</target>
             </trans-unit>
-            <trans-unit id="36">
+            <trans-unit id="messages-36">
                 <source>Old password</source>
                 <target>Aktuelles Passwort</target>
             </trans-unit>
-            <trans-unit id="37">
+            <trans-unit id="messages-37">
                 <source>New password</source>
                 <target>Neues Passwort</target>
             </trans-unit>
-            <trans-unit id="38">
+            <trans-unit id="messages-38">
                 <source>Repeat new password</source>
                 <target>Neues Passwort wiederholen</target>
             </trans-unit>
-            <trans-unit id="39">
+            <trans-unit id="messages-39">
                 <source>Save</source>
                 <target>Speichern</target>
             </trans-unit>
-            <trans-unit id="40">
+            <trans-unit id="messages-40">
                 <source>Reset your password</source>
                 <target>Passwort zur&#xFC;cksetzen</target>
             </trans-unit>
-            <trans-unit id="41">
+            <trans-unit id="messages-41">
                 <source>Choose a new password, %name%</source>
                 <target>W&#xE4;hle ein neues Passwort, %name%</target>
             </trans-unit>
-            <trans-unit id="42">
+            <trans-unit id="messages-42">
                 <source>Enter your email address below and we'll send you password reset instructions.</source>
                 <target>Gib unten deine E-Mailadresse ein und wird werden dir die n&#xF6;tigen Anweisungen schicken,
                     dein Passwort zur&#xFC;ckzusetzen.
                 </target>
             </trans-unit>
-            <trans-unit id="43">
+            <trans-unit id="messages-43">
                 <source>Reset</source>
                 <target>Zur&#xFC;cksetzen</target>
             </trans-unit>
-            <trans-unit id="44">
+            <trans-unit id="messages-44">
                 <source>Thank you!</source>
                 <target>Danke!</target>
             </trans-unit>
-            <trans-unit id="45">
+            <trans-unit id="messages-45">
                 <source>No user was found with that ID.</source>
                 <target>Kein Benutzer mit dieser ID wurde gefunden.</target>
             </trans-unit>
-            <trans-unit id="46">
+            <trans-unit id="messages-46">
                 <source>That user is disabled (pending email confirmation).</source>
                 <target>Dieser Benutzer ist deaktiviert (wartet auf E-Mail-Best&#xE4;tigung).</target>
             </trans-unit>
-            <trans-unit id="47">
+            <trans-unit id="messages-47">
                 <source>Saved account information.</source>
                 <target>Die Benutzereinstellungen wurden gespeichert.</target>
             </trans-unit>
-            <trans-unit id="48">
+            <trans-unit id="messages-48">
                 <source>You need to be logged in.</source>
                 <target>Du musst eingeloggt sein.</target>
             </trans-unit>
-            <trans-unit id="49">
+            <trans-unit id="messages-49">
                 <source>Changed password.</source>
                 <target>Das Passwort wurde ge&#xE4;ndert.</target>
             </trans-unit>
-            <trans-unit id="50">
+            <trans-unit id="messages-50">
                 <source>Sorry, your email confirmation link has expired.</source>
                 <target>Entschuldigung, aber dein E-Mail Best&#xE4;tigungslink ist leider abgelaufen.</target>
             </trans-unit>
-            <trans-unit id="51">
+            <trans-unit id="messages-51">
                 <source>Thank you! Your account has been activated.</source>
                 <target>Danke! Dein Account wurde aktiviert.</target>
             </trans-unit>
-            <trans-unit id="52">
+            <trans-unit id="messages-52">
                 <source>No user account was found with that email address.</source>
                 <target>Es wurde kein Benutzeraccount mit dieser E-Mailadresse gefunden.</target>
             </trans-unit>
-            <trans-unit id="53">
+            <trans-unit id="messages-53">
                 <source>Password resetting is not enabled.</source>
                 <target>Die Funktion "Passwort zur&#xFC;cksetzen" wurde vom Administrator deaktiviert.</target>
             </trans-unit>
-            <trans-unit id="54">
+            <trans-unit id="messages-54">
                 <source>Instructions for resetting your password have been emailed to you.</source>
                 <target>Wir haben dir Anweisungen geschickt, wie du dein Passwort zur&#xFC;cksetzen kannst.</target>
             </trans-unit>
-            <trans-unit id="55">
+            <trans-unit id="messages-55">
                 <source>Sorry, your password reset link has expired.</source>
                 <target>Es tut uns leid, aber der Link um dein Passwort zur&#xFC;ckzusetzen ist leider abgelaufen.
                 </target>
             </trans-unit>
-            <trans-unit id="56">
+            <trans-unit id="messages-56">
                 <source>Your password has been reset and you are now signed in.</source>
                 <target>Dein Passwort wurde zur&#xFC;ckgesetzt und du bist jetzt eingeloggt.</target>
             </trans-unit>
-            <trans-unit id="57">
+            <trans-unit id="messages-57">
                 <source>Invalid credentials.</source>
                 <target>Deine Logindaten sind falsch. Bitte &#xFC;berpr&#xFC;fe E-Mail und Passwort.</target>
             </trans-unit>
-            <trans-unit id="58">
+            <trans-unit id="messages-58">
                 <source>Pending email confirmation</source>
                 <target>Warte auf E-Mail-Best&#xE4;tigung</target>
             </trans-unit>
