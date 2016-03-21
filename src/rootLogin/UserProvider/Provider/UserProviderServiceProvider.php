@@ -98,7 +98,6 @@ class UserProviderServiceProvider implements ServiceProviderInterface
         });
 
         $app['translator'] = $app->share($app->extend('translator', function($translator, $app) {
-            //$translator->addLoader('yaml', new YamlFileLoader());
             $translator->addResource('xliff', __DIR__ . '/../Resources/translations/messages.de.xliff', 'de', 'messages');
             $translator->addResource('xliff', __DIR__ . '/../Resources/translations/validators.de.xliff', 'de', 'validators');
             $translator->addResource('xliff', __DIR__ . '/../Resources/translations/mail.de.xliff', 'de', 'mail');

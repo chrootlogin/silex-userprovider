@@ -1,3 +1,0 @@
-Email {{ email }} doesn't exist.: Die E-Mailadresse {{ email }} existiert nicht.
-Email {{ email }} already exist.: Die E-Mailadresse {{ email }} existiert bereits.
-Wrong value for your current password: Die Eingabe entspricht nicht deinem aktuellen Passwort
