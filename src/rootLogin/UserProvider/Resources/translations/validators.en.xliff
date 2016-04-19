@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+    <file source-language="en" datatype="plaintext" original="">
+        <body>
+            <trans-unit id="validators-1">
+                <source>Email {{ email }} doesn't exist.</source>
+                <target>Email {{ email }} doesn't exist.</target>
+            </trans-unit>
+            <trans-unit id="validators-2">
+                <source>Email {{ email }} already exist.</source>
+                <target>Email {{ email }} already exist.</target>
+            </trans-unit>
+            <trans-unit id="validators-3">
+                <source>Wrong value for your current password</source>
+                <target>Wrong value for your current password</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

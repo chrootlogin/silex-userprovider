@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+    <file source-language="en" datatype="plaintext" original="">
+        <body>
+            <trans-unit id="mail-1">
+                <source>Welcome! Please confirm your email.</source>
+                <target>Welcome! Please confirm your email.</target>
+            </trans-unit>
+            <trans-unit id="mail-2">
+                <source>Thanks for joining our site!</source>
+                <target>Thanks for joining our site!</target>
+            </trans-unit>
+            <trans-unit id="mail-3">
+                <source>Please click this link to confirm your email.</source>
+                <target>Please click this link to confirm your email.</target>
+            </trans-unit>
+            <trans-unit id="mail-4">
+                <source>Please click the link below to confirm your email:</source>
+                <target>Please click the link below to confirm your email:</target>
+            </trans-unit>
+            <trans-unit id="mail-5">
+                <source>Reset your password</source>
+                <target>Reset your password</target>
+            </trans-unit>
+            <trans-unit id="mail-6">
+                <source>Didn't ask to reset your password?</source>
+                <target>Didn't ask to reset your password?</target>
+            </trans-unit>
+            <trans-unit id="mail-7">
+                <source>If you didn't ask to reset your password, it's likely that another user entered your username or email address by mistake while trying to reset their password. If that's the case, you don't need to take any further action and you can safely disregard this email.</source>
+                <target>If you didn't ask to reset your password, it's likely that another user entered your username or email address by mistake while trying to reset their password. If that's the case, you don't need to take any further action and you can safely disregard this email.</target>
+            </trans-unit>
+            <trans-unit id="mail-8">
+                <source>Please click this link to reset your password.</source>
+                <target>Please click this link to reset your password.</target>
+            </trans-unit>
+            <trans-unit id="mail-9">
+                <source>Please click the link below to reset your password:</source>
+                <target>Please click the link below to reset your password:</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

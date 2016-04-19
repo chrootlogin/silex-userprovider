@@ -1,0 +1,249 @@
+<?xml version="1.0"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+    <file source-language="en" datatype="plaintext" original="">
+        <body>
+            <trans-unit id="messages-1">
+                <source>Create account</source>
+                <target>Create account</target>
+            </trans-unit>
+            <trans-unit id="messages-2">
+                <source>List users</source>
+                <target>List users</target>
+            </trans-unit>
+            <trans-unit id="messages-3">
+                <source>Sign in</source>
+                <target>Sign in</target>
+            </trans-unit>
+            <trans-unit id="messages-4">
+                <source>Hello, %name%!</source>
+                <target>Hello, %name%!</target>
+            </trans-unit>
+            <trans-unit id="messages-5">
+                <source>Edit your profile</source>
+                <target>Edit your profile</target>
+            </trans-unit>
+            <trans-unit id="messages-6">
+                <source>View your profile</source>
+                <target>View your profile</target>
+            </trans-unit>
+            <trans-unit id="messages-7">
+                <source>Change your password</source>
+                <target>Change your password</target>
+            </trans-unit>
+            <trans-unit id="messages-8">
+                <source>Don't have an account?</source>
+                <target>Don't have an account?</target>
+            </trans-unit>
+            <trans-unit id="messages-9">
+                <source>Register now.</source>
+                <target>Register now.</target>
+            </trans-unit>
+            <trans-unit id="messages-10">
+                <source>Email</source>
+                <target>Email</target>
+            </trans-unit>
+            <trans-unit id="messages-11">
+                <source>Password</source>
+                <target>Password</target>
+            </trans-unit>
+            <trans-unit id="messages-12">
+                <source>Remember me on this computer</source>
+                <target>Remember me on this computer</target>
+            </trans-unit>
+            <trans-unit id="messages-13">
+                <source>Forgot your password?</source>
+                <target>Forgot your password?</target>
+            </trans-unit>
+            <trans-unit id="messages-14">
+                <source>Hello, %name%. You are already registered and signed in.</source>
+                <target>Hello, %name%. You are already registered and signed in.</target>
+            </trans-unit>
+            <trans-unit id="messages-15">
+                <source>Sign out</source>
+                <target>Sign out</target>
+            </trans-unit>
+            <trans-unit id="messages-16">
+                <source>Create an account</source>
+                <target>Create an account</target>
+            </trans-unit>
+            <trans-unit id="messages-17">
+                <source>Already have an account?</source>
+                <target>Already have an account?</target>
+            </trans-unit>
+            <trans-unit id="messages-18">
+                <source>Sign in now.</source>
+                <target>Sign in now.</target>
+            </trans-unit>
+            <trans-unit id="messages-19">
+                <source>Repeat password</source>
+                <target>Repeat password</target>
+            </trans-unit>
+            <trans-unit id="messages-20">
+                <source>Register</source>
+                <target>Register</target>
+            </trans-unit>
+            <trans-unit id="messages-21">
+                <source>Email confirmation needed</source>
+                <target>Email confirmation needed</target>
+            </trans-unit>
+            <trans-unit id="messages-22">
+                <source>Your account is not yet active</source>
+                <target>Your account is not yet active</target>
+            </trans-unit>
+            <trans-unit id="messages-23">
+                <source>An email should have been sent to you at &lt;strong&gt;%email%&lt;/strong&gt; when you
+                    registered.
+                </source>
+                <target>An email should have been sent to you at &lt;strong&gt;%email%&lt;/strong&gt; when you
+                    registered.
+                </target>
+            </trans-unit>
+            <trans-unit id="messages-24">
+                <source>Please click the link in that message to confirm your email address and activate your account.
+                </source>
+                <target>Please click the link in that message to confirm your email address and activate your account.
+                </target>
+            </trans-unit>
+            <trans-unit id="messages-25">
+                <source>Resend the message</source>
+                <target>Resend the message</target>
+            </trans-unit>
+            <trans-unit id="messages-26">
+                <source>If you don't get an email within a few minutes, make sure to check your spam or junk folder. The
+                    sender is &lt;strong&gt;%fromAddress%&lt;/strong&gt;.
+                </source>
+                <target>If you don't get an email within a few minutes, make sure to check your spam or junk folder. The
+                    sender is &lt;strong&gt;%fromAddress%&lt;/strong&gt;.
+                </target>
+            </trans-unit>
+            <trans-unit id="messages-27">
+                <source>Please click the link in that message to activate your account.</source>
+                <target>Please click the link in that message to activate your account.</target>
+            </trans-unit>
+            <trans-unit id="messages-28">
+                <source>An email has been sent to you at &lt;strong&gt;%email%&lt;/strong&gt;.</source>
+                <target>An email has been sent to you at &lt;strong&gt;%email%&lt;/strong&gt;.</target>
+            </trans-unit>
+            <trans-unit id="messages-29">
+                <source>Pending email confirmation.</source>
+                <target>Pending email confirmation.</target>
+            </trans-unit>
+            <trans-unit id="messages-30">
+                <source>(visible to admins only)</source>
+                <target>(visible to admins only)</target>
+            </trans-unit>
+            <trans-unit id="messages-31">
+                <source>Registered</source>
+                <target>Registered</target>
+            </trans-unit>
+            <trans-unit id="messages-32">
+                <source>Edit</source>
+                <target>Edit</target>
+            </trans-unit>
+            <trans-unit id="messages-33">
+                <source>Change password</source>
+                <target>Change password</target>
+            </trans-unit>
+            <trans-unit id="messages-34">
+                <source>Edit User</source>
+                <target>Edit User</target>
+            </trans-unit>
+            <trans-unit id="messages-35">
+                <source>Roles</source>
+                <target>Roles</target>
+            </trans-unit>
+            <trans-unit id="messages-36">
+                <source>Old password</source>
+                <target>Old password</target>
+            </trans-unit>
+            <trans-unit id="messages-37">
+                <source>New password</source>
+                <target>New password</target>
+            </trans-unit>
+            <trans-unit id="messages-38">
+                <source>Repeat new password</source>
+                <target>Repeat new password</target>
+            </trans-unit>
+            <trans-unit id="messages-39">
+                <source>Save</source>
+                <target>Save</target>
+            </trans-unit>
+            <trans-unit id="messages-40">
+                <source>Reset your password</source>
+                <target>Reset your password</target>
+            </trans-unit>
+            <trans-unit id="messages-41">
+                <source>Choose a new password, %name%</source>
+                <target>Choose a new password, %name%</target>
+            </trans-unit>
+            <trans-unit id="messages-42">
+                <source>Enter your email address below and we'll send you password reset instructions.</source>
+                <target>Enter your email address below and we'll send you password reset instructions.</target>
+            </trans-unit>
+            <trans-unit id="messages-43">
+                <source>Reset</source>
+                <target>Reset</target>
+            </trans-unit>
+            <trans-unit id="messages-44">
+                <source>Thank you!</source>
+                <target>Thank you!</target>
+            </trans-unit>
+            <trans-unit id="messages-45">
+                <source>No user was found with that ID.</source>
+                <target>No user was found with that ID.</target>
+            </trans-unit>
+            <trans-unit id="messages-46">
+                <source>That user is disabled (pending email confirmation).</source>
+                <target>That user is disabled (pending email confirmation).</target>
+            </trans-unit>
+            <trans-unit id="messages-47">
+                <source>Saved account information.</source>
+                <target>Saved account information.</target>
+            </trans-unit>
+            <trans-unit id="messages-48">
+                <source>You need to be logged in.</source>
+                <target>You need to be logged in.</target>
+            </trans-unit>
+            <trans-unit id="messages-49">
+                <source>Changed password.</source>
+                <target>Changed password.</target>
+            </trans-unit>
+            <trans-unit id="messages-50">
+                <source>Sorry, your email confirmation link has expired.</source>
+                <target>Sorry, your email confirmation link has expired.</target>
+            </trans-unit>
+            <trans-unit id="messages-51">
+                <source>Thank you! Your account has been activated.</source>
+                <target>Thank you! Your account has been activated.</target>
+            </trans-unit>
+            <trans-unit id="messages-52">
+                <source>No user account was found with that email address.</source>
+                <target>No user account was found with that email address.</target>
+            </trans-unit>
+            <trans-unit id="messages-53">
+                <source>Password resetting is not enabled.</source>
+                <target>Password resetting is not enabled.</target>
+            </trans-unit>
+            <trans-unit id="messages-54">
+                <source>Instructions for resetting your password have been emailed to you.</source>
+                <target>Instructions for resetting your password have been emailed to you.</target>
+            </trans-unit>
+            <trans-unit id="messages-55">
+                <source>Sorry, your password reset link has expired.</source>
+                <target>Sorry, your password reset link has expired.</target>
+            </trans-unit>
+            <trans-unit id="messages-56">
+                <source>Your password has been reset and you are now signed in.</source>
+                <target>Your password has been reset and you are now signed in.</target>
+            </trans-unit>
+            <trans-unit id="messages-57">
+                <source>Invalid credentials.</source>
+                <target>Invalid credentials.</target>
+            </trans-unit>
+            <trans-unit id="messages-58">
+                <source>Pending email confirmation</source>
+                <target>Pending email confirmation</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

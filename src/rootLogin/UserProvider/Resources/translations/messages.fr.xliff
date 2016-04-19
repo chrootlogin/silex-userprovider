@@ -1,240 +1,240 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
-  <file original="" datatype="plaintext" xml:space="preserve" source-language="de" target-language="fr">
+  <file original="" datatype="plaintext" xml:space="preserve" source-language="en" target-language="fr">
     <header>
       <tool tool-id="poeditor.com" tool-name="POEditor"/>
     </header>
     <body>
       <trans-unit id="messages-1">
-        <source>Registrieren</source>
+        <source>Create account</source>
         <target>S'enregistrer</target>
       </trans-unit>
       <trans-unit id="messages-2">
-        <source>Benutzerliste</source>
+        <source>List users</source>
         <target>Liste d'utilisateurs</target>
       </trans-unit>
       <trans-unit id="messages-3">
-        <source>Einloggen</source>
+        <source>Sign in</source>
         <target>Se connecter</target>
       </trans-unit>
       <trans-unit id="messages-4">
-        <source>Hallo %name%!</source>
+        <source>Hello, %name%!</source>
         <target>Bonjour %name% !</target>
       </trans-unit>
       <trans-unit id="messages-5">
-        <source>Bearbeite dein Profil</source>
+        <source>Edit your profile</source>
         <target>Complète ton profil</target>
       </trans-unit>
       <trans-unit id="messages-6">
-        <source>Benutzerprofil ansehen</source>
+        <source>View your profile</source>
         <target>Voir le profil</target>
       </trans-unit>
       <trans-unit id="messages-7">
-        <source>Ändere dein Passwort</source>
+        <source>Change your password</source>
         <target>Modifier ton mot de passe</target>
       </trans-unit>
       <trans-unit id="messages-8">
-        <source>Hast du noch keinen Account?</source>
+        <source>Don't have an account?</source>
         <target>Pas encore enregistré ?</target>
       </trans-unit>
       <trans-unit id="messages-9">
-        <source>Registriere dich jetzt.</source>
+        <source>Register now.</source>
         <target>S'enregistrer maintenant.</target>
       </trans-unit>
       <trans-unit id="messages-10">
-        <source>E-Mail</source>
+        <source>Email</source>
         <target>e-mail</target>
       </trans-unit>
       <trans-unit id="messages-11">
-        <source>Passwort</source>
+        <source>Password</source>
         <target>mot de passe</target>
       </trans-unit>
       <trans-unit id="messages-12">
-        <source>Mein Login auf diesem Computer speichern</source>
+        <source>Remember me on this computer</source>
         <target>Se souvenir de moi sur cet ordinateur</target>
       </trans-unit>
       <trans-unit id="messages-13">
-        <source>Hast du dein Passwort vergessen?</source>
+        <source>Forgot your password?</source>
         <target>Mot de passe oublié ?</target>
       </trans-unit>
       <trans-unit id="messages-14">
-        <source>Hallo %name%. Du bist bereits registriert und eingeloggt.</source>
+        <source>Hello, %name%. You are already registered and signed in.</source>
         <target>Bonjour %name%. Tu es déjà enregistré et connecté.</target>
       </trans-unit>
       <trans-unit id="messages-15">
-        <source>Ausloggen</source>
+        <source>Sign out</source>
         <target>Déconnecter</target>
       </trans-unit>
       <trans-unit id="messages-16">
-        <source>Einen Account erstellen</source>
+        <source>Create an account</source>
         <target>Créer un compte</target>
       </trans-unit>
       <trans-unit id="messages-17">
-        <source>Hast du bereits einen Account?</source>
+        <source>Already have an account?</source>
         <target>As-tu déjà un compte ?</target>
       </trans-unit>
       <trans-unit id="messages-18">
-        <source>Log dich jetzt ein.</source>
+        <source>Sign in now.</source>
         <target>Connecte-toi</target>
       </trans-unit>
       <trans-unit id="messages-19">
-        <source>Passwort wiederholen</source>
+        <source>Repeat password</source>
         <target>Répéter le mot de passe</target>
       </trans-unit>
       <trans-unit id="messages-20">
-        <source>Registrieren</source>
+        <source>Register</source>
         <target>S'enregistrer</target>
       </trans-unit>
       <trans-unit id="messages-21">
-        <source>Bestätigung der E-Mailadresse nötig.</source>
+        <source>Email confirmation needed</source>
         <target>Confirmation de l'adresse e-mail demandée.</target>
       </trans-unit>
       <trans-unit id="messages-22">
-        <source>Dein Account wurde noch nicht aktiviert.</source>
+        <source>Your account is not yet active</source>
         <target>Compte pas encore activé.</target>
       </trans-unit>
       <trans-unit id="messages-23">
-        <source>Als du dich registriert hast haben wir eine E-Mail für dich an die Adresse &lt;strong&gt;%email%&lt;/strong&gt; gesendet.</source>
+        <source>An email should have been sent to you at &lt;strong&gt;%email%&lt;/strong&gt; when you registered.</source>
         <target>Lors de l'inscription, nous t'avons envoyé un e-mail à cette adresse : &lt;strong&gt;%email%&lt;/strong&gt;. </target>
       </trans-unit>
       <trans-unit id="messages-24">
-        <source>Klicke auf den Link in dieser Nachricht um deine Adresse zu bestätigen.</source>
+        <source>Please click the link in that message to confirm your email address and activate your account.</source>
         <target>Cliques sur le lien indiqué dans ce message pour confirmer ton adresse.</target>
       </trans-unit>
       <trans-unit id="messages-25">
-        <source>E-Mail erneut senden</source>
+        <source>Resend the message</source>
         <target>Renvoyer l'e-mail</target>
       </trans-unit>
       <trans-unit id="messages-26">
-        <source>Wenn du in den nächsten paar Minuten keine E-Mail erhältst, überprüfe bitte deinen Spam oder Junk-Mail Ordner. Der Absender ist &lt;strong&gt;%fromAddress%&lt;/strong&gt;.</source>
+        <source>If you don't get an email within a few minutes, make sure to check your spam or junk folder. The sender is &lt;strong&gt;%fromAddress%&lt;/strong&gt;.</source>
         <target>Si l'e-mail n'arrive pas dans les prochaines minutes, merci de vérifier dans les spams ou courriers indésirables. L'expéditeur est &lt;strong&gt;%fromAddress%&lt;/strong&gt;.</target>
       </trans-unit>
       <trans-unit id="messages-27">
-        <source>Bitte klicke auf den Link in dieser Nachricht um deinen Account zu aktivieren.</source>
+        <source>Please click the link in that message to activate your account.</source>
         <target>Merci de cliquer sur le lien indiqué dans ce message pour activer ton compte.</target>
       </trans-unit>
       <trans-unit id="messages-28">
-        <source>Eine E-Mail für dich wurde für dich an &lt;strong&gt;%email%&lt;/strong&gt; gesendet.</source>
+        <source>An email has been sent to you at &lt;strong&gt;%email%&lt;/strong&gt;.</source>
         <target>Un e-mail a été envoyé pour toi à l'adresse suivante : &lt;strong&gt;%email%&lt;/strong&gt;.</target>
       </trans-unit>
       <trans-unit id="messages-29">
-        <source>Warten auf E-Mail Bestätigung.</source>
+        <source>Pending email confirmation.</source>
         <target>Attendre l'e-mail de confirmation.</target>
       </trans-unit>
       <trans-unit id="messages-30">
-        <source>(Nur für Administratoren sichtbar)</source>
+        <source>(visible to admins only)</source>
         <target>(Visible uniquement par les administrateurs)</target>
       </trans-unit>
       <trans-unit id="messages-31">
-        <source>Registriert</source>
+        <source>Registered</source>
         <target>Enregistré</target>
       </trans-unit>
       <trans-unit id="messages-32">
-        <source>Bearbeiten</source>
+        <source>Edit</source>
         <target>Compléter</target>
       </trans-unit>
       <trans-unit id="messages-33">
-        <source>Passwort ändern</source>
+        <source>Change password</source>
         <target>Modifier le mot de passe</target>
       </trans-unit>
       <trans-unit id="messages-34">
-        <source>Bearbeite Benutzer</source>
+        <source>Edit User</source>
         <target>Editer l'utilisateur</target>
       </trans-unit>
       <trans-unit id="messages-35">
-        <source>Benutzerrollen</source>
+        <source>Roles</source>
         <target>Rôles de l'utilisateur</target>
       </trans-unit>
       <trans-unit id="messages-36">
-        <source>Aktuelles Passwort</source>
+        <source>Old password</source>
         <target>Mot de passe actuel</target>
       </trans-unit>
       <trans-unit id="messages-37">
-        <source>Neues Passwort</source>
+        <source>New password</source>
         <target>Nouveau mot de passe</target>
       </trans-unit>
       <trans-unit id="messages-38">
-        <source>Neues Passwort wiederholen</source>
+        <source>Repeat new password</source>
         <target>Répéter le nouveau mot de passe</target>
       </trans-unit>
       <trans-unit id="messages-39">
-        <source>Speichern</source>
+        <source>Save</source>
         <target>Enregistrer</target>
       </trans-unit>
       <trans-unit id="messages-40">
-        <source>Passwort zurücksetzen</source>
+        <source>Reset your password</source>
         <target>Réinitialiser le mot de passe</target>
       </trans-unit>
       <trans-unit id="messages-41">
-        <source>Wähle ein neues Passwort, %name%</source>
+        <source>Choose a new password, %name%</source>
         <target>Choisis un nouveau mot de passe, %name%</target>
       </trans-unit>
       <trans-unit id="messages-42">
-        <source>Gib unten deine E-Mailadresse ein und wird werden dir die nötigen Anweisungen schicken, dein Passwort zurückzusetzen.</source>
+        <source>Enter your email address below and we'll send you password reset instructions.</source>
         <target>Entre ton adresse e-mail ci-dessous pour recevoir les directives de réinitialisation de mot de passe.</target>
       </trans-unit>
       <trans-unit id="messages-43">
-        <source>Zurücksetzen</source>
+        <source>Reset</source>
         <target>Réinitialiser</target>
       </trans-unit>
       <trans-unit id="messages-44">
-        <source>Danke!</source>
+        <source>Thank you!</source>
         <target>Merci !</target>
       </trans-unit>
       <trans-unit id="messages-45">
-        <source>Kein Benutzer mit dieser ID wurde gefunden.</source>
+        <source>No user was found with that ID.</source>
         <target>Aucun utilisateur trouvé.</target>
       </trans-unit>
       <trans-unit id="messages-46">
-        <source>Dieser Benutzer ist deaktiviert (wartet auf E-Mail-Bestätigung).</source>
+        <source>That user is disabled (pending email confirmation).</source>
         <target>Ce compte n'est pas activé (attendre l'e-mail de confirmation).</target>
       </trans-unit>
       <trans-unit id="messages-47">
-        <source>Die Benutzereinstellungen wurden gespeichert.</source>
+        <source>Saved account information.</source>
         <target>Les paramètres de ce compte sont enregistrés.</target>
       </trans-unit>
       <trans-unit id="messages-48">
-        <source>Du musst eingeloggt sein.</source>
+        <source>You need to be logged in.</source>
         <target>Tu dois être connecté.</target>
       </trans-unit>
       <trans-unit id="messages-49">
-        <source>Das Passwort wurde geändert.</source>
+        <source>Changed password.</source>
         <target>Le mot de passe a été modifié.</target>
       </trans-unit>
       <trans-unit id="messages-50">
-        <source>Entschuldigung, aber dein E-Mail Bestätigungslink ist leider abgelaufen.</source>
+        <source>Sorry, your email confirmation link has expired.</source>
         <target>Désolé, ton lien de confirmation d'e-mail a expiré.</target>
       </trans-unit>
       <trans-unit id="messages-51">
-        <source>Danke! Dein Account wurde aktiviert.</source>
+        <source>Thank you! Your account has been activated.</source>
         <target>Merci ! Ton compte est activé.</target>
       </trans-unit>
       <trans-unit id="messages-52">
-        <source>Es wurde kein Benutzeraccount mit dieser E-Mailadresse gefunden.</source>
+        <source>No user account was found with that email address.</source>
         <target>Pas de compte lié à cette adresse e-mail.</target>
       </trans-unit>
       <trans-unit id="messages-53">
-        <source>Die Funktion "Passwort zurücksetzen" wurde vom Administrator deaktiviert.</source>
+        <source>Password resetting is not enabled.</source>
         <target>La fonction de réinitialisation du mot de passe a été désactivée par l'administrateur.</target>
       </trans-unit>
       <trans-unit id="messages-54">
-        <source>Wir haben dir Anweisungen geschickt, wie du dein Passwort zurücksetzen kannst.</source>
+        <source>Instructions for resetting your password have been emailed to you.</source>
         <target>Les directives de réinitialisation de mot de passe t'ont été envoyées.</target>
       </trans-unit>
       <trans-unit id="messages-55">
-        <source>Es tut uns leid, aber der Link um dein Passwort zurückzusetzen ist leider abgelaufen.</source>
+        <source>Sorry, your password reset link has expired.</source>
         <target>Désolé, le lien de réinitialisation du mot de passe a expiré.</target>
       </trans-unit>
       <trans-unit id="messages-56">
-        <source>Dein Passwort wurde zurückgesetzt und du bist jetzt eingeloggt.</source>
+        <source>Your password has been reset and you are now signed in.</source>
         <target>Le mot de passe a été réinitialisé et tu es connecté.</target>
       </trans-unit>
       <trans-unit id="messages-57">
-        <source>Deine Logindaten sind falsch. Bitte überprüfe E-Mail und Passwort.</source>
+        <source>Invalid credentials.</source>
         <target>Données de compte erronées. Merci de vérifier l'e-mail et le mot de passe.</target>
       </trans-unit>
       <trans-unit id="messages-58">
-        <source>Warte auf E-Mail-Bestätigung</source>
+        <source>Pending email confirmation</source>
         <target>Attendre l'e-mail de confirmation.</target>
       </trans-unit>
     </body>
