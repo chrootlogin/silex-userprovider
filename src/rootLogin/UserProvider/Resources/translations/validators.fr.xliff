@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
+  <file original="" datatype="plaintext" xml:space="preserve" source-language="de" target-language="fr">
+    <header>
+      <tool tool-id="poeditor.com" tool-name="POEditor"/>
+    </header>
+    <body>
+      <trans-unit id="validators-1">
+        <source>Die E-Mailadresse {{ email }} existiert nicht.</source>
+        <target>L'adresse e-mail {{ email }} n'existe pas.</target>
+      </trans-unit>
+      <trans-unit id="validators-2">
+        <source>Die E-Mailadresse {{ email }} existiert bereits.</source>
+        <target>L'adresse e-mail {{ email }} existe déjà.</target>
+      </trans-unit>
+      <trans-unit id="validators-3">
+        <source>Die Eingabe entspricht nicht deinem aktuellen Passwort</source>
+        <target>Les données ne correspondent pas à ton mot de passe actuel.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

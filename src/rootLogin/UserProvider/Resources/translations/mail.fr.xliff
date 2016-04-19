@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
+  <file original="" datatype="plaintext" xml:space="preserve" source-language="de" target-language="fr">
+    <header>
+      <tool tool-id="poeditor.com" tool-name="POEditor"/>
+    </header>
+    <body>
+      <trans-unit id="mail-1">
+        <source>Willkommen. Bitte bestätige deine E-Mailadresse.</source>
+        <target>Bienvenue. Merci de confirmer ton adresse e-mail.</target>
+      </trans-unit>
+      <trans-unit id="mail-2">
+        <source>Danke, dass du unserer Community beigetreten bist.</source>
+        <target>Merci d'avoir adhéré à notre communauté.</target>
+      </trans-unit>
+      <trans-unit id="mail-3">
+        <source>Bitte klicke den Link an, um deine E-Mailadresse zu bestätigen.</source>
+        <target>Merci de cliquer sur ce lien pour confirmer ton adresse e-mail.</target>
+      </trans-unit>
+      <trans-unit id="mail-4">
+        <source>Bitte klicke auf den Link unten, um deine E-Mailadresse zu bestätigen:</source>
+        <target>Merci de cliquer sur le lien ci-dessous pour confirmer ton adresse e-mail :</target>
+      </trans-unit>
+      <trans-unit id="mail-5">
+        <source>Dein Passwort zurücksetzen.</source>
+        <target>Réinitialiser ton mot de passe.</target>
+      </trans-unit>
+      <trans-unit id="mail-6">
+        <source>Du wolltest dein Passwort nicht zurücksetzen?</source>
+        <target>Tu n'as pas demandé la réinitialisation de ton mot de passe ?</target>
+      </trans-unit>
+      <trans-unit id="mail-7">
+        <source>Wenn du dein Passwort nicht zurücksetzen wolltest, ist es möglich, dass ein anderer Benutzer ausversehen deine E-Mailadresse oder Benutzernamen eingegeben hat, als er sein eigenes Passwort zurücksetzen wollte. Falls dies der Fall ist, musst du nicht weiter unternehmen und kannst diese E-Mail ignorieren.</source>
+        <target>Si tu n'as pas demandé à réinitialiser ton mot de passe, il est possible qu'un autre utilisateur ait entré ton adresse e-mail ou ton nom de compte par inadvertance, alors qu'il voulait réinitialiser son propre mot de passe. Si c'est le cas, merci de ne rien faire et d'ignorer cet e-mail.</target>
+      </trans-unit>
+      <trans-unit id="mail-8">
+        <source>Bitte klicke den Link an, um dein Passwort zurückzusetzen.</source>
+        <target>Merci de cliquer sur ce lien pour réinitialiser ton mot de passe.</target>
+      </trans-unit>
+      <trans-unit id="mail-9">
+        <source>Bitte klicke auf den Link unten, um dein Passwort zurückzusetzen:</source>
+        <target>Merci de cliquer sur le lien ci-dessous pour réinitialiser ton mot de passe :</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
