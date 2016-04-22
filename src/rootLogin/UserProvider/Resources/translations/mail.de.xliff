@@ -1,42 +1,46 @@
-<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-    <file source-language="en" datatype="plaintext" original="">
-        <body>
-            <trans-unit id="mail-1">
-                <source>Welcome! Please confirm your email.</source>
-                <target>Willkommen. Bitte bestätige deine E-Mailadresse.</target>
-            </trans-unit>
-            <trans-unit id="mail-2">
-                <source>Thanks for joining our site!</source>
-                <target>Danke, dass du unserer Community beigetreten bist.</target>
-            </trans-unit>
-            <trans-unit id="mail-3">
-                <source>Please click this link to confirm your email.</source>
-                <target>Bitte klicke den Link an, um deine E-Mailadresse zu bestätigen.</target>
-            </trans-unit>
-            <trans-unit id="mail-4">
-                <source>Please click the link below to confirm your email:</source>
-                <target>Bitte klicke auf den Link unten, um deine E-Mailadresse zu bestätigen:</target>
-            </trans-unit>
-            <trans-unit id="mail-5">
-                <source>Reset your password</source>
-                <target>Dein Passwort zurücksetzen.</target>
-            </trans-unit>
-            <trans-unit id="mail-6">
-                <source>Didn't ask to reset your password?</source>
-                <target>Du wolltest dein Passwort nicht zurücksetzen?</target>
-            </trans-unit>
-            <trans-unit id="mail-7">
-                <source>If you didn't ask to reset your password, it's likely that another user entered your username or email address by mistake while trying to reset their password. If that's the case, you don't need to take any further action and you can safely disregard this email.</source>
-                <target>Wenn du dein Passwort nicht zurücksetzen wolltest, ist es möglich, dass ein anderer Benutzer ausversehen deine E-Mailadresse oder Benutzernamen eingegeben hat, als er sein eigenes Passwort zurücksetzen wollte. Falls dies der Fall ist, musst du nicht weiter unternehmen und kannst diese E-Mail ignorieren.</target>
-            </trans-unit>
-            <trans-unit id="mail-8">
-                <source>Please click this link to reset your password.</source>
-                <target>Bitte klicke den Link an, um dein Passwort zurückzusetzen.</target>
-            </trans-unit>
-            <trans-unit id="mail-9">
-                <source>Please click the link below to reset your password:</source>
-                <target>Bitte klicke auf den Link unten, um dein Passwort zurückzusetzen:</target>
-            </trans-unit>
-        </body>
-    </file>
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
+  <file original="" datatype="plaintext" xml:space="preserve" source-language="en" target-language="de">
+    <header>
+      <tool tool-id="poeditor.com" tool-name="POEditor"/>
+    </header>
+    <body>
+      <trans-unit id="mail-1">
+        <source>Welcome! Please confirm your email.</source>
+        <target>Willkommen. Bitte bestätige deine E-Mailadresse.</target>
+      </trans-unit>
+      <trans-unit id="mail-2">
+        <source>Thanks for joining our site!</source>
+        <target>Danke, dass du unserer Community beigetreten bist.</target>
+      </trans-unit>
+      <trans-unit id="mail-3">
+        <source>Please click this link to confirm your email.</source>
+        <target>Bitte klicke den Link an, um deine E-Mailadresse zu bestätigen.</target>
+      </trans-unit>
+      <trans-unit id="mail-4">
+        <source>Please click the link below to confirm your email:</source>
+        <target>Bitte klicke auf den Link unten, um deine E-Mailadresse zu bestätigen:</target>
+      </trans-unit>
+      <trans-unit id="mail-5">
+        <source>Reset your password</source>
+        <target>Dein Passwort zurücksetzen.</target>
+      </trans-unit>
+      <trans-unit id="mail-6">
+        <source>Didn't ask to reset your password?</source>
+        <target>Du wolltest dein Passwort nicht zurücksetzen?</target>
+      </trans-unit>
+      <trans-unit id="mail-7">
+        <source>If you didn't ask to reset your password, it's likely that another user entered your username or email address by mistake while trying to reset their password. If that's the case, you don't need to take any further action and you can safely disregard this email.</source>
+        <target>Wenn du dein Passwort nicht zurücksetzen wolltest, ist es möglich, dass ein anderer Benutzer ausversehen deine E-Mailadresse oder Benutzernamen eingegeben hat, als er sein eigenes Passwort zurücksetzen wollte. Falls dies der Fall ist, musst du nicht weiter unternehmen und kannst diese E-Mail ignorieren.</target>
+      </trans-unit>
+      <trans-unit id="mail-8">
+        <source>Please click this link to reset your password.</source>
+        <target>Bitte klicke den Link an, um dein Passwort zurückzusetzen.</target>
+      </trans-unit>
+      <trans-unit id="mail-9">
+        <source>Please click the link below to reset your password:</source>
+        <target>Bitte klicke auf den Link unten, um dein Passwort zurückzusetzen:</target>
+      </trans-unit>
+    </body>
+  </file>
 </xliff>
