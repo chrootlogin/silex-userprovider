@@ -104,6 +104,9 @@ class UserProviderServiceProvider implements ServiceProviderInterface
             $translator->addResource('xliff', __DIR__ . '/../Resources/translations/messages.fr.xliff', 'fr', 'messages');
             $translator->addResource('xliff', __DIR__ . '/../Resources/translations/validators.fr.xliff', 'fr', 'validators');
             $translator->addResource('xliff', __DIR__ . '/../Resources/translations/mail.fr.xliff', 'fr', 'mail');
+            $translator->addResource('xliff', __DIR__ . '/../Resources/translations/messages.it.xliff', 'it', 'messages');
+            $translator->addResource('xliff', __DIR__ . '/../Resources/translations/validators.it.xliff', 'it', 'validators');
+            $translator->addResource('xliff', __DIR__ . '/../Resources/translations/mail.it.xliff', 'it', 'mail');
 
             return $translator;
         }));

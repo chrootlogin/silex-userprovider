@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
+  <file original="" datatype="plaintext" xml:space="preserve" source-language="en" target-language="it">
+    <header>
+      <tool tool-id="poeditor.com" tool-name="POEditor"/>
+    </header>
+    <body>
+      <trans-unit id="messages-1">
+        <source>Create account</source>
+        <target>Registra</target>
+      </trans-unit>
+      <trans-unit id="messages-2">
+        <source>List users</source>
+        <target>Lista utenti</target>
+      </trans-unit>
+      <trans-unit id="messages-3">
+        <source>Sign in</source>
+        <target>Login</target>
+      </trans-unit>
+      <trans-unit id="messages-4">
+        <source>Hello, %name%!</source>
+        <target>Ciao  %name%!</target>
+      </trans-unit>
+      <trans-unit id="messages-5">
+        <source>Edit your profile</source>
+        <target>Modifica il tuo profilo</target>
+      </trans-unit>
+      <trans-unit id="messages-6">
+        <source>View your profile</source>
+        <target>Visualizza il tuo profilo</target>
+      </trans-unit>
+      <trans-unit id="messages-7">
+        <source>Change your password</source>
+        <target>Cambia la password</target>
+      </trans-unit>
+      <trans-unit id="messages-8">
+        <source>Don't have an account?</source>
+        <target>Non hai ancora un account?</target>
+      </trans-unit>
+      <trans-unit id="messages-9">
+        <source>Register now.</source>
+        <target>Registrati ora.</target>
+      </trans-unit>
+      <trans-unit id="messages-10">
+        <source>Email</source>
+        <target>E-mail</target>
+      </trans-unit>
+      <trans-unit id="messages-11">
+        <source>Password</source>
+        <target>Password</target>
+      </trans-unit>
+      <trans-unit id="messages-12">
+        <source>Remember me on this computer</source>
+        <target>Memorizza i miei dati su questo computer</target>
+      </trans-unit>
+      <trans-unit id="messages-13">
+        <source>Forgot your password?</source>
+        <target>Hai dimenticato la password?</target>
+      </trans-unit>
+      <trans-unit id="messages-14">
+        <source>Hello, %name%. You are already registered and signed in.</source>
+        <target>Ciao %name%. Sei già registrato e ora sei loggato.</target>
+      </trans-unit>
+      <trans-unit id="messages-15">
+        <source>Sign out</source>
+        <target>Logout</target>
+      </trans-unit>
+      <trans-unit id="messages-16">
+        <source>Create an account</source>
+        <target>Crea un account</target>
+      </trans-unit>
+      <trans-unit id="messages-17">
+        <source>Already have an account?</source>
+        <target>Possiedi già un account?</target>
+      </trans-unit>
+      <trans-unit id="messages-18">
+        <source>Sign in now.</source>
+        <target>Esegui ora il login.</target>
+      </trans-unit>
+      <trans-unit id="messages-19">
+        <source>Repeat password</source>
+        <target>Ripeti la password</target>
+      </trans-unit>
+      <trans-unit id="messages-20">
+        <source>Register</source>
+        <target>Registra</target>
+      </trans-unit>
+      <trans-unit id="messages-21">
+        <source>Email confirmation needed</source>
+        <target>Mail di conferma necessaria</target>
+      </trans-unit>
+      <trans-unit id="messages-22">
+        <source>Your account is not yet active</source>
+        <target>Il tuo account non è ancora stato attivato</target>
+      </trans-unit>
+      <trans-unit id="messages-23">
+        <source>An email should have been sent to you at &lt;strong&gt;%email%&lt;/strong&gt; when you registered.</source>
+        <target>Al momento della registrazione ti abbiamo inviato una mail all'indirizzo &lt;strong&gt;%email%&lt;/strong&gt;.</target>
+      </trans-unit>
+      <trans-unit id="messages-24">
+        <source>Please click the link in that message to confirm your email address and activate your account.</source>
+        <target>Clicca sul link contenuto in questo messaggio per confermare il tuo indirizzo e-mail.</target>
+      </trans-unit>
+      <trans-unit id="messages-25">
+        <source>Resend the message</source>
+        <target>Invia nuovamente il messaggio</target>
+      </trans-unit>
+      <trans-unit id="messages-26">
+        <source>If you don't get an email within a few minutes, make sure to check your spam or junk folder. The sender is &lt;strong&gt;%fromAddress%&lt;/strong&gt;.</source>
+        <target>Se fra qualche minuto non dovessi ricevere una mail, controlla la cartella di posta indesiderata (spam). Il mittente del messaggio è &lt;strong&gt;%fromAddress%&lt;/strong&gt;.  </target>
+      </trans-unit>
+      <trans-unit id="messages-27">
+        <source>Please click the link in that message to activate your account.</source>
+        <target>Clicca sul link contenuto in questo messaggio per attivare il tuo account. Se fra qualche minuto non dovessi ricevere una mail, controlla la cartella di posta indesiderata (spam).  </target>
+      </trans-unit>
+      <trans-unit id="messages-28">
+        <source>An email has been sent to you at &lt;strong&gt;%email%&lt;/strong&gt;.</source>
+        <target>Ti è stata inviata una mail all'indirizzo &lt;strong&gt;%email%&lt;/strong&gt;. </target>
+      </trans-unit>
+      <trans-unit id="messages-29">
+        <source>Pending email confirmation.</source>
+        <target>In attesa della mail di conferma.</target>
+      </trans-unit>
+      <trans-unit id="messages-30">
+        <source>(visible to admins only)</source>
+        <target>(visibile solo per gli amministratori) </target>
+      </trans-unit>
+      <trans-unit id="messages-31">
+        <source>Registered</source>
+        <target>Registrato</target>
+      </trans-unit>
+      <trans-unit id="messages-32">
+        <source>Edit</source>
+        <target>Modifica</target>
+      </trans-unit>
+      <trans-unit id="messages-33">
+        <source>Change password</source>
+        <target>Cambia la password</target>
+      </trans-unit>
+      <trans-unit id="messages-34">
+        <source>Edit User</source>
+        <target>Modifica utente</target>
+      </trans-unit>
+      <trans-unit id="messages-35">
+        <source>Roles</source>
+        <target>Funzioni</target>
+      </trans-unit>
+      <trans-unit id="messages-36">
+        <source>Old password</source>
+        <target>Password attuale</target>
+      </trans-unit>
+      <trans-unit id="messages-37">
+        <source>New password</source>
+        <target>Nuova password</target>
+      </trans-unit>
+      <trans-unit id="messages-38">
+        <source>Repeat new password</source>
+        <target>Ripeti la nuova password</target>
+      </trans-unit>
+      <trans-unit id="messages-39">
+        <source>Save</source>
+        <target>Salva</target>
+      </trans-unit>
+      <trans-unit id="messages-40">
+        <source>Reset your password</source>
+        <target>Reimposta la password</target>
+      </trans-unit>
+      <trans-unit id="messages-41">
+        <source>Choose a new password, %name%</source>
+        <target>Scegli una nuova password %name%</target>
+      </trans-unit>
+      <trans-unit id="messages-42">
+        <source>Enter your email address below and we'll send you password reset instructions.</source>
+        <target>Inserisci qui sotto il tuo indirizzo e-mail e ti invieremo le istruzioni per reimpostare la password.</target>
+      </trans-unit>
+      <trans-unit id="messages-43">
+        <source>Reset</source>
+        <target>Reimposta</target>
+      </trans-unit>
+      <trans-unit id="messages-44">
+        <source>Thank you!</source>
+        <target>Grazie!</target>
+      </trans-unit>
+      <trans-unit id="messages-45">
+        <source>No user was found with that ID.</source>
+        <target>Non è stato trovato alcun utente con questo ID</target>
+      </trans-unit>
+      <trans-unit id="messages-46">
+        <source>That user is disabled (pending email confirmation).</source>
+        <target>Questo utente è disabilitato (in attesa della mail di conferma)</target>
+      </trans-unit>
+      <trans-unit id="messages-47">
+        <source>Saved account information.</source>
+        <target>Le impostazioni utente sono state salvate.</target>
+      </trans-unit>
+      <trans-unit id="messages-48">
+        <source>You need to be logged in.</source>
+        <target>È necessario eseguire prima il login.</target>
+      </trans-unit>
+      <trans-unit id="messages-49">
+        <source>Changed password.</source>
+        <target>La password è stata cambiata</target>
+      </trans-unit>
+      <trans-unit id="messages-50">
+        <source>Sorry, your email confirmation link has expired.</source>
+        <target>Spiacenti. Il link della mail di conferma è scaduto.</target>
+      </trans-unit>
+      <trans-unit id="messages-51">
+        <source>Thank you! Your account has been activated.</source>
+        <target>Grazie! Il tuo account è stato attivato.</target>
+      </trans-unit>
+      <trans-unit id="messages-52">
+        <source>No user account was found with that email address.</source>
+        <target>Non sono stati trovati utenti con questo indirizzo e-mail.</target>
+      </trans-unit>
+      <trans-unit id="messages-53">
+        <source>Password resetting is not enabled.</source>
+        <target>La funzione "reimposta la password" è stata disattivata dall'amministratore.</target>
+      </trans-unit>
+      <trans-unit id="messages-54">
+        <source>Instructions for resetting your password have been emailed to you.</source>
+        <target>Riceverai una mail con le istruzioni che ti permetteranno di reimpostare la password.</target>
+      </trans-unit>
+      <trans-unit id="messages-55">
+        <source>Sorry, your password reset link has expired.</source>
+        <target>Spiacenti! Il link per reimpostare la password è scaduto.</target>
+      </trans-unit>
+      <trans-unit id="messages-56">
+        <source>Your password has been reset and you are now signed in.</source>
+        <target>La tua password è stata reimpostata e ora sei loggato.</target>
+      </trans-unit>
+      <trans-unit id="messages-57">
+        <source>Invalid credentials.</source>
+        <target>I dati di accesso non sono validi. Controlla l'indirizzo e-mail e la password.</target>
+      </trans-unit>
+      <trans-unit id="messages-58">
+        <source>Pending email confirmation</source>
+        <target>In attesa della mail di conferma.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

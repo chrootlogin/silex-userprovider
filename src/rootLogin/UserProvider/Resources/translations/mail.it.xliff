@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
+  <file original="" datatype="plaintext" xml:space="preserve" source-language="en" target-language="it">
+    <header>
+      <tool tool-id="poeditor.com" tool-name="POEditor"/>
+    </header>
+    <body>
+      <trans-unit id="mail-1">
+        <source>Welcome! Please confirm your email.</source>
+        <target>Benvenuto! Conferma per cortesia il tuo indirizzo e-mail.</target>
+      </trans-unit>
+      <trans-unit id="mail-2">
+        <source>Thanks for joining our site!</source>
+        <target>Grazie di esserti unito a noi!</target>
+      </trans-unit>
+      <trans-unit id="mail-3">
+        <source>Please click this link to confirm your email.</source>
+        <target>Clicca su questo link per confermare il tuo indirizzo e-mail.</target>
+      </trans-unit>
+      <trans-unit id="mail-4">
+        <source>Please click the link below to confirm your email:</source>
+        <target>Clicca sul link sottostante per confermare il tuo indirizzo e-mail.</target>
+      </trans-unit>
+      <trans-unit id="mail-5">
+        <source>Reset your password</source>
+        <target>Reimposta la password</target>
+      </trans-unit>
+      <trans-unit id="mail-6">
+        <source>Didn't ask to reset your password?</source>
+        <target>Non sei stato tu a inviare una richiesta per reimpostare la password?</target>
+      </trans-unit>
+      <trans-unit id="mail-7">
+        <source>If you didn't ask to reset your password, it's likely that another user entered your username or email address by mistake while trying to reset their password. If that's the case, you don't need to take any further action and you can safely disregard this email.</source>
+        <target>Se non sei stato tu a inviare la richiesta per la reimpostazione della password è probabile che un altro utente abbia inserito per errore il tuo nome utente o il tuo indirizzo e-mail mentre tentava di reimpostare la sua password. In questo caso non devi fare nulla e puoi ignorare questa mail.</target>
+      </trans-unit>
+      <trans-unit id="mail-8">
+        <source>Please click this link to reset your password.</source>
+        <target>Clicca su questo link per reimpostare la tua password.</target>
+      </trans-unit>
+      <trans-unit id="mail-9">
+        <source>Please click the link below to reset your password:</source>
+        <target>Clicca sul link sottostante per reimpostare la tua password</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
